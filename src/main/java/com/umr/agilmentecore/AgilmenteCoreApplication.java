@@ -1,4 +1,4 @@
-package com.umr.agilmentecore.com.umr.agilmentecore;
+package com.umr.agilmentecore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

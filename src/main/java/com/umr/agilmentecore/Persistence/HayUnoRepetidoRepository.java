@@ -1,4 +1,4 @@
-package com.umr.agilmentecore.com.umr.agilmentecore.Persistence;
+package com.umr.agilmentecore.Persistence;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.umr.agilmentecore.com.umr.agilmentecore.Class.HayUnoRepetido;
+import com.umr.agilmentecore.Class.HayUnoRepetido;
 
 import org.springframework.data.domain.Page;
 
@@ -16,5 +16,4 @@ public interface HayUnoRepetidoRepository extends JpaRepository<HayUnoRepetido, 
 	
 	Page<HayUnoRepetido> findAll(Pageable pagina);
 	
-
 }

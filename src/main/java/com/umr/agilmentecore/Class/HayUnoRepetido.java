@@ -1,4 +1,4 @@
-package com.umr.agilmentecore.com.umr.agilmentecore.Class;
+package com.umr.agilmentecore.Class;
 
 import java.util.Date;
 import java.util.List;
