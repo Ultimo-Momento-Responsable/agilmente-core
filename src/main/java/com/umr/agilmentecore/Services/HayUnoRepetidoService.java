@@ -13,14 +13,15 @@ import com.umr.agilmentecore.Persistence.HayUnoRepetidoRepository;
 public class HayUnoRepetidoService {
 	
 	@Autowired
-	private HayUnoRepetidoRepository repositorio;
+	private HayUnoRepetidoRepository repository;
 	
 	public Page<HayUnoRepetido> getAll(Pageable pagina) {
-		return repositorio.findAll(pagina);
+		return repository.findAll(pagina);
 	}
 	
 	public HayUnoRepetido saveGame(HayUnoRepetido j) {
 		
-		return repositorio.saveAndFlush(j);
+		return repository.saveAndFlush(j);
 	}
 }
+      
