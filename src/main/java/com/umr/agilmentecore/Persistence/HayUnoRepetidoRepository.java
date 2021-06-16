@@ -11,6 +11,6 @@ import org.springframework.data.domain.Page;
 @Repository
 public interface HayUnoRepetidoRepository extends JpaRepository<HayUnoRepetido, Integer>{
 	
-	Page<HayUnoRepetido> findAll(Pageable pagina);
+	Page<HayUnoRepetido> findAll(Pageable page);
 	
 }

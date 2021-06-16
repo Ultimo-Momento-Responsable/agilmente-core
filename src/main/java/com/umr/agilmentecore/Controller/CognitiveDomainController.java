@@ -9,27 +9,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.umr.agilmentecore.Class.HayUnoRepetido;
-import com.umr.agilmentecore.Services.HayUnoRepetidoService;
+import com.umr.agilmentecore.Class.CognitiveDomain;
+import com.umr.agilmentecore.Services.CognitiveDomainService;
 
 @RestController
-@RequestMapping("/hay-uno-repetido")
-public class HayUnoRepetidoController {
+@RequestMapping("/cognitive-domain")
+public class CognitiveDomainController {
 
 	@Autowired
-	private HayUnoRepetidoService service;
+	private CognitiveDomainService service;
 	
-	// Obtiene todos los resultados de Hay uno Repetido
+	// Obtiene todos los dominios cognitivos
 	@GetMapping
-	public Page<HayUnoRepetido> getAll(Pageable page) {
+	public Page<CognitiveDomain> getAll(Pageable page) {
 		return service.getAll(page);
 	}
 	
-	// Guarda un resultado de Hay uno Repetido
+	// Guarda un dominio cognitivo
 	@PostMapping
-	public HayUnoRepetido saveGame(@RequestBody HayUnoRepetido g) {
+	public CognitiveDomain saveGame(@RequestBody CognitiveDomain cd) {
 		
-		return service.saveGame(g);
+		return service.saveGame(cd);
 	}
-
 }

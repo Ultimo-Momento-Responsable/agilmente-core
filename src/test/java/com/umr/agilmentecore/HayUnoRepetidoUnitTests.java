@@ -1,32 +1,24 @@
 package com.umr.agilmentecore;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import org.assertj.core.api.ObjectAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.umr.agilmentecore.Class.HayUnoRepetido;
 import com.umr.agilmentecore.Controller.HayUnoRepetidoController;
-import com.umr.agilmentecore.Services.HayUnoRepetidoService;
 
 @SpringBootTest
 public class HayUnoRepetidoUnitTests {
 	
 	@Autowired(required=true)
 	private HayUnoRepetidoController hayUnoRepeController;
-	private HayUnoRepetidoService hayUnoRepeService;
 	
 	private HayUnoRepetido hayUnoRepe;
 	
@@ -50,13 +42,8 @@ public class HayUnoRepetidoUnitTests {
 	}
 	
 	@Test
-	public void testNewGame() throws Exception {
+	public void testNewHayUnoRepetido() throws Exception {
 		assertThat(hayUnoRepeController.saveGame(hayUnoRepe)).isNotNull();
-	}
-	
-	@Test
-	public void testGetGames() throws Exception {
-		
 	}
 	
 }

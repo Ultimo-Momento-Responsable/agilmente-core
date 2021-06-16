@@ -9,7 +9,7 @@ CREATE SEQUENCE hibernate_sequence
 DROP TABLE IF EXISTS hay_uno_repetido;
  
 CREATE TABLE hay_uno_repetido (
-	id INTEGER NOT NULL,
+	id BIGINT NOT NULL,
 	name VARCHAR(128) NOT NULL,
 	mistakes INTEGER,
 	successes INTEGER,
@@ -19,4 +19,10 @@ CREATE TABLE hay_uno_repetido (
 	canceled BOOLEAN,
 	PRIMARY KEY (id)
 );
-	
+
+DROP TABLE IF EXISTS cognitive_domain;
+CREATE TABLE cognitive_domain (
+	id BIGINT NOT NULL,
+	name VARCHAR(128) NOT NULL,
+	PRIMARY KEY (id)
+);
