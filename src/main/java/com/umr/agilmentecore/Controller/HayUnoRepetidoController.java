@@ -17,16 +17,16 @@ import com.umr.agilmentecore.Services.HayUnoRepetidoService;
 public class HayUnoRepetidoController {
 
 	@Autowired
-	private HayUnoRepetidoService servicio;
+	private HayUnoRepetidoService service;
 	
 	@GetMapping
 	public Page<HayUnoRepetido> getAll(Pageable pagina) {
-		return servicio.getAll(pagina);
+		return service.getAll(pagina);
 	}
 	
 	@PostMapping
 	public HayUnoRepetido saveGame(@RequestBody HayUnoRepetido j) {
 		
-		return servicio.saveGame(j);
+		return service.saveGame(j);
 	}
 }

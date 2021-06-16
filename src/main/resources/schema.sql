@@ -14,7 +14,7 @@ CREATE TABLE hay_uno_repetido (
 	mistakes INTEGER,
 	successes INTEGER,
 	total_time NUMERIC,
-	time_between_successes NUMERIC[],
+	time_between_successes bytea,
 	date_time TIMESTAMP,
 	canceled BOOLEAN,
 	PRIMARY KEY (id)
