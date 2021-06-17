@@ -34,12 +34,21 @@ public class HayUnoRepetidoController {
 		return service.getAll(page);
 	}
 	
+	/**
+	 *  Obtiene un resultado de HayUnoRepetido
+	 * @param Long el id del juego específico
+	 * @return Optional un resultado de un juego o nada.
+	 */
 	@GetMapping(value = "/{id}")
 	public Optional<HayUnoRepetido> getOne(@PathVariable(name = "id") Long id) {
 		return service.getOne(id);
 	}
 	
-	// Guarda un resultado de Hay uno Repetido
+	/**
+	 * Guarda un resultado de Hay uno Repetido
+	 * @param g Un resultado de HayUnoRepetido
+	 * @return el resultado del juego guardado
+	 */
 	@PostMapping
 	public HayUnoRepetido saveGame(@RequestBody HayUnoRepetido g) {
 		

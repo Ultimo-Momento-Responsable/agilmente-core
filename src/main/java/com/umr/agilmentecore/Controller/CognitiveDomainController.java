@@ -19,13 +19,21 @@ public class CognitiveDomainController {
 	@Autowired
 	private CognitiveDomainService service;
 	
-	// Obtiene todos los dominios cognitivos
+	/**
+	 *  Obtiene todos los resultados de los Dominios Cognitivos
+	 * @param page Contiene las opciones de paginación
+	 * @return Una página de resultados
+	 */
 	@GetMapping
 	public Page<CognitiveDomain> getAll(Pageable page) {
 		return service.getAll(page);
 	}
 	
-	// Guarda un dominio cognitivo
+	/**
+	 * Guarda un Dominio Cognitivo
+	 * @param cd Un Dominio Cognitivo
+	 * @return el Dominio Cognitivo guardado
+	 */
 	@PostMapping
 	public CognitiveDomain saveGame(@RequestBody CognitiveDomain cd) {
 		
