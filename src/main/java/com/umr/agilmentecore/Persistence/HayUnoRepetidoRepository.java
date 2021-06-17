@@ -9,7 +9,7 @@ import com.umr.agilmentecore.Class.HayUnoRepetido;
 import org.springframework.data.domain.Page;
 
 @Repository
-public interface HayUnoRepetidoRepository extends JpaRepository<HayUnoRepetido, Integer>{
+public interface HayUnoRepetidoRepository extends JpaRepository<HayUnoRepetido, Long>{
 	
 	Page<HayUnoRepetido> findAllByOrderByDateTimeDesc(Pageable page);
 	

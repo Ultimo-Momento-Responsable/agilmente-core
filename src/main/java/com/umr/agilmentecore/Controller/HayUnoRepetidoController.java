@@ -24,7 +24,11 @@ public class HayUnoRepetidoController {
 	@Autowired
 	private HayUnoRepetidoService service;
 	
-	// Obtiene todos los resultados de Hay uno Repetido
+	/**
+	 *  Obtiene todos los resultados de HayUnoRepetido
+	 * @param page Contiene las opciones de paginación
+	 * @return Una página de resultados
+	 */
 	@GetMapping
 	public Page<HayUnoRepetido> getAll(Pageable page) {
 		return service.getAll(page);

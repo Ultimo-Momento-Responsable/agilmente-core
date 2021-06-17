@@ -10,11 +10,12 @@
 	</parent>
 	<groupId>com.umr</groupId>
 	<artifactId>agilmente-core</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>agilmente-core</name>
 	<description>AgilMente es un software de rehabilitación neuronal que utiliza un enfoque de gamificación para facilitar a los pacientes la realización de los ejercicios de su tratamiento. Además, se ofrece una serie de funcionalidades al profesional de la salud para planificación y seguimiento del tratamiento. </description>
 	<properties>
 		<java.version>11</java.version>
+		<start-class>com.umr.agilmentecore.AgilmenteCoreApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -75,6 +76,11 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-resources-plugin</artifactId>
+			    <version>3.1.0</version>
 			</plugin>
 		</plugins>
 	</build>
