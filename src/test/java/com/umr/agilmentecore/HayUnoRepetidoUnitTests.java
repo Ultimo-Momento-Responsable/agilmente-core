@@ -43,7 +43,7 @@ public class HayUnoRepetidoUnitTests {
 	
 	@Test
 	public void testNewHayUnoRepetido() throws Exception {
-		assertThat(hayUnoRepeController.saveGame(hayUnoRepe)).isNotNull();
+		assertThat(hayUnoRepeController.save(hayUnoRepe)).isNotNull();
 	}
 	
 }

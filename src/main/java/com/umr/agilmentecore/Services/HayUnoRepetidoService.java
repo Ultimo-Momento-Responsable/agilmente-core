@@ -31,7 +31,7 @@ public class HayUnoRepetidoService {
 	 * @param g Un resultado de HayUnoRepetido
 	 * @return el resultado del juego guardado
 	 */
-	public HayUnoRepetido saveGame(HayUnoRepetido g) {
+	public HayUnoRepetido save(HayUnoRepetido g) {
 		
 		return repository.save(g);
 	}

@@ -28,7 +28,7 @@ public class CognitiveDomainService {
 	 * @param cd Un Dominio Cognitivo
 	 * @return el Dominio Cognitivo guardado
 	 */
-	public CognitiveDomain saveGame(CognitiveDomain cd) {
+	public CognitiveDomain save(CognitiveDomain cd) {
 		return repository.save(cd);
 	}
 }
