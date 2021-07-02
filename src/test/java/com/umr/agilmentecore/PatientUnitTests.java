@@ -13,15 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Controller.PatientController;
-import com.umr.agilmentecore.Persistence.PatientRepository;
 
 @SpringBootTest
 public class PatientUnitTests {
 	
 	@Autowired(required=true)
 	private PatientController patientController;
-	@Autowired(required=true)
-	private PatientRepository repository;
 	
 	private Patient p;
 	private Long id;
