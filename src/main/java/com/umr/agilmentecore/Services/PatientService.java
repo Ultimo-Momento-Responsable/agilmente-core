@@ -28,7 +28,7 @@ public class PatientService {
 	
 	/**
 	 * Guarda un paciente
-	 * @param g Un paciente
+	 * @param p Un paciente
 	 * @return el paciente guardado
 	 */
 	public Patient save(Patient p) {
