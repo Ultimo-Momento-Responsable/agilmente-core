@@ -32,6 +32,6 @@ public class CognitiveDomainUnitTests {
 	
 	@Test
 	public void testNewCognitiveDomain() throws Exception {
-		assertThat(cognitiveDomainController.saveGame(cognitiveDomain)).isNotNull();
+		assertThat(cognitiveDomainController.save(cognitiveDomain)).isNotNull();
 	}
 }

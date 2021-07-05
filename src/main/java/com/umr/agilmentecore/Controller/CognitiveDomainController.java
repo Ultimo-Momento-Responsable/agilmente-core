@@ -35,8 +35,8 @@ public class CognitiveDomainController {
 	 * @return el Dominio Cognitivo guardado
 	 */
 	@PostMapping
-	public CognitiveDomain saveGame(@RequestBody CognitiveDomain cd) {
+	public CognitiveDomain save(@RequestBody CognitiveDomain cd) {
 		
-		return service.saveGame(cd);
+		return service.save(cd);
 	}
 }

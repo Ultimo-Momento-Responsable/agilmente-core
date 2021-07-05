@@ -50,9 +50,9 @@ public class HayUnoRepetidoController {
 	 * @return el resultado del juego guardado
 	 */
 	@PostMapping
-	public HayUnoRepetido saveGame(@RequestBody HayUnoRepetido g) {
+	public HayUnoRepetido save(@RequestBody HayUnoRepetido g) {
 		
-		return service.saveGame(g);
+		return service.save(g);
 	}
 
 }
