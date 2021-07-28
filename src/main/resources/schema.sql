@@ -1,11 +1,11 @@
-/* SECUENCIA HIBERNATE */
+/* SECUENCIA HIBERNATE 
 DROP SEQUENCE IF EXISTS hibernate_sequence;
 
 CREATE SEQUENCE hibernate_sequence
 	START WITH 1
 	INCREMENT BY 1;
 
-/* TABLAS */
+/* TABLAS 
 DROP TABLE IF EXISTS hay_uno_repetido;
  
 CREATE TABLE hay_uno_repetido (
@@ -26,3 +26,4 @@ CREATE TABLE cognitive_domain (
 	name VARCHAR(128) NOT NULL,
 	PRIMARY KEY (id)
 );
+*/

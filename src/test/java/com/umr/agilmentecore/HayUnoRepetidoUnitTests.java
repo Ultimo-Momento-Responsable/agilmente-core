@@ -11,16 +11,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.umr.agilmentecore.Class.HayUnoRepetido;
-import com.umr.agilmentecore.Controller.HayUnoRepetidoController;
+import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Controller.HayUnoRepetidoSessionController;
 
 @SpringBootTest
 public class HayUnoRepetidoUnitTests {
 	
 	@Autowired(required=true)
-	private HayUnoRepetidoController hayUnoRepeController;
+	private HayUnoRepetidoSessionController hayUnoRepeController;
 	
-	private HayUnoRepetido hayUnoRepe;
+	private HayUnoRepetidoSession hayUnoRepe;
 	
 	
 	@BeforeEach
@@ -31,7 +31,7 @@ public class HayUnoRepetidoUnitTests {
 		
 		String sDT="11-06-2021 11:55:27";  
 	    Date dT= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(sDT);  
-		hayUnoRepe = new HayUnoRepetido();
+		hayUnoRepe = new HayUnoRepetidoSession();
 		hayUnoRepe.setName("Hay Uno Repetido");
 		hayUnoRepe.setTotalTime((float)3.054781);
 		hayUnoRepe.setMistakes(1);

@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.umr.agilmentecore.Class.HayUnoRepetido;
-import com.umr.agilmentecore.Services.HayUnoRepetidoService;
+import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Services.HayUnoRepetidoSessionService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/hay-uno-repetido")
-public class HayUnoRepetidoController {
+public class HayUnoRepetidoSessionController {
 
 	@Autowired
-	private HayUnoRepetidoService service;
+	private HayUnoRepetidoSessionService service;
 	
 	/**
 	 *  Obtiene todos los resultados de HayUnoRepetido
@@ -30,7 +30,7 @@ public class HayUnoRepetidoController {
 	 * @return Una página de resultados
 	 */
 	@GetMapping
-	public Page<HayUnoRepetido> getAll(Pageable page) {
+	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
 		return service.getAll(page);
 	}
 	
@@ -40,7 +40,7 @@ public class HayUnoRepetidoController {
 	 * @return Optional un resultado de un juego o nada.
 	 */
 	@GetMapping(value = "/{id}")
-	public Optional<HayUnoRepetido> getOne(@PathVariable(name = "id") Long id) {
+	public Optional<HayUnoRepetidoSession> getOne(@PathVariable(name = "id") Long id) {
 		return service.getOne(id);
 	}
 	
@@ -50,7 +50,7 @@ public class HayUnoRepetidoController {
 	 * @return el resultado del juego guardado
 	 */
 	@PostMapping
-	public HayUnoRepetido save(@RequestBody HayUnoRepetido g) {
+	public HayUnoRepetidoSession save(@RequestBody HayUnoRepetidoSession g) {
 		
 		return service.save(g);
 	}

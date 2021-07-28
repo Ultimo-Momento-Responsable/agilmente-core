@@ -7,22 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.umr.agilmentecore.Class.HayUnoRepetido;
-import com.umr.agilmentecore.Persistence.HayUnoRepetidoRepository;
+import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
 
 
 @Service
-public class HayUnoRepetidoService {
+public class HayUnoRepetidoSessionService {
 	
 	@Autowired
-	private HayUnoRepetidoRepository repository;
+	private HayUnoRepetidoSessionRepository repository;
 	
 	/**
 	 *  Obtiene todos los resultados de HayUnoRepetido
 	 * @param page Contiene las opciones de paginación
 	 * @return Una página de resultados
 	 */
-	public Page<HayUnoRepetido> getAll(Pageable page) {
+	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
 		return repository.findAllByOrderByDateTimeDesc(page);
 	}
 	
@@ -31,7 +31,7 @@ public class HayUnoRepetidoService {
 	 * @param g Un resultado de HayUnoRepetido
 	 * @return el resultado del juego guardado
 	 */
-	public HayUnoRepetido save(HayUnoRepetido g) {
+	public HayUnoRepetidoSession save(HayUnoRepetidoSession g) {
 		
 		return repository.save(g);
 	}
@@ -41,7 +41,7 @@ public class HayUnoRepetidoService {
 	 * @param Long el id del juego específico
 	 * @return Optional un resultado de un juego o nada.
 	 */
-	public Optional<HayUnoRepetido> getOne(Long id) {
+	public Optional<HayUnoRepetidoSession> getOne(Long id) {
 		return repository.findById(id);
 	}
 	
