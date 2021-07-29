@@ -1,15 +1,12 @@
 package com.umr.agilmentecore.Class;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
-import com.umr.agilmentecore.Interfaces.IParam;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,12 +26,39 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private MaximumTime maximumTime;
 	@Column(name = "results")
 	@OneToMany
-	private List<Result> results;
+	private List<HayUnoMasResult> results;
 	@ManyToOne
 	private Game game;
 	
 	@Override
 	public String toString() {
 		return "";
+	}
+	
+	@Override
+	public void addParam(String type, String value) {
+		if (this.isMaximumTimeParam(type) && this.canAddMaximumTimeParam()) {
+			this.maximumTime = new MaximumTime();
+			this.maximumTime.setValue(value);
+		} else if(this.isFigureQuantityParam(type) && this.canAddFigureQuantityParam()) {
+			this.figureQuantity = new FigureQuantity();
+			this.figureQuantity.setValue(value);
+		}
+	}
+	
+	private boolean isMaximumTimeParam(String type) {
+		return type.equals("MaximumTime");
+	}
+	
+	private boolean isFigureQuantityParam(String type) {
+		return type.equals("FigureQuantity");
+	}
+	
+	private boolean canAddFigureQuantityParam() {
+		return this.figureQuantity == null && this.maximumTime != null;
+	}
+	
+	private boolean canAddMaximumTimeParam() {
+		return this.figureQuantity != null && this.maximumTime == null;
 	}
 }

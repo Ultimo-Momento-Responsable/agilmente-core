@@ -32,7 +32,6 @@ public class HayUnoRepetidoSessionService {
 	 * @return el resultado del juego guardado
 	 */
 	public HayUnoRepetidoSession save(HayUnoRepetidoSession g) {
-		
 		return repository.save(g);
 	}
 	
