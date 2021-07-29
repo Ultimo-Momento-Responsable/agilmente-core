@@ -37,12 +37,21 @@ public class PatientService {
 	}
 	
 	/**
-	 *  Obtiene un paciente
+	 *  Obtiene un paciente por el id
 	 * @param Long el id del paciente específico
 	 * @return Optional un paciente o nada.
 	 */
 	public Optional<Patient> getOne(Long id) {
 		return repository.findById(id);
+	}
+	
+	/**
+	 *  Obtiene un paciente por el loginCode
+	 * @param String el código de Logueo del paciente específico
+	 * @return Optional un paciente o nada.
+	 */
+	public Optional<Patient> getOneByLoginCode(String loginCode) {
+		return repository.findByLoginCode(loginCode);
 	}
 	
 	/**
