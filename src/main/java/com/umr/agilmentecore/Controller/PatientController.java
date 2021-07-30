@@ -36,13 +36,23 @@ public class PatientController {
 	}
 	
 	/**
-	 *  Obtiene un Paciente
+	 *  Obtiene un Paciente por su id
 	 * @param Long el id del paciente específico
 	 * @return Optional un paciente o nada.
 	 */
 	@GetMapping(value = "/{id}")
 	public Optional<Patient> getOne(@PathVariable(name = "id") Long id) {
 		return service.getOne(id);
+	}
+	
+	/**
+	 *  Obtiene un Paciente por su loginCode
+	 * @param String el Login Code del paciente específico
+	 * @return Optional un paciente o nada.
+	 */
+	@GetMapping(value = "/lc{loginCode}")
+	public Optional<Patient> getOne(@PathVariable(name = "loginCode") String loginCode) {
+		return service.getOneByLoginCode(loginCode);
 	}
 	
 	/**
