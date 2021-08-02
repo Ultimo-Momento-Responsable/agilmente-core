@@ -9,6 +9,5 @@ import com.umr.agilmentecore.Class.CognitiveDomain;
 
 @Repository
 public interface CognitiveDomainRepository extends JpaRepository<CognitiveDomain, Integer>{
-
 	Page<CognitiveDomain> findAll(Pageable page);
 }

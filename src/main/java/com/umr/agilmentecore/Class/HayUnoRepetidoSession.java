@@ -19,14 +19,14 @@ public class HayUnoRepetidoSession implements IGameSession {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private long id;
-	@OneToOne
+	private Long id;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private FigureQuantity figureQuantity;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@Column(name = "results")
 	@OneToMany
-	private List<HayUnoMasResult> results;
+	private List<HayUnoRepetidoResult> results;
 	@ManyToOne
 	private Game game;
 	
@@ -35,30 +35,60 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return "";
 	}
 	
+	/**
+	 * Agrega un parámetro a la sesión.
+	 * @param type Puede ser:
+	 *   - "MaximumTime": Límite de tiempo para la sesión.
+	 *   - "FigureQuantity": Límite de figuras para la sesión.
+	 * "FigureQuantity" y "MaximumTime" son mutuamente exclueyentes. 
+	 * @param value Valor del parámetro.
+	 * @throws Exception Si type no es uno de los valores listados.
+	 */
 	@Override
-	public void addParam(String type, String value) {
-		if (this.isMaximumTimeParam(type) && this.canAddMaximumTimeParam()) {
-			this.maximumTime = new MaximumTime();
-			this.maximumTime.setValue(value);
-		} else if(this.isFigureQuantityParam(type) && this.canAddFigureQuantityParam()) {
-			this.figureQuantity = new FigureQuantity();
-			this.figureQuantity.setValue(value);
+	public void addParam(String type, String value) throws Exception {
+		if (this.canAddEndConditionParam()) {
+			if (this.isMaximumTimeParam(type)) {
+				this.maximumTime = new MaximumTime();
+				this.maximumTime.setValue(value);
+			} else if(this.isFigureQuantityParam(type)) {
+				this.figureQuantity = new FigureQuantity();
+				try {
+					this.figureQuantity.setValue(value);
+				} catch(Exception e) {
+					System.out.println(e);
+				}
+			} 
+		} else {
+			throw new Exception("Invalid parammeter for " + this.game.getName() + ": " + type);
 		}
+
 	}
 	
+	/**
+	 * Verifica si el tipo de parámetro es "MaximumTime".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "MaximumTime".
+	 */
 	private boolean isMaximumTimeParam(String type) {
 		return type.equals("MaximumTime");
 	}
 	
+	/**
+	 * Verifica si el tipo de parámetro es "FigureQuantity".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "FigureQuantity".
+	 */
 	private boolean isFigureQuantityParam(String type) {
 		return type.equals("FigureQuantity");
 	}
 	
-	private boolean canAddFigureQuantityParam() {
-		return this.figureQuantity == null && this.maximumTime != null;
-	}
-	
-	private boolean canAddMaximumTimeParam() {
-		return this.figureQuantity != null && this.maximumTime == null;
+	/**
+	 * Verifica si se puede añadir un parámetro "FigureQuantity" o
+	 * "MaximumTime".
+	 * No tiene que existir un valor anterior para ninguna de las dos.
+	 * @return Verdadero si puede añadir una condición de parada.
+	 */
+	private boolean canAddEndConditionParam() {
+		return (this.figureQuantity == null) && (this.maximumTime == null);
 	}
 }

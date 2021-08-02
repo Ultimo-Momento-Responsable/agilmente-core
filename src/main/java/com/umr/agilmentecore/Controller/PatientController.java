@@ -52,7 +52,6 @@ public class PatientController {
 	 */
 	@PostMapping
 	public Patient save(@RequestBody Patient p) {
-		
 		return service.save(p);
 	}
 

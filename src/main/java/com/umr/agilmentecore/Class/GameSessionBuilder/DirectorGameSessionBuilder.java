@@ -1,7 +1,7 @@
 package com.umr.agilmentecore.Class.GameSessionBuilder;
 
 import java.util.Date;
-import java.util.Dictionary;
+import java.util.Map;
 
 import com.umr.agilmentecore.Class.Game;
 
@@ -20,8 +20,19 @@ public class DirectorGameSessionBuilder {
 		this.builder = builder;
 	}
 	
-	public void build(Game game, Date creationDatetime, Dictionary<String, String> params) {
-		this.builder.buildProduct(game, creationDatetime);
-		this.builder.buildParams(params);
+	/**
+	 * Método principal que inicia la construcción de 
+	 * una sesión de juegos.
+	 * @param game Tipo de juego.
+	 * @param creationDatetime Fecha de creación de la sesión.
+	 * @param params Diccionario con los parámetros del juego.
+	 */
+	public void build(Game game, Map<String, String> params) {
+		this.builder.buildProduct(game);
+		try {
+			this.builder.buildParams(params);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }

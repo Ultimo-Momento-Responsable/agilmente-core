@@ -29,10 +29,10 @@ public class HayUnoRepetidoSessionController {
 	 * @param page Contiene las opciones de paginación
 	 * @return Una página de resultados
 	 */
-	@GetMapping
-	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
-		return service.getAll(page);
-	}
+//	@GetMapping
+//	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
+//		return service.getAll(page);
+//	}
 	
 	/**
 	 *  Obtiene un resultado de HayUnoRepetido

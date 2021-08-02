@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "hay_uno_mas_result")
-public class HayUnoMasResult {
+public class HayUnoRepetidoResult {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

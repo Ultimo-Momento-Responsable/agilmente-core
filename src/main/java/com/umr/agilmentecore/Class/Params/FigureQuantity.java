@@ -29,8 +29,14 @@ public class FigureQuantity implements IParam {
 	}
 	
 	@Override
-	public void setValue(String value) {
-		this.figureQuantity = Integer.parseInt(value);
+	public void setValue(String value) throws Exception {
+		int parsed  = Integer.parseInt(value);
+		
+		if(parsed > 20) {
+			throw new Exception("FigureQuantity can't be greater than 20.");
+		}
+		
+		this.figureQuantity = parsed;
 	}
 	
 	@Override
