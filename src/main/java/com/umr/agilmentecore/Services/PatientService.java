@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Services;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,14 @@ public class PatientService {
 	 */
 	public Page<Patient> getAll(Pageable page) {
 		return repository.findAll(page);
+	}
+	
+	/**
+	 *  Obtiene todos los resultados de Pacientes
+	 * @return Una lista con todos los pacientes
+	 */
+	public ArrayList<Patient> getAllList() {
+		return repository.findAll();
 	}
 	
 	/**

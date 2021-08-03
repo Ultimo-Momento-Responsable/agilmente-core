@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,15 @@ public class PatientController {
 
 	@Autowired
 	private PatientService service;
+	
+	/**
+	 *  Obtiene todos los resultados de Pacientes
+	 * @return Una lista con todos los pacientes
+	 */
+	@GetMapping(value = "/listed")
+	public ArrayList<Patient> getAllList(Pageable page) {
+		return service.getAllList();
+	}
 	
 	/**
 	 *  Obtiene todos los pacientes
