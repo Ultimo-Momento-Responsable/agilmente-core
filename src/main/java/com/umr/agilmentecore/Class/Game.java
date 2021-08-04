@@ -27,4 +27,6 @@ public class Game {
 	private List<CognitiveDomain> cognitiveDomain;
 	@ManyToMany
 	private List<Param> param;
+	@ManyToMany
+	private List<Param> stopConditions;
 }
