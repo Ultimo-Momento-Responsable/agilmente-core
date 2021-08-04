@@ -1,6 +1,5 @@
 package com.umr.agilmentecore.Class.GameSessionBuilder;
 
-import java.util.Date;
 import java.util.Map;
 
 import com.umr.agilmentecore.Class.Game;
@@ -26,13 +25,10 @@ public class DirectorGameSessionBuilder {
 	 * @param game Tipo de juego.
 	 * @param creationDatetime Fecha de creación de la sesión.
 	 * @param params Diccionario con los parámetros del juego.
+	 * @throws Exception Si los parámetros son inválidos.
 	 */
-	public void build(Game game, Map<String, String> params) {
+	public void build(Game game, Map<String, String> params) throws Exception {
 		this.builder.buildProduct(game);
-		try {
-			this.builder.buildParams(params);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		this.builder.buildParams(params);
 	}
 }

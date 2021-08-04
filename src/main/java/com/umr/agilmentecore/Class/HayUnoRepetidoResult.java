@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "hay_uno_mas_result")
+@Table(name = "hay_uno_repetido_result")
 public class HayUnoRepetidoResult {
 	@Id
 	@GeneratedValue

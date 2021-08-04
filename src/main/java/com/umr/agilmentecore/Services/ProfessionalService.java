@@ -12,7 +12,12 @@ import com.umr.agilmentecore.Persistence.ProfessionalRepository;
 public class ProfessionalService {
 	@Autowired
 	private ProfessionalRepository repository;
-	
+
+	/**
+	 * Obtiene un profesional a partir del id.
+	 * @param id Id del profesional.
+	 * @return Instancia de Professional.
+	 */
 	public Optional<Professional> getOne(Long id) {
 		return this.repository.findById(id);
 	}

@@ -10,7 +10,7 @@ public interface IGameSessionBuilder {
 	/**
 	 * Construye los parámetros de la sesión de juego.
 	 * @param params Diccionario con los params.
-	 * @throws Exception Si se pasa un parámetro inválido.
+	 * @throws Exception Si los parámetros son inválidos.
 	 */
 	public void buildParams(Map<String, String> params) throws Exception;
 	

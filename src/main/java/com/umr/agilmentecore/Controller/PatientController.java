@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
+import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Services.PatientService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-
 	@Autowired
 	private PatientService service;
 	
 	/**
-	 *  Obtiene todos los pacientes
-	 * @param page Contiene las opciones de paginación
-	 * @return Una página de resultados
+	 * Obtiene todos los pacientes.
+	 * @param page Contiene las opciones de paginación.
+	 * @return Una página de resultados.
 	 */
 	@GetMapping
 	public Page<Patient> getAll(Pageable page) {
@@ -36,8 +37,8 @@ public class PatientController {
 	}
 	
 	/**
-	 *  Obtiene un Paciente
-	 * @param Long el id del paciente específico
+	 * Obtiene un Paciente.
+	 * @param Long el id del paciente específico.
 	 * @return Optional un paciente o nada.
 	 */
 	@GetMapping(value = "/{id}")
@@ -46,9 +47,19 @@ public class PatientController {
 	}
 	
 	/**
-	 * Guarda un paciente
-	 * @param p Un paciente
-	 * @return el paciente guardado
+	 * Obtiene la lista de Planning activas de un paciente.
+	 * @param Long el id del paciente específico.
+	 * @return List<Planning> un paciente o nada.
+	 */
+	@GetMapping(value = "/{id}/current-plannings")
+	public List<Planning> getCurrentActivePlannings(@PathVariable(name = "id") Long id) throws Exception {
+		return this.service.getCurrentPlanningsFromPatientId(id);
+	}
+	
+	/**
+	 * Guarda un paciente.
+	 * @param p Un paciente.
+	 * @return el paciente guardado.
 	 */
 	@PostMapping
 	public Patient save(@RequestBody Patient p) {
@@ -56,8 +67,8 @@ public class PatientController {
 	}
 
 	/**
-	 *  Actualiza un paciente
-	 * @param p El paciente que se actualizará
+	 * Actualiza un paciente.
+	 * @param p El paciente que se actualizará.
 	 * @return El paciente guardado.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -66,8 +77,8 @@ public class PatientController {
 	}
 	
 	/**
-	 *  Elimina un paciente
-	 * @param id Long el id del paciente a eliminar
+	 * Elimina un paciente.
+	 * @param id Long el id del paciente a eliminar.
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(name = "id") Long id) {

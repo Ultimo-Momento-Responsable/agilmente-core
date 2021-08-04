@@ -18,15 +18,6 @@ public class HayUnoRepetidoSessionService {
 	private HayUnoRepetidoSessionRepository repository;
 	
 	/**
-	 *  Obtiene todos los resultados de HayUnoRepetido
-	 * @param page Contiene las opciones de paginación
-	 * @return Una página de resultados
-	 */
-//	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
-//		return repository.findAllByOrderByDateTimeDesc(page);
-//	}
-	
-	/**
 	 * Guarda un resultado de Hay uno Repetido
 	 * @param g Un resultado de HayUnoRepetido
 	 * @return el resultado del juego guardado

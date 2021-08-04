@@ -1,11 +1,11 @@
 package com.umr.agilmentecore.Class.IntermediateClasses;
 
-import java.util.List;
+import java.util.Map;
 
 public class GameData {
 	private Integer gameId;
 	private Integer maxNumberOfSessions;
-	private List<ParamData> params;
+	private Map<String, String> params;
 	
 	public Integer getGameId() {
 		return this.gameId;
@@ -15,7 +15,7 @@ public class GameData {
 		return this.maxNumberOfSessions;
 	}
 	
-	public List<ParamData> getParams() {
+	public Map<String, String> getParams() {
 		return this.params;
 	}
 }

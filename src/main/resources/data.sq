@@ -1,6 +1,0 @@
-INSERT INTO game (id, name) VALUES (0, 'HayUnoRepetido');
-INSERT INTO cognitive_domain (id, name) VALUES (0, 'Procesos Atencionales');
-INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (0, 0);
-
-INSERT INTO patient (id, born_date, city, description, first_name, last_name) VALUES (0, '1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez');
-INSERT INTO professional (id, first_name, last_name) VALUES (0, 'Jorgelina', 'Cordero');

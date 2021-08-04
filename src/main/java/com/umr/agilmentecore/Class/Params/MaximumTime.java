@@ -20,19 +20,19 @@ public class MaximumTime implements IParam {
 	@GeneratedValue
 	@Column(name = "id")
 	private long id;
-	@Column(name = "total_time")
-	private float totalTime;
-	
+	@Column(name = "maximum_time")
+	private float maximumTime;
+
 	@Override
 	public String getValue() {
-		return Float.toString(this.totalTime);
+		return Float.toString(this.maximumTime);
 	}
-	
+
 	@Override
 	public void setValue(String value) {
-		this.totalTime = Float.parseFloat(value);
+		this.maximumTime = Float.parseFloat(value);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getValue();

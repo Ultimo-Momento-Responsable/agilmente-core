@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.umr.agilmentecore.Interfaces.IGameSession;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +28,15 @@ public class PlanningDetail {
 	private HayUnoRepetidoSession hayUnoRepetidoSession;
 	@Column(name = "max_number_of_sessions")
 	private int maxNumberOfSessions;
+	
+	public PlanningDetail(IGameSession gameSession, Integer maxNumberOfSessions) {
+		this.setMaxNumberOfSessions(maxNumberOfSessions);
+		this.setGameSession(gameSession);
+	}
+	
+	public void setGameSession(IGameSession gameSession) {
+		if(gameSession instanceof HayUnoRepetidoSession) {
+			this.setHayUnoRepetidoSession((HayUnoRepetidoSession) gameSession);
+		}
+	}
 }

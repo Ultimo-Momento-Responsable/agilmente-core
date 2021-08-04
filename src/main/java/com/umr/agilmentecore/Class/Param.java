@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "game")
-public class Game {
+@Table(name = "param")
+public class Param {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private Integer id;
 	@Column(name = "name")
 	private String name;
-	@ManyToMany
-	private List<CognitiveDomain> cognitiveDomain;
-	@ManyToMany
-	private List<Param> param;
+	@Column(name = "class_name")
+	private String className;
+	@Column(name = "type")
+	private Integer type;
 }

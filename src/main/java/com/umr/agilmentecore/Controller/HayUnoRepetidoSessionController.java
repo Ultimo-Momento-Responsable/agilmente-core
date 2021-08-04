@@ -25,16 +25,6 @@ public class HayUnoRepetidoSessionController {
 	private HayUnoRepetidoSessionService service;
 	
 	/**
-	 *  Obtiene todos los resultados de HayUnoRepetido
-	 * @param page Contiene las opciones de paginación
-	 * @return Una página de resultados
-	 */
-//	@GetMapping
-//	public Page<HayUnoRepetidoSession> getAll(Pageable page) {
-//		return service.getAll(page);
-//	}
-	
-	/**
 	 *  Obtiene un resultado de HayUnoRepetido
 	 * @param Long el id del juego específico
 	 * @return Optional un resultado de un juego o nada.
@@ -51,7 +41,6 @@ public class HayUnoRepetidoSessionController {
 	 */
 	@PostMapping
 	public HayUnoRepetidoSession save(@RequestBody HayUnoRepetidoSession g) {
-		
 		return service.save(g);
 	}
 

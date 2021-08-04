@@ -42,7 +42,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 *   - "FigureQuantity": Límite de figuras para la sesión.
 	 * "FigureQuantity" y "MaximumTime" son mutuamente exclueyentes. 
 	 * @param value Valor del parámetro.
-	 * @throws Exception Si type no es uno de los valores listados.
 	 */
 	@Override
 	public void addParam(String type, String value) throws Exception {
@@ -52,16 +51,9 @@ public class HayUnoRepetidoSession implements IGameSession {
 				this.maximumTime.setValue(value);
 			} else if(this.isFigureQuantityParam(type)) {
 				this.figureQuantity = new FigureQuantity();
-				try {
-					this.figureQuantity.setValue(value);
-				} catch(Exception e) {
-					System.out.println(e);
-				}
+				this.figureQuantity.setValue(value);
 			} 
-		} else {
-			throw new Exception("Invalid parammeter for " + this.game.getName() + ": " + type);
 		}
-
 	}
 	
 	/**

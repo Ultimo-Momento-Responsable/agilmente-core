@@ -37,7 +37,7 @@ public class PlanningController {
 	 * @return Una instancia de planificación.
 	 */
 	@PostMapping
-	public Planning save(@RequestBody PlanningData planning) {
+	public Planning save(@RequestBody PlanningData planning) throws Exception {
 		return this.service.save(planning);
 	}
 }

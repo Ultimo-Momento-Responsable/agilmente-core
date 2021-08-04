@@ -3,6 +3,7 @@ package com.umr.agilmentecore.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.umr.agilmentecore.Class.CognitiveDomain;
 import com.umr.agilmentecore.Services.CognitiveDomainService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/cognitive-domain")
 public class CognitiveDomainController {
@@ -36,7 +38,6 @@ public class CognitiveDomainController {
 	 */
 	@PostMapping
 	public CognitiveDomain save(@RequestBody CognitiveDomain cd) {
-		
 		return service.save(cd);
 	}
 }

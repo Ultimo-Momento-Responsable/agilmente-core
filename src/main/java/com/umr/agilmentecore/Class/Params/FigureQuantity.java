@@ -32,15 +32,24 @@ public class FigureQuantity implements IParam {
 	public void setValue(String value) throws Exception {
 		int parsed  = Integer.parseInt(value);
 		
-		if(parsed > 20) {
-			throw new Exception("FigureQuantity can't be greater than 20.");
+		if (this.checkIfValid(parsed)) {
+			this.figureQuantity = parsed;
+		} else {
+			throw new Exception("FigureQuantity parameter can't be greater than 20.");
 		}
-		
-		this.figureQuantity = parsed;
 	}
 	
 	@Override
 	public String toString() {
 		return this.getValue();
+	}
+	
+	/**
+	 * Verifica si el valor ingresado es válido.
+	 * @param value Cantidad de figuras.
+	 * @return Verdadero si es menor o igual a 20.
+	 */
+	private boolean checkIfValid(int value) {
+		return value <= 20;
 	}
 }
