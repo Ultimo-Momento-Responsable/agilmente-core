@@ -1,8 +1,5 @@
 package com.umr.agilmentecore.Class.GameSessionBuilder;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,7 +8,6 @@ import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
-import com.umr.agilmentecore.Interfaces.IParam;
 
 public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder{
 	private FigureQuantity figureQuantity;

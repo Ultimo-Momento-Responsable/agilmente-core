@@ -3,8 +3,6 @@ package com.umr.agilmentecore.Controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +18,6 @@ import com.umr.agilmentecore.Services.HayUnoRepetidoSessionService;
 @RestController
 @RequestMapping("/hay-uno-repetido")
 public class HayUnoRepetidoSessionController {
-
 	@Autowired
 	private HayUnoRepetidoSessionService service;
 	
@@ -43,5 +40,4 @@ public class HayUnoRepetidoSessionController {
 	public HayUnoRepetidoSession save(@RequestBody HayUnoRepetidoSession g) {
 		return service.save(g);
 	}
-
 }
