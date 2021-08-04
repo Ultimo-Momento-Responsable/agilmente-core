@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
-import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;

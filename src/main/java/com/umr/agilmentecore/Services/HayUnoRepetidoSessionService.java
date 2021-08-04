@@ -3,17 +3,13 @@ package com.umr.agilmentecore.Services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
 
-
 @Service
 public class HayUnoRepetidoSessionService {
-	
 	@Autowired
 	private HayUnoRepetidoSessionRepository repository;
 	
