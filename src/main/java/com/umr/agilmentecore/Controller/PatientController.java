@@ -27,9 +27,18 @@ public class PatientController {
 	private PatientService service;
 	
 	/**
+	 * Obtiene todos los resultados de Pacientes.
+	 * @return Una lista con todos los pacientes.
+	 */
+	@GetMapping(value = "/listed")
+	public List<Patient> getAllList(Pageable page) {
+		return service.getAllList();
+	}
+	
+	/**
 	 * Obtiene todos los pacientes.
 	 * @param page Contiene las opciones de paginación.
-	 * @return Una página de resultados.
+	 * @return Page<Patient> Una página de resultados.
 	 */
 	@GetMapping
 	public Page<Patient> getAll(Pageable page) {
@@ -57,9 +66,19 @@ public class PatientController {
 	}
 	
 	/**
+	 * Obtiene un Paciente por su loginCode.
+	 * @param value El Login Code del paciente específico.
+	 * @return Optional un paciente o nada.
+	 */
+	@GetMapping(value = "/lc{loginCode}")
+	public Optional<Patient> getOne(@PathVariable(name = "loginCode") String loginCode) {
+		return service.getOneByLoginCode(loginCode);
+	}
+	
+	/**
 	 * Guarda un paciente.
 	 * @param p Un paciente.
-	 * @return el paciente guardado.
+	 * @return Patient El paciente guardado.
 	 */
 	@PostMapping
 	public Patient save(@RequestBody Patient p) {
