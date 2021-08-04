@@ -9,5 +9,4 @@ public class AgilmenteCoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AgilmenteCoreApplication.class, args);
 	}
-
 }
