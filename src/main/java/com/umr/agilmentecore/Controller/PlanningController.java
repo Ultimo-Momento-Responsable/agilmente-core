@@ -10,34 +10,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.umr.agilmentecore.Class.CognitiveDomain;
-import com.umr.agilmentecore.Services.CognitiveDomainService;
+import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
+import com.umr.agilmentecore.Services.PlanningService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/cognitive-domain")
-public class CognitiveDomainController {
-
+@RequestMapping("/planning")
+public class PlanningController {
 	@Autowired
-	private CognitiveDomainService service;
+	private PlanningService service;
 	
 	/**
-	 *  Obtiene todos los resultados de los Dominios Cognitivos
-	 * @param page Contiene las opciones de paginación
-	 * @return Una página de resultados
+	 * Obtiene todas las planificaciones paginadas.
+	 * @param page Opciones de paginación.
+	 * @return Página de planificaciones.
 	 */
 	@GetMapping
-	public Page<CognitiveDomain> getAll(Pageable page) {
+	public Page<Planning> getAll(Pageable page) {
 		return service.getAll(page);
 	}
 	
 	/**
-	 * Guarda un Dominio Cognitivo
-	 * @param cd Un Dominio Cognitivo
-	 * @return el Dominio Cognitivo guardado
+	 * Crea una planificación.
+	 * @param planning Datos de la planificación.
+	 * @return Una instancia de planificación.
 	 */
 	@PostMapping
-	public CognitiveDomain save(@RequestBody CognitiveDomain cd) {
-		return service.save(cd);
+	public Planning save(@RequestBody PlanningData planning) throws Exception {
+		return this.service.save(planning);
 	}
 }
