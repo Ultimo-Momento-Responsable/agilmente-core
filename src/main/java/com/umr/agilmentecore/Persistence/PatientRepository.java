@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Persistence;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -15,4 +16,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	Page<Patient> findAll(Pageable page);
 	Optional<Patient> findById(Long id);
 	Optional<Patient> findByLoginCode(String loginCode);
+	ArrayList<Patient> findAll();
 }
