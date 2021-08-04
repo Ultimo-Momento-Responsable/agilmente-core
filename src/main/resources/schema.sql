@@ -54,6 +54,8 @@ CREATE TABLE patient (
 	description VARCHAR(255),
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
+	is_logged BOOLEAN,
+	login_code VARCHAR(255),
 	PRIMARY KEY (id)
 );
 
@@ -115,4 +117,21 @@ CREATE TABLE planning_detail (
 	PRIMARY KEY (id),
 	FOREIGN KEY (hay_uno_repetido_session_id) REFERENCES hay_uno_repetido_session(id),
 	FOREIGN KEY (planning_id) REFERENCES planning(id)	
+);
+
+DROP TABLE IF EXISTS param;
+CREATE TABLE param (
+	id BIGINT NOT NULL,
+	name VARCHAR(255),
+	class_name VARCHAR(255),
+	type INT,
+	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS param;
+CREATE TABLE game_param (
+	game_id BIGINT NOT NULL,
+	param_id BIGINT NOT NULL,
+	FOREIGN KEY (game_id) REFERENCES game(id),
+	FOREIGN KEY (param_id) REFERENCES param(id)
 );
