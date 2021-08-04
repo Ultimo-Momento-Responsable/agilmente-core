@@ -9,9 +9,7 @@ import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 
-public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder{
-	private FigureQuantity figureQuantity;
-	private MaximumTime maximumTime;
+public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
 	private HayUnoRepetidoSession gameSession;
 	
 	/**
