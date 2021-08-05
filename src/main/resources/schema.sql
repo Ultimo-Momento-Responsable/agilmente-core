@@ -128,7 +128,7 @@ CREATE TABLE param (
 	PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS param;
+DROP TABLE IF EXISTS game_param;
 CREATE TABLE game_param (
 	game_id BIGINT NOT NULL,
 	param_id BIGINT NOT NULL,
