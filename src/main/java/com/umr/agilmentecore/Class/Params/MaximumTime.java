@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "maximum_time")
 public class MaximumTime implements IParam {
+	
+	private static int MIN_VALUE = 1;
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -36,5 +38,14 @@ public class MaximumTime implements IParam {
 	@Override
 	public String toString() {
 		return this.getValue();
+	}
+	
+	/**
+	 * Verifica si el valor ingresado es válido.
+	 * @param value Tiempo.
+	 * @return Verdadero si es mayor o igual a 1.
+	 */
+	private boolean checkIfValid(int value) {
+		return (value >= MIN_VALUE);
 	}
 }

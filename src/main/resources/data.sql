@@ -1,5 +1,5 @@
-INSERT INTO param (id, name, class_name, type) VALUES (hibernate_sequence.nextval,'Cantidad de Figuras', 'FigureQuantity',0);
-INSERT INTO param (id, name, class_name, type) VALUES (hibernate_sequence.nextval,'Tiempo Máximo', 'MaximumTime',0);
+INSERT INTO param (id, name, class_name, type, max_value, min_value) VALUES (hibernate_sequence.nextval,'Cantidad de Figuras', 'FigureQuantity',0, 20, 3);
+INSERT INTO param (id, name, class_name, type, max_value, min_value) VALUES (hibernate_sequence.nextval,'Tiempo Máximo', 'MaximumTime', 0, -1, 1);
 INSERT INTO game (id, name) VALUES (hibernate_sequence.nextval, 'Encuentra al Repetido');
 INSERT INTO game_param (game_id, param_id) VALUES (3, 1);
 INSERT INTO game_param (game_id, param_id) VALUES (3, 2);
