@@ -22,6 +22,8 @@ public class FigureQuantity implements IParam {
 	private long id;
 	@Column(name = "figure_quantity")
 	private int figureQuantity;
+	private static int MAX_VALUE = 20;
+	private static int MIN_VALUE = 3;
 	
 	@Override
 	public String getValue() {
@@ -35,7 +37,7 @@ public class FigureQuantity implements IParam {
 		if (this.checkIfValid(parsed)) {
 			this.figureQuantity = parsed;
 		} else {
-			throw new Exception("FigureQuantity parameter can't be greater than 20.");
+			throw new Exception("FigureQuantity parameter can't be greater than " + MAX_VALUE + ".");
 		}
 	}
 	
@@ -47,9 +49,9 @@ public class FigureQuantity implements IParam {
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.
-	 * @return Verdadero si es menor o igual a 20.
+	 * @return Verdadero si es menor o igual a 20 y si es mayor o igual a 1.
 	 */
 	private boolean checkIfValid(int value) {
-		return value <= 20;
+		return (value <= MAX_VALUE && value >= MIN_VALUE);
 	}
 }
