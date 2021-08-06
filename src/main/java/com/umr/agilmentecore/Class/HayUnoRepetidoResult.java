@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,9 +20,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "hay_uno_repetido_result")
 public class HayUnoRepetidoResult {
 	@Id
-	@GeneratedValue
-	@Column(name = "id")
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	@Column(name = "complete_datetime")
 	private Date completeDatetime;
