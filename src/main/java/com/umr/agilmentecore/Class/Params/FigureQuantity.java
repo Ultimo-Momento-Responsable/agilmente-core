@@ -3,6 +3,7 @@ package com.umr.agilmentecore.Class.Params;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,8 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "figure_quantity")
 public class FigureQuantity implements IParam {
 	@Id
-	@GeneratedValue
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "figure_quantity")
 	private int figureQuantity;
