@@ -24,4 +24,8 @@ public class Param {
 	private String className;
 	@Column(name = "type")
 	private Integer type;
+	@Column(name = "max_value")
+	private Integer maxValue;
+	@Column(name = "min_value")
+	private Integer minValue;
 }

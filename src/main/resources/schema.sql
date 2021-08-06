@@ -125,6 +125,8 @@ CREATE TABLE param (
 	name VARCHAR(255),
 	class_name VARCHAR(255),
 	type INT,
+	max_value INT,
+	min_value INT,
 	PRIMARY KEY (id)
 );
 
