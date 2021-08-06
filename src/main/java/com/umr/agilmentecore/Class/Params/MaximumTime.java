@@ -31,7 +31,14 @@ public class MaximumTime implements IParam {
 	}
 
 	@Override
-	public void setValue(String value) {
+	public void setValue(String value) throws Exception {
+		int parsed  = Integer.parseInt(value);
+		
+		if (this.checkIfValid(parsed)) {
+			this.maximumTime = parsed;
+		} else {
+			throw new Exception("MaximumTime parameter can't be less than " + MIN_VALUE + ".");
+		}
 		this.maximumTime = Float.parseFloat(value);
 	}
 
