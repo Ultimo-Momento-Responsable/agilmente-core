@@ -8,28 +8,28 @@ CREATE SEQUENCE hibernate_sequence
 /* TABLAS */
 DROP TABLE IF EXISTS cognitive_domain;
 CREATE TABLE cognitive_domain (
-	id INTEGER NOT NULL,
+	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(128) NOT NULL,
 	PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS figure_quantity;
 CREATE TABLE figure_quantity (
-	id INTEGER NOT NULL,
+	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	figure_quantity INTEGER NOT NULL,
 	PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS game;
 CREATE TABLE game (
-	id INTEGER NOT NULL,
+	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(255),
 	PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS hay_uno_repetido_result;
 CREATE TABLE hay_uno_repetido_result (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	mistakes INTEGER,
 	successes INTEGER,
 	total_time NUMERIC,
@@ -41,14 +41,14 @@ CREATE TABLE hay_uno_repetido_result (
 
 DROP TABLE IF EXISTS maximum_time;
 CREATE TABLE maximum_time (
-	id INTEGER NOT NULL,
+	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	maximum_time INTEGER NOT NULL,
 	PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS patient;
 CREATE TABLE patient (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	born_date TIMESTAMP,
 	city VARCHAR(255),
 	description VARCHAR(255),
@@ -61,7 +61,7 @@ CREATE TABLE patient (
 
 DROP TABLE IF EXISTS professional;
 CREATE TABLE professional (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
 	PRIMARY KEY (id)
@@ -77,7 +77,7 @@ CREATE TABLE game_cognitive_domain (
 
 DROP TABLE IF EXISTS hay_uno_repetido_session;
 CREATE TABLE hay_uno_repetido_session (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	figure_quantity_id INTEGER,
 	game_id INTEGER NOT NULL,
 	maximum_time_id INTEGER,
@@ -97,7 +97,7 @@ CREATE TABLE hay_uno_repetido_session_results (
 
 DROP TABLE IF EXISTS planning;
 CREATE TABLE planning (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	creation_datetime TIMESTAMP,
 	due_date TIMESTAMP,
 	start_date TIMESTAMP,
@@ -110,7 +110,7 @@ CREATE TABLE planning (
 
 DROP TABLE IF EXISTS planning_detail;
 CREATE TABLE planning_detail (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	max_number_of_sessions INTEGER,
 	hay_uno_repetido_session_id BIGINT,
 	planning_id BIGINT,
@@ -121,7 +121,7 @@ CREATE TABLE planning_detail (
 
 DROP TABLE IF EXISTS param;
 CREATE TABLE param (
-	id BIGINT NOT NULL,
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(255),
 	class_name VARCHAR(255),
 	type INT,

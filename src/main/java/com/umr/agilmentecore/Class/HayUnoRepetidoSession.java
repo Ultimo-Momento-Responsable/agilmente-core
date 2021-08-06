@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "hay_uno_repetido_session")
 public class HayUnoRepetidoSession implements IGameSession {
 	@Id
-	@GeneratedValue
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private FigureQuantity figureQuantity;
