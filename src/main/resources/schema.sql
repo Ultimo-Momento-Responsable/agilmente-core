@@ -6,25 +6,25 @@ CREATE SEQUENCE hibernate_sequence
 	INCREMENT BY 1;
 
 /* TABLAS */
-DROP TABLE IF EXISTS cognitive_domain;
+DROP TABLE IF EXISTS cognitive_domain CASCADE;
 CREATE TABLE cognitive_domain (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(128) NOT NULL
 );
 
-DROP TABLE IF EXISTS figure_quantity;
+DROP TABLE IF EXISTS figure_quantity CASCADE;
 CREATE TABLE figure_quantity (
 	id SERIAL NOT NULL PRIMARY KEY,
 	figure_quantity INTEGER NOT NULL
 );
 
-DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS game CASCADE;
 CREATE TABLE game (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS hay_uno_repetido_result;
+DROP TABLE IF EXISTS hay_uno_repetido_result CASCADE;
 CREATE TABLE hay_uno_repetido_result (
 	id SERIAL NOT NULL PRIMARY KEY,
 	mistakes INTEGER,
@@ -35,13 +35,13 @@ CREATE TABLE hay_uno_repetido_result (
 	canceled BOOLEAN
 );
 
-DROP TABLE IF EXISTS maximum_time;
+DROP TABLE IF EXISTS maximum_time CASCADE;
 CREATE TABLE maximum_time (
 	id SERIAL NOT NULL PRIMARY KEY,
 	maximum_time INTEGER NOT NULL
 );
 
-DROP TABLE IF EXISTS patient;
+DROP TABLE IF EXISTS patient CASCADE;
 CREATE TABLE patient (
 	id SERIAL NOT NULL PRIMARY KEY,
 	born_date TIMESTAMP,
@@ -53,14 +53,14 @@ CREATE TABLE patient (
 	login_code VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS professional;
+DROP TABLE IF EXISTS professional CASCADE;
 CREATE TABLE professional (
 	id SERIAL NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255),
 	last_name VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS game_cognitive_domain;
+DROP TABLE IF EXISTS game_cognitive_domain CASCADE;
 CREATE TABLE game_cognitive_domain (
 	game_id INTEGER NOT NULL,
 	cognitive_domain_id INTEGER NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE game_cognitive_domain (
 	FOREIGN KEY (cognitive_domain_id) REFERENCES cognitive_domain(id)
 );
 
-DROP TABLE IF EXISTS hay_uno_repetido_session;
+DROP TABLE IF EXISTS hay_uno_repetido_session CASCADE; 
 CREATE TABLE hay_uno_repetido_session (
 	id SERIAL NOT NULL PRIMARY KEY,
 	figure_quantity_id INTEGER,
@@ -79,7 +79,7 @@ CREATE TABLE hay_uno_repetido_session (
 	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id)
 );
 
-DROP TABLE IF EXISTS hay_uno_repetido_session_results;
+DROP TABLE IF EXISTS hay_uno_repetido_session_results CASCADE;
 CREATE TABLE hay_uno_repetido_session_results (
 	hay_uno_repetido_session_id BIGINT NOT NULL,
 	results_id BIGINT NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE hay_uno_repetido_session_results (
 	FOREIGN KEY (results_id) REFERENCES hay_uno_repetido_result(id)
 );
 
-DROP TABLE IF EXISTS planning;
+DROP TABLE IF EXISTS planning CASCADE;
 CREATE TABLE planning (
 	id SERIAL NOT NULL PRIMARY KEY,
 	creation_datetime TIMESTAMP,
@@ -99,17 +99,18 @@ CREATE TABLE planning (
 	FOREIGN KEY (professional_id) REFERENCES professional(id)	
 );
 
-DROP TABLE IF EXISTS planning_detail;
+DROP TABLE IF EXISTS planning_detail CASCADE;
 CREATE TABLE planning_detail (
 	id SERIAL NOT NULL PRIMARY KEY,
 	max_number_of_sessions INTEGER,
+	number_of_sessions INTEGER,
 	hay_uno_repetido_session_id BIGINT,
 	planning_id BIGINT,
 	FOREIGN KEY (hay_uno_repetido_session_id) REFERENCES hay_uno_repetido_session(id),
 	FOREIGN KEY (planning_id) REFERENCES planning(id)	
 );
 
-DROP TABLE IF EXISTS param;
+DROP TABLE IF EXISTS param CASCADE;
 CREATE TABLE param (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(255),
@@ -119,7 +120,7 @@ CREATE TABLE param (
 	min_value INT
 );
 
-DROP TABLE IF EXISTS game_param;
+DROP TABLE IF EXISTS game_param CASCADE;
 CREATE TABLE game_param (
 	game_id BIGINT NOT NULL,
 	param_id BIGINT NOT NULL,

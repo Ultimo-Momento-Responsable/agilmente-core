@@ -26,15 +26,24 @@ public class PlanningDetail {
 	private HayUnoRepetidoSession hayUnoRepetidoSession;
 	@Column(name = "max_number_of_sessions")
 	private int maxNumberOfSessions;
+	@Column(name = "number_of_sessions")
+	private int numberOfSessions;
 	
 	public PlanningDetail(IGameSession gameSession, Integer maxNumberOfSessions) {
 		this.setMaxNumberOfSessions(maxNumberOfSessions);
 		this.setGameSession(gameSession);
+		this.numberOfSessions = maxNumberOfSessions;
 	}
 	
 	public void setGameSession(IGameSession gameSession) {
 		if(gameSession instanceof HayUnoRepetidoSession) {
 			this.setHayUnoRepetidoSession((HayUnoRepetidoSession) gameSession);
 		}
+	}
+	public IGameSession getGameSession() {
+		if (this.hayUnoRepetidoSession!=null) {
+			return this.hayUnoRepetidoSession;
+		}
+		return null;
 	}
 }

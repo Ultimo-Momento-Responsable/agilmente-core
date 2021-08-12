@@ -34,6 +34,11 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return "";
 	}
 	
+	@Override
+	public String getName() {
+		return this.game.getName();
+	}
+	
 	/**
 	 * Agrega un parámetro a la sesión.
 	 * @param type Puede ser:

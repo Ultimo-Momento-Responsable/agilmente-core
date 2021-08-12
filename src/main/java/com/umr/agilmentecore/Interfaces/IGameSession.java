@@ -8,4 +8,6 @@ public interface IGameSession {
 	 * @throws Exception Si el parámetro no es válido.
 	 */
 	public void addParam(String type, String value) throws Exception;
+	
+	public String getName();
 }
