@@ -37,4 +37,11 @@ public class PlanningDetail {
 			this.setHayUnoRepetidoSession((HayUnoRepetidoSession) gameSession);
 		}
 	}
+	
+	public IGameSession getGameSession() {
+        if (this.hayUnoRepetidoSession!=null) {
+            return this.hayUnoRepetidoSession;
+        }
+        return null;
+    }
 }
