@@ -1,13 +1,9 @@
 package com.umr.agilmentecore.Class;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
-import org.springframework.lang.Nullable;
-
-import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
@@ -28,7 +24,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@Column(name = "results")
-	@Nullable
 	@OneToMany
 	private List<HayUnoRepetidoResult> results;
 	@ManyToOne
@@ -86,29 +81,5 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 */
 	private boolean canAddEndConditionParam() {
 		return (this.figureQuantity == null) && (this.maximumTime == null);
-	}
-	
-	/**
-	 */
-	@Override
-	public List<ResultsData> getResults() {
-		List<ResultsData> finalResult = new ArrayList<ResultsData>();
-		
-		for (HayUnoRepetidoResult resultsData : this.results) {
-			
-			ResultsData result = new ResultsData(resultsData.getId(), resultsData.getCompleteDatetime(), resultsData.isCanceled(),
-												resultsData.getMistakes(),	resultsData.getSuccesses(), resultsData.getTimeBetweenSuccesses(),
-												resultsData.getTotalTime());
-			
-			finalResult.add(result);
-		}
-		
-		return finalResult;
-	}
-	
-	//Devuelve el nombre del juego utilizado en la sesion
-	@Override
-	public String getName() {
-		return this.game.getName();
 	}
 }
