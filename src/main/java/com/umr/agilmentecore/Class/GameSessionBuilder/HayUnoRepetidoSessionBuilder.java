@@ -1,9 +1,11 @@
 package com.umr.agilmentecore.Class.GameSessionBuilder;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.umr.agilmentecore.Class.Game;
+import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
@@ -35,6 +37,7 @@ public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
 	public void buildProduct(Game game) {
 		this.gameSession = new HayUnoRepetidoSession();
 		this.gameSession.setGame(game);
+		this.gameSession.setResults(new ArrayList<HayUnoRepetidoResult>());
 	}
 
 	@Override
