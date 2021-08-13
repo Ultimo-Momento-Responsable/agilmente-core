@@ -1,7 +1,5 @@
 package com.umr.agilmentecore.Class.IntermediateClasses;
 
-import java.util.List;
-
 public class PlanningMobileData {
 	private String game;
 	private Integer numberOfSession;
