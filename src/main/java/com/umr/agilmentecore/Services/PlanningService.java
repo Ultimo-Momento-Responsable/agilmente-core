@@ -18,6 +18,7 @@ import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuild
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
@@ -134,7 +135,7 @@ public class PlanningService {
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public List<PlanningMobileData> getCurrentPlanningsFromPatientForMobile(Long patientId) {
+	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		Date now = new Date();
 		List<Planning> plannings = this.repository.findByPatient_idAndStartDateBeforeAndDueDateAfter(patientId, now, now);
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
@@ -147,6 +148,7 @@ public class PlanningService {
 				planningList.add(new PlanningMobileData(game,numberOfSession));
 			}
 		}
-		return planningList;
+		PlanningList pl = new PlanningList(planningList);
+		return pl;
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Services.PlanningService;
 
 @CrossOrigin(origins = "*")
@@ -60,7 +60,7 @@ public class PlanningController {
 	 * @return Optional una planificación o nada.
 	 */
 	@GetMapping(value = "/mobile_patient_{id}")
-	public List<PlanningMobileData> getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
+	public PlanningList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
 	}
 }
