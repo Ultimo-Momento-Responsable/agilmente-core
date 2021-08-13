@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.lang.Nullable;
+
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
@@ -26,6 +28,7 @@ public class HayUnoRepetidoSession implements IGameSession {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@Column(name = "results")
+	@Nullable
 	@OneToMany
 	private List<HayUnoRepetidoResult> results;
 	@ManyToOne

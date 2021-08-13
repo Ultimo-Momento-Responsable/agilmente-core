@@ -16,13 +16,13 @@ public class ResultsData {
 	private String game;
 	
 	public ResultsData(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime) {
-		this.id = id;
+		this.setId(id);
 		this.completeDatetime = completeDatetime;
-		this.canceled = canceled;
-		this.mistakes = mistakes;
-		this.successes = successes;
-		this.timeBetweenSuccesses = timeBetweenSuccesses;
-		this.totalTime = totalTime;
+		this.setCanceled(canceled);
+		this.setMistakes(mistakes);
+		this.setSuccesses(successes);
+		this.setTimeBetweenSuccesses(timeBetweenSuccesses);
+		this.setTotalTime(totalTime);
 	}
 
 	public String getPatient() {
@@ -39,6 +39,54 @@ public class ResultsData {
 
 	public void setGame(String game) {
 		this.game = game;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isCanceled() {
+		return canceled;
+	}
+
+	public void setCanceled(boolean canceled) {
+		this.canceled = canceled;
+	}
+
+	public int getMistakes() {
+		return mistakes;
+	}
+
+	public void setMistakes(int mistakes) {
+		this.mistakes = mistakes;
+	}
+
+	public int getSuccesses() {
+		return successes;
+	}
+
+	public void setSuccesses(int successes) {
+		this.successes = successes;
+	}
+
+	public float[] getTimeBetweenSuccesses() {
+		return timeBetweenSuccesses;
+	}
+
+	public void setTimeBetweenSuccesses(float[] timeBetweenSuccesses) {
+		this.timeBetweenSuccesses = timeBetweenSuccesses;
+	}
+
+	public float getTotalTime() {
+		return totalTime;
+	}
+
+	public void setTotalTime(float totalTime) {
+		this.totalTime = totalTime;
 	}
 	
 	
