@@ -22,6 +22,10 @@ public class GameSessionResultController {
 	@Autowired
 	private GameSessionResultService service;
 	
+	/**
+	 * Obtiene la lista de resultados completa.
+	 * Devuelve una lista de ResultsData
+	 */
 	@GetMapping
 	public List<ResultsData> getAllResultsOrdered() {
 		return this.service.createResultList();
