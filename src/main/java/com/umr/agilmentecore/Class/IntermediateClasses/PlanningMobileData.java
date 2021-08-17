@@ -1,12 +1,19 @@
 package com.umr.agilmentecore.Class.IntermediateClasses;
 
+import java.util.List;
+
+import com.umr.agilmentecore.Interfaces.IParam;
+
+
 public class PlanningMobileData {
 	private String game;
 	private Integer numberOfSession;
+	private List<IParam> parameters;
 	
-	public PlanningMobileData(String game, int numberOfSession) {
+	public PlanningMobileData(String game, int numberOfSession, List<IParam> parameters) {
 		this.setGame(game);
 		this.setNumberOfSession(numberOfSession);
+		this.parameters = parameters;
 	}
 
 	public String getGame() {
@@ -23,5 +30,13 @@ public class PlanningMobileData {
 
 	public void setNumberOfSession(int numberOfSession) {
 		this.numberOfSession = numberOfSession;
+	}
+
+	public List<IParam> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<IParam> params) {
+		this.parameters = params;
 	}
 }

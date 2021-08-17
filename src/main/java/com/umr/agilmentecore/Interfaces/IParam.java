@@ -13,4 +13,6 @@ public interface IParam {
 	 * @return Valor del parámetro.
 	 */
 	public String getValue();
+	
+	public String getName();
 }

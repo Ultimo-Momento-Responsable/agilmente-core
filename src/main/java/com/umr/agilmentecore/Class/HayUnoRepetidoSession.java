@@ -1,12 +1,23 @@
 package com.umr.agilmentecore.Class;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
+import com.umr.agilmentecore.Interfaces.IParam;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +49,20 @@ public class HayUnoRepetidoSession implements IGameSession {
 	public String getName() {
 		return this.game.getName();
 	}
+	
+	@Override
+	public List<Param> getParams() {
+		return this.game.getParam();
+	}
+	
+	@Override
+	public List<IParam> getSettedParams() {
+		List<IParam> params = new ArrayList<IParam>();
+		params.add(figureQuantity);
+		params.add(maximumTime);
+		return params;
+	}
+	
 	
 	/**
 	 * Agrega un parámetro a la sesión.

@@ -46,6 +46,10 @@ public class FigureQuantity implements IParam {
 		return this.getValue();
 	}
 	
+	@Override
+	public String getName() {
+		return "figureQuantity";
+	}
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.
