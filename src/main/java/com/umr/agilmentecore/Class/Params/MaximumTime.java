@@ -31,6 +31,11 @@ public class MaximumTime implements IParam {
 	}
 
 	@Override
+	public String getName() {
+		return "maximumTime";
+	}
+	
+	@Override
 	public void setValue(String value) throws Exception {
 		int parsed  = Integer.parseInt(value);
 		

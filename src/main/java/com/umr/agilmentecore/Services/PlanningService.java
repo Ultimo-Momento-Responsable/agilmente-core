@@ -18,7 +18,10 @@ import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuild
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Interfaces.IGameSession;
+import com.umr.agilmentecore.Interfaces.IParam;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
 
 @Service
@@ -125,5 +128,34 @@ public class PlanningService {
 	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
 		Date now = new Date();
 		return this.repository.findByPatient_idAndStartDateBeforeAndDueDateAfter(patientId, now, now);
+	}
+	
+	/**
+	 * Obtiene todas las planificaciones actualmente activas o
+	 * vigentes del paciente a partir de su id.
+	 * @param id Id del paciente.
+	 * @return Lista de planificaciones.
+	 */
+	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
+		Date now = new Date();
+		List<Planning> plannings = this.repository.findByPatient_idAndStartDateBeforeAndDueDateAfter(patientId, now, now);
+		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
+		for (Planning plan : plannings) {
+			String game = null;
+			List<IParam> parameters = new ArrayList<IParam>();
+			int numberOfSession = -1;
+			for (PlanningDetail pd : plan.getDetail()) {
+				for (IParam param : pd.getGameSession().getSettedParams()) {
+					if (param!=null) {
+						parameters.add(param);
+					}
+				}
+				game = (pd.getGameSession().getName());
+				numberOfSession =(pd.getNumberOfSessions());
+				planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+			}
+		}
+		PlanningList pl = new PlanningList(planningList);
+		return pl;
 	}
 }
