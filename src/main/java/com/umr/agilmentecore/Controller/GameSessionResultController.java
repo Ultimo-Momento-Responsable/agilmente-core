@@ -22,11 +22,6 @@ public class GameSessionResultController {
 	@Autowired
 	private GameSessionResultService service;
 	
-	/*@GetMapping
-	public Page<HayUnoRepetidoResult> getAllResultsOrdered(Pageable page) {
-		return this.service.getAllResultsOrdered(page);
-	}*/
-	
 	@GetMapping
 	public List<ResultsData> getAllResultsOrdered() {
 		return this.service.createResultList();

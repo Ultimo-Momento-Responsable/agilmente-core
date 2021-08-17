@@ -12,7 +12,9 @@ public interface IGameSession {
 	 */
 	public void addParam(String type, String value) throws Exception;
 	
+	// Método general para obtener resultados para los juegos
 	public List<ResultsData> getResults();
 	
+	// Método general para obtener el nombre del juego
 	public String getName();
 }

@@ -27,15 +27,15 @@ public class GameSessionResultService {
 	}
 	
 	/**
-	 * TODO: explicar que carajo hace esto
-	 * @param games Lista con los datos y parámetros de los juegos.
-	 * @return Lista de detalles de planificación.
-	 * @throws Exception Si uno de los parámetros es inválido.
+	 * Busca desde las planificaciones hacia los detalles y resultados y obtiene
+	 * los datos necesarios para la página de resultados generales.
+	 * @param ResultsData Datos que estan incluidos en los resultados.
+	 * @return Lista completa de resultados con pacientes, profesionales y datos asociados
 	 */
 	public List<ResultsData> createResultList() {
 		List<ResultsData> results = new ArrayList<ResultsData>();
 		
-		//Obtener todos los datos
+		//Obtener todos los datos a traves de las planificaciones hacia los resultados
 		List<Planning> planningList = planningService.getAll();
 		for(Planning specificPlanning : planningList) {
 			
@@ -49,6 +49,8 @@ public class GameSessionResultService {
 					specificResult.setGame(game);
 					specificResult.setPatient(patient);
 				}
+				
+				// Agregamos el resultado a la lista final
 				results.addAll(resultList);
 			}
 		}
