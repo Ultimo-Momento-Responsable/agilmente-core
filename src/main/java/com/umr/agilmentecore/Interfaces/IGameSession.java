@@ -2,7 +2,11 @@ package com.umr.agilmentecore.Interfaces;
 
 import java.util.List;
 
+
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
+
+import com.umr.agilmentecore.Class.Param;
+
 
 public interface IGameSession {
 	/**
@@ -18,4 +22,9 @@ public interface IGameSession {
 	
 	// Método general para obtener el nombre del juego
 	public String getName();
+	
+	public List<Param> getParams();
+	
+	public List<IParam> getSettedParams();
+
 }
