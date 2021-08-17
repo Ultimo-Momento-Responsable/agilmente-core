@@ -1,6 +1,5 @@
 package com.umr.agilmentecore.Services;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class GameSessionResultService {
 	public Page<HayUnoRepetidoResult> getAllResultsOrdered(Pageable page) {
 		return this.repository.findAllByOrderByCompleteDatetimeDesc(page);
 	}
-	
+
 	/**
 	 * Busca desde las planificaciones hacia los detalles y resultados y obtiene
 	 * los datos necesarios para la página de resultados generales.
@@ -58,4 +57,5 @@ public class GameSessionResultService {
 		//Devolver la lista de los datos
 		return results;
 	}
+
 }

@@ -37,7 +37,7 @@ public class FigureQuantity implements IParam {
 		if (this.checkIfValid(parsed)) {
 			this.figureQuantity = parsed;
 		} else {
-			throw new Exception("FigureQuantity parameter can't be greater than " + MAX_VALUE + ".");
+			throw new Exception("FigureQuantity parameter can't be greater than " + MAX_VALUE + " or lesser than "+ MIN_VALUE +".");
 		}
 	}
 	

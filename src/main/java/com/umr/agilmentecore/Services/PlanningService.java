@@ -114,6 +114,9 @@ public class PlanningService {
 		for (GameData gameData : games) {
 			Game game = this.gameService.getOne(gameData.getGameId()).get();
 			Map<String, String> params = gameData.getParams();
+			if (params.isEmpty()) {
+				throw new Exception("There are no params on game session");
+			}
 			IGameSession gameSession = this.buildGameSession(game, params);
 			PlanningDetail planningDetail = new PlanningDetail(gameSession, gameData.getMaxNumberOfSessions());			
 			planningDetailList.add(planningDetail);
