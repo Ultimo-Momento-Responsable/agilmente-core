@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
@@ -45,9 +46,29 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return "";
 	}
 	
+
+	//Devuelve el nombre del juego utilizado en la sesion
 	@Override
 	public String getName() {
 		return this.game.getName();
+	}
+	
+	/*
+	 * Pide a ResultsData los datos especificos de los resultados de
+	 * Hay Uno Repetido y los devuelve como una lista
+	 */
+	@Override
+	public List<ResultsData> getResults() {
+		List<ResultsData> finalResult = new ArrayList<ResultsData>();
+		
+		for (HayUnoRepetidoResult resultsData : this.results) {
+			ResultsData result = new ResultsData(resultsData.getId(), resultsData.getCompleteDatetime(), resultsData.isCanceled(),
+												resultsData.getMistakes(),	resultsData.getSuccesses(), resultsData.getTimeBetweenSuccesses(),
+												resultsData.getTotalTime());	
+			finalResult.add(result);
+		}
+		
+		return finalResult;
 	}
 	
 	@Override
@@ -62,7 +83,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 		params.add(maximumTime);
 		return params;
 	}
-	
 	
 	/**
 	 * Agrega un parámetro a la sesión.

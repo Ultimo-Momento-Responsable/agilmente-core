@@ -38,6 +38,7 @@ public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
 		this.gameSession = new HayUnoRepetidoSession();
 		this.gameSession.setResults(new ArrayList<HayUnoRepetidoResult>());
 		this.gameSession.setGame(game);
+		this.gameSession.setResults(new ArrayList<HayUnoRepetidoResult>());
 	}
 
 	@Override

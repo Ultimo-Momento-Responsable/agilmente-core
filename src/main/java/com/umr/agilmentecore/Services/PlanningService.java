@@ -43,6 +43,15 @@ public class PlanningService {
 	public Page<Planning> getAll(Pageable page) {
 		return this.repository.findAll(page);
 	}
+	
+	/**
+	 * Obtiene todas las planificaciones sin paginar.
+	 * @param page Opciones de paginación.
+	 * @return Página de planificaciones.
+	 */
+	public List<Planning> getAll() {
+		return this.repository.findAll();
+	}
 
 	/**
 	 * Crea una planificación.
