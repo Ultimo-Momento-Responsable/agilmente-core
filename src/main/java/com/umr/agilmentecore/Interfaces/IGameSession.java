@@ -3,7 +3,7 @@ package com.umr.agilmentecore.Interfaces;
 import java.util.List;
 
 
-import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
+import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 
 import com.umr.agilmentecore.Class.Param;
 
@@ -18,7 +18,7 @@ public interface IGameSession {
 	public void addParam(String type, String value) throws Exception;
 	
 	// Método general para obtener resultados para los juegos
-	public List<ResultsData> getResults();
+//	public List<ResultsListView> getResults();
 	
 	// Método general para obtener el nombre del juego
 	public String getName();

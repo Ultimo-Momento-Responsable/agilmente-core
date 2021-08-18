@@ -23,9 +23,9 @@ public class HayUnoRepetidoSessionService {
 	}
 	
 	/**
-	 *  Obtiene un resultado de HayUnoRepetido
+	 * Obtiene una sesión de HayUnoRepetido.
 	 * @param Long el id del juego específico
-	 * @return Optional un resultado de un juego o nada.
+	 * @return Optional una sesión.
 	 */
 	public Optional<HayUnoRepetidoSession> getOne(Long id) {
 		return repository.findById(id);

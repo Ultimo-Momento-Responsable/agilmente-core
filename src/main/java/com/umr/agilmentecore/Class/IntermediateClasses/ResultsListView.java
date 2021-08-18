@@ -3,7 +3,7 @@ package com.umr.agilmentecore.Class.IntermediateClasses;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ResultsData {
+public class ResultsListView {
 	private Long id;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date completeDatetime;
@@ -15,7 +15,7 @@ public class ResultsData {
 	private String patient;
 	private String game;
 	
-	public ResultsData(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime) {
+	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime, String patient, String game) {
 		this.setId(id);
 		this.completeDatetime = completeDatetime;
 		this.setCanceled(canceled);
@@ -23,6 +23,8 @@ public class ResultsData {
 		this.setSuccesses(successes);
 		this.setTimeBetweenSuccesses(timeBetweenSuccesses);
 		this.setTotalTime(totalTime);
+		this.patient = patient;
+		this.game = game;
 	}
 
 	public String getPatient() {
