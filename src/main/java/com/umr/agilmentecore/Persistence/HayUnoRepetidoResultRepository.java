@@ -1,6 +1,5 @@
 package com.umr.agilmentecore.Persistence;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -14,6 +13,13 @@ import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 
 @Repository
 public interface HayUnoRepetidoResultRepository extends org.springframework.data.repository.Repository<HayUnoRepetidoResult, Long> {
+	// TODO: Pasar esto a un repositorio genérico de resultados.
+	/**
+	 * Obtiene todos los resultados de todos los juegos
+	 * paginados.
+	 * @param page Opciones de paginación.
+	 * @return Una página de resultados genéricos.
+	 */
 	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
 			+ "r.id, "
 			+ "r.completeDatetime, "
@@ -28,8 +34,13 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN p.detail pd "
 			+ "JOIN pd.hayUnoRepetidoSession hurs "
 			+ "JOIN hurs.results r")
-	List<ResultsListView> findAllResultsListView();
+	Page<ResultsListView> findAllResultsListView(Pageable page);
 	
+	/**
+	 * Busca un resultado de HayUnoRepetidoResult a partir del id.
+	 * @param id Id del resultado.
+	 * @return Vista del detalle del resultado.
+	 */
 	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView( "
 			+ "r.id, "
 			+ "r.completeDatetime, "

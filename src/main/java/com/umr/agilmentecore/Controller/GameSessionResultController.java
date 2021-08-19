@@ -1,16 +1,16 @@
 package com.umr.agilmentecore.Controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Services.GameSessionResultService;
@@ -27,8 +27,8 @@ public class GameSessionResultController {
 	 * Devuelve una lista de ResultsData
 	 */
 	@GetMapping
-	public List<ResultsListView> getAllResultsOrdered() {
-		return this.service.getAllResultsOrdered();
+	public Page<ResultsListView> getAllResultsOrdered(Pageable page) {
+		return this.service.getAllResultsOrdered(page);
 	}
 	
 	/**

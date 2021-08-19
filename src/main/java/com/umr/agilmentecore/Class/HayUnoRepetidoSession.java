@@ -12,14 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.ColumnTransformer;
-import org.hibernate.annotations.Formula;
 
-import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
@@ -58,24 +54,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 	public String getName() {
 		return this.game.getName();
 	}
-	
-	/*
-	 * Pide a ResultsData los datos especificos de los resultados de
-	 * Hay Uno Repetido y los devuelve como una lista
-	 */
-//	@Override
-//	public List<ResultsListView> getResults() {
-//		List<ResultsListView> finalResult = new ArrayList<ResultsListView>();
-//		
-//		for (HayUnoRepetidoResult resultsData : this.results) {
-//			ResultsListView result = new ResultsListView(resultsData.getId(), resultsData.getCompleteDatetime(), resultsData.isCanceled(),
-//												resultsData.getMistakes(),	resultsData.getSuccesses(), resultsData.getTimeBetweenSuccesses(),
-//												resultsData.getTotalTime());	
-//			finalResult.add(result);
-//		}
-//		
-//		return finalResult;
-//	}
 	
 	@Override
 	public List<Param> getParams() {
