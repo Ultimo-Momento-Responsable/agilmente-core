@@ -15,8 +15,6 @@ import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 public class GameSessionResultService {
 	@Autowired
 	private HayUnoRepetidoResultRepository hayUnoRepetidoResultRepository;
-	@Autowired
-	private PlanningService planningService;
 	
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
