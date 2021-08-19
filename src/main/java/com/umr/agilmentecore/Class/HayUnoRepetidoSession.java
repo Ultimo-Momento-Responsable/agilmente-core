@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
+import org.hibernate.annotations.ColumnTransformer;
+
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
@@ -41,6 +42,7 @@ public class HayUnoRepetidoSession implements IGameSession {
 	@ManyToOne
 	private Game game;
 	
+		
 	@Override
 	public String toString() {
 		return "";
@@ -53,34 +55,24 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return this.game.getName();
 	}
 	
-	/*
-	 * Pide a ResultsData los datos especificos de los resultados de
-	 * Hay Uno Repetido y los devuelve como una lista
-	 */
-	@Override
-	public List<ResultsData> getResults() {
-		List<ResultsData> finalResult = new ArrayList<ResultsData>();
-		
-		for (HayUnoRepetidoResult resultsData : this.results) {
-			ResultsData result = new ResultsData(resultsData.getId(), resultsData.getCompleteDatetime(), resultsData.isCanceled(),
-												resultsData.getMistakes(),	resultsData.getSuccesses(), resultsData.getTimeBetweenSuccesses(),
-												resultsData.getTotalTime());	
-			finalResult.add(result);
-		}
-		
-		return finalResult;
-	}
-	
 	@Override
 	public List<Param> getParams() {
 		return this.game.getParam();
 	}
 	
+	@ColumnTransformer
 	@Override
 	public List<IParam> getSettedParams() {
 		List<IParam> params = new ArrayList<IParam>();
-		params.add(figureQuantity);
-		params.add(maximumTime);
+		
+		if (this.figureQuantity != null) {
+			params.add(figureQuantity);
+		}
+		
+		if (this.maximumTime != null) {
+			params.add(maximumTime);
+		}
+		
 		return params;
 	}
 	

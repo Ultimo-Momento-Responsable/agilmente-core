@@ -1,61 +1,37 @@
 package com.umr.agilmentecore.Services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
-import com.umr.agilmentecore.Class.Planning;
-import com.umr.agilmentecore.Class.PlanningDetail;
-import com.umr.agilmentecore.Class.IntermediateClasses.ResultsData;
+import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 
 @Service
 public class GameSessionResultService {
 	@Autowired
-	private HayUnoRepetidoResultRepository repository;
-	@Autowired
-	private PlanningService planningService;
+	private HayUnoRepetidoResultRepository hayUnoRepetidoResultRepository;
 	
-	public Page<HayUnoRepetidoResult> getAllResultsOrdered(Pageable page) {
-		return this.repository.findAllByOrderByCompleteDatetimeDesc(page);
-	}
-
 	/**
-	 * Busca desde las planificaciones hacia los detalles y resultados y obtiene
-	 * los datos necesarios para la página de resultados generales.
-	 * @param ResultsData Datos que estan incluidos en los resultados.
-	 * @return Lista completa de resultados con pacientes, profesionales y datos asociados
+	 * Obtiene una página de resultados de todos los juegos.
+	 * @param page Opciones de paginación.
+	 * @return Página de resultados.
 	 */
-	public List<ResultsData> createResultList() {
-		List<ResultsData> results = new ArrayList<ResultsData>();
-		
-		//Obtener todos los datos a traves de las planificaciones hacia los resultados
-		List<Planning> planningList = planningService.getAll();
-		for(Planning specificPlanning : planningList) {
-			
-			List<PlanningDetail> detailList = specificPlanning.getDetail();
-			for(PlanningDetail specificDetail: detailList) {
-				
-				List<ResultsData> resultList = specificDetail.getGameSession().getResults();
-				for(ResultsData specificResult : resultList) {
-					String game = specificDetail.getGameSession().getName();
-					String patient = specificPlanning.getPatient().getFirstName() + " " + specificPlanning.getPatient().getLastName();
-					specificResult.setGame(game);
-					specificResult.setPatient(patient);
-				}
-				
-				// Agregamos el resultado a la lista final
-				results.addAll(resultList);
-			}
-		}
-		
-		//Devolver la lista de los datos
-		return results;
+	public Page<ResultsListView> getAllResultsOrdered(Pageable page) {
+		return this.hayUnoRepetidoResultRepository.findAllResultsListView(page);
+	}	
+	
+	/**
+	 * Obtiene un resultado de HayUnoRepetido.
+	 * @param Long el id del juego específico.
+	 * @return Optional un resultado de un juego o nada.
+	 */
+	public Optional<HayUnoRepetidoResultDetailView> getOneHayUnoRepetido(Long id) {
+		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultDetailById(id);
 	}
 
 }

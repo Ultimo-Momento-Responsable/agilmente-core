@@ -1,9 +1,15 @@
 package com.umr.agilmentecore.Class.IntermediateClasses;
 
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.List;
 
-public class ResultsData {
+import org.springframework.data.annotation.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Interfaces.IParam;
+
+public class HayUnoRepetidoResultDetailView {
 	private Long id;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date completeDatetime;
@@ -14,39 +20,38 @@ public class ResultsData {
 	private float totalTime;
 	private String patient;
 	private String game;
-	
-	public ResultsData(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime) {
-		this.setId(id);
+	@Transient
+	private HayUnoRepetidoSession session;
+
+	public HayUnoRepetidoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
+		float[] timeBetweenSuccesses, float totalTime, String patient, String game, HayUnoRepetidoSession session) {
+		super();
+		this.id = id;
 		this.completeDatetime = completeDatetime;
-		this.setCanceled(canceled);
-		this.setMistakes(mistakes);
-		this.setSuccesses(successes);
-		this.setTimeBetweenSuccesses(timeBetweenSuccesses);
-		this.setTotalTime(totalTime);
-	}
-
-	public String getPatient() {
-		return patient;
-	}
-
-	public void setPatient(String patient) {
+		this.canceled = canceled;
+		this.mistakes = mistakes;
+		this.successes = successes;
+		this.timeBetweenSuccesses = timeBetweenSuccesses;
+		this.totalTime = totalTime;
 		this.patient = patient;
-	}
-
-	public String getGame() {
-		return game;
-	}
-
-	public void setGame(String game) {
 		this.game = game;
+		this.session = session;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getCompleteDatetime() {
+		return completeDatetime;
+	}
+
+	public void setCompleteDatetime(Date completeDatetime) {
+		this.completeDatetime = completeDatetime;
 	}
 
 	public boolean isCanceled() {
@@ -88,6 +93,24 @@ public class ResultsData {
 	public void setTotalTime(float totalTime) {
 		this.totalTime = totalTime;
 	}
-	
-	
+
+	public String getPatient() {
+		return patient;
+	}
+
+	public void setPatient(String patient) {
+		this.patient = patient;
+	}
+
+	public String getGame() {
+		return game;
+	}
+
+	public void setGame(String game) {
+		this.game = game;
+	}
+
+	public List<IParam> getParams() {
+		return this.session.getSettedParams();
+	}
 }
