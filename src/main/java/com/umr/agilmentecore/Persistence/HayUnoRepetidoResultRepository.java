@@ -33,7 +33,8 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
 			+ "JOIN pd.hayUnoRepetidoSession hurs "
-			+ "JOIN hurs.results r")
+			+ "JOIN hurs.results r "
+			+ "ORDER BY r.completeDatetime")
 	Page<ResultsListView> findAllResultsListView(Pageable page);
 	
 	/**
