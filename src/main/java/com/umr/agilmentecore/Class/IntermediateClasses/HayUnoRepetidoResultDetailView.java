@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
-import com.umr.agilmentecore.Class.Param;
 import com.umr.agilmentecore.Interfaces.IParam;
 
 public class HayUnoRepetidoResultDetailView {
