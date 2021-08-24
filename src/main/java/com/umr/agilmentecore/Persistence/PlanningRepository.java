@@ -14,4 +14,6 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 	List<Planning> findByPatient_idAndStartDateBeforeAndDueDateAfter(Long patientId, Date startDate, Date dueDate);
 	
 	Optional<Planning> findByDetail_HayUnoRepetidoSession_Results_Id(Long id);
+	
+	List<Planning> findByStartDateBeforeAndDueDateAfter(Date startDate, Date dueDate);
 }

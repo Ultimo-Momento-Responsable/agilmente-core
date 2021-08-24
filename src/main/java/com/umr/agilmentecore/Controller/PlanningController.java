@@ -35,6 +35,11 @@ public class PlanningController {
 		return service.getAll(page);
 	}
 	
+//	@GetMapping(value = "/planningOverview")
+//	public Page<Planning> getAll(Pageable page) {
+//		return service.get
+//	}
+	
 	/**
 	 * Crea una planificación.
 	 * @param planning Datos de la planificación.
