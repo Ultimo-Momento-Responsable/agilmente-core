@@ -38,13 +38,30 @@ public class PlanningService {
 	@Autowired
 	private GameService gameService;
 
+	/**
+	 * Actualiza los estados de las plannigs según su fecha;
+	 */
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
 		for (Planning planning : plannings) {
-			planning.updateState();
+			Date today = new Date();
+			if (planning.getState().getName().equals("Pendiente") && planning.getStartDate().before(today) && planning.getDueDate().after(today)) {
+				planning.setState(stateRepository.getOne((long) 2));
+			}
+			if (planning.getState().getName().equals("Vigente") && planning.getDueDate().before(today)) {
+				planning.setState(stateRepository.getOne((long) 3));
+			}
 			this.repository.save(planning);
 		}
 		
+	}
+	
+	/**
+	 * Cambia el estado de una planning a Cancelada
+	 * @param planning la planning a cancelar
+	 */
+	private void cancelPlanning(Planning planning) { 
+		planning.setState(stateRepository.getOne((long) 4)); 
 	}
 	
 	/**

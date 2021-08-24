@@ -28,9 +28,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "planning")
 public class Planning {
-	@Autowired
-	@Transient
-	private PlanningStateRepository repository;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,17 +51,4 @@ public class Planning {
 	@ManyToOne
 	private PlanningState state;
 	
-	public void updateState() {
-		Date today = new Date();
-		if (state.getName().equals("Pendiente") && startDate.before(today) && dueDate.after(today)) {
-			state = repository.findByName("Vigente");
-		}
-		if (state.getName().equals("Vigente") && dueDate.before(today)) {
-			state = repository.findByName("Terminada");
-		}
-	}
-	
-	public void cancelState() {
-		state = repository.findByName("Cancelada");
-	}
 }
