@@ -1,3 +1,4 @@
+INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
 INSERT INTO param (name, class_name, type, min_value, max_value) VALUES ('Cantidad de Figuras', 'FigureQuantity', 0, 3, 20);
 INSERT INTO param (name, class_name, type, min_value, max_value) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 1, -1);
 INSERT INTO game (name) VALUES ('Encuentra al Repetido');
