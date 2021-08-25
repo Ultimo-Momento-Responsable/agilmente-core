@@ -11,7 +11,7 @@ import com.umr.agilmentecore.Class.Planning;
 
 @Repository
 public interface PlanningRepository extends JpaRepository<Planning, Long> {
-	List<Planning> findByPatient_idAndStartDateBeforeAndDueDateAfter(Long patientId, Date startDate, Date dueDate);
+	List<Planning> findByPatient_idAndState_name(Long patientId, String name);
 	
 	Optional<Planning> findByDetail_HayUnoRepetidoSession_Results_Id(Long id);
 }

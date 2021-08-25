@@ -23,11 +23,14 @@ import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
+import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 
 @Service
 public class PlanningService {
 	@Autowired
 	private PlanningRepository repository;
+	@Autowired
+	private PlanningStateRepository stateRepository;
 	@Autowired
 	private ProfessionalService professionalService;
 	@Autowired
@@ -36,11 +39,38 @@ public class PlanningService {
 	private GameService gameService;
 
 	/**
+	 * Actualiza los estados de las plannigs según su fecha;
+	 */
+	private void updateAllPlannings() {
+		List<Planning> plannings = this.repository.findAll();
+		for (Planning planning : plannings) {
+			Date today = new Date();
+			if (planning.getState().getName().equals("Pendiente") && planning.getStartDate().before(today) && planning.getDueDate().after(today)) {
+				planning.setState(stateRepository.getOne((long) 2));
+			}
+			if (planning.getState().getName().equals("Vigente") && planning.getDueDate().before(today)) {
+				planning.setState(stateRepository.getOne((long) 3));
+			}
+			this.repository.save(planning);
+		}
+		
+	}
+	
+	/**
+	 * Cambia el estado de una planning a Cancelada
+	 * @param planning la planning a cancelar
+	 */
+	private void cancelPlanning(Planning planning) { 
+		planning.setState(stateRepository.getOne((long) 4)); 
+	}
+	
+	/**
 	 * Obtiene todas las planificaciones paginadas.
 	 * @param page Opciones de paginación.
 	 * @return Página de planificaciones.
 	 */
 	public Page<Planning> getAll(Pageable page) {
+		updateAllPlannings();
 		return this.repository.findAll(page);
 	}
 	
@@ -50,6 +80,7 @@ public class PlanningService {
 	 * @return Página de planificaciones.
 	 */
 	public List<Planning> getAll() {
+		updateAllPlannings();
 		return this.repository.findAll();
 	}
 
@@ -61,9 +92,10 @@ public class PlanningService {
 	 */
 	public Planning save(PlanningData planningData) throws Exception {
 		Planning planning = new Planning();
-		
 		planning.setProfessional(this.professionalService.getOne(planningData.getProfessionalId()).get());
 		planning.setPatient(this.patientService.getOne(planningData.getPatientId()).get());
+		
+		planning.setState(this.stateRepository.getOne(planningData.getStateId()));
 		
 		planning.setStartDate(planningData.getStartDate());
 		planning.setDueDate(planningData.getDueDate());
@@ -135,8 +167,8 @@ public class PlanningService {
 	 * @return Lista de planificaciones.
 	 */
 	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
-		Date now = new Date();
-		return this.repository.findByPatient_idAndStartDateBeforeAndDueDateAfter(patientId, now, now);
+		updateAllPlannings();
+		return this.repository.findByPatient_idAndState_name(patientId,"Vigente");
 	}
 	
 	/**
@@ -146,8 +178,8 @@ public class PlanningService {
 	 * @return Lista de planificaciones.
 	 */
 	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
-		Date now = new Date();
-		List<Planning> plannings = this.repository.findByPatient_idAndStartDateBeforeAndDueDateAfter(patientId, now, now);
+		updateAllPlannings();
+		List<Planning> plannings = this.repository.findByPatient_idAndState_name(patientId,"Vigente");
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 		for (Planning plan : plannings) {
 			String game = null;

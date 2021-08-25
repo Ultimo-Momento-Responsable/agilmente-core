@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PlanningData {
 	private Long patientId;
 	private Long professionalId;
+	private Long stateId;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
 	@JsonFormat(pattern = "dd-MM-yyyy")
@@ -32,5 +33,9 @@ public class PlanningData {
 	
 	public List<GameData> getGames() {
 		return this.games;
+	}
+
+	public Long getStateId() {
+		return stateId;
 	}
 }

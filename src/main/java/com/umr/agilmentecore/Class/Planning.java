@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "planning")
 public class Planning {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,4 +44,7 @@ public class Planning {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "planning_id")
 	private List<PlanningDetail> detail;
+	@ManyToOne
+	private PlanningState state;
+	
 }
