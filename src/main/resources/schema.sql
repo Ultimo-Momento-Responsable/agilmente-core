@@ -12,6 +12,12 @@ CREATE TABLE cognitive_domain (
 	name VARCHAR(128) NOT NULL
 );
 
+DROP TABLE IF EXISTS planning_state CASCADE;
+CREATE TABLE planning_state (
+	id SERIAL NOT NULL PRIMARY KEY,
+	name VARCHAR(128) NOT NULL
+);
+
 DROP TABLE IF EXISTS figure_quantity CASCADE;
 CREATE TABLE figure_quantity (
 	id SERIAL NOT NULL PRIMARY KEY,
@@ -30,7 +36,7 @@ CREATE TABLE hay_uno_repetido_result (
 	mistakes INTEGER,
 	successes INTEGER,
 	total_time NUMERIC,
-	time_between_successes bytea,
+	time_between_successes BYTEA,
 	complete_datetime TIMESTAMP,
 	canceled BOOLEAN
 );
@@ -58,6 +64,16 @@ CREATE TABLE professional (
 	id SERIAL NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255),
 	last_name VARCHAR(255)
+);
+
+DROP TABLE IF EXISTS param CASCADE;
+CREATE TABLE param (
+	id SERIAL NOT NULL PRIMARY KEY,
+	name VARCHAR(255),
+	class_name VARCHAR(255),
+	type INT,
+	max_value INT,
+	min_value INT
 );
 
 DROP TABLE IF EXISTS game_cognitive_domain CASCADE;
@@ -95,6 +111,7 @@ CREATE TABLE planning (
 	start_date TIMESTAMP,
 	patient_id BIGINT,
 	professional_id BIGINT,
+	planning_state_id BIGINT,
 	FOREIGN KEY (patient_id) REFERENCES patient(id),
 	FOREIGN KEY (professional_id) REFERENCES professional(id)	
 );
@@ -108,16 +125,6 @@ CREATE TABLE planning_detail (
 	planning_id BIGINT,
 	FOREIGN KEY (hay_uno_repetido_session_id) REFERENCES hay_uno_repetido_session(id),
 	FOREIGN KEY (planning_id) REFERENCES planning(id)	
-);
-
-DROP TABLE IF EXISTS param CASCADE;
-CREATE TABLE param (
-	id SERIAL NOT NULL PRIMARY KEY,
-	name VARCHAR(255),
-	class_name VARCHAR(255),
-	type INT,
-	max_value INT,
-	min_value INT
 );
 
 DROP TABLE IF EXISTS game_param CASCADE;
