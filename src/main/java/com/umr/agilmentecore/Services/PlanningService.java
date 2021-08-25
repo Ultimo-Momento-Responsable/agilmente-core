@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
@@ -31,6 +33,7 @@ public class PlanningService {
 	private PlanningRepository repository;
 	@Autowired
 	private PlanningStateRepository stateRepository;
+
 	@Autowired
 	private ProfessionalService professionalService;
 	@Autowired
@@ -39,7 +42,7 @@ public class PlanningService {
 	private GameService gameService;
 
 	/**
-	 * Actualiza los estados de las plannigs según su fecha;
+	 * Actualiza los estados de las plannings según su fecha;
 	 */
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
@@ -48,7 +51,7 @@ public class PlanningService {
 			if (planning.getState().getName().equals("Pendiente") && planning.getStartDate().before(today) && planning.getDueDate().after(today)) {
 				planning.setState(stateRepository.getOne((long) 2));
 			}
-			if (planning.getState().getName().equals("Vigente") && planning.getDueDate().before(today)) {
+			if ((planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) && planning.getDueDate().before(today)) {
 				planning.setState(stateRepository.getOne((long) 3));
 			}
 			this.repository.save(planning);
@@ -74,9 +77,29 @@ public class PlanningService {
 		return this.repository.findAll(page);
 	}
 	
-//	public Page<Planning> getAll(Pageable page) {
-//		return this.repository.
-//	}
+	/**
+	 * Obtiene todas las planificaciones vigentes y pendientes de vista general (sin juegos)
+	 * @return Página de planificaciones vigentes o pendientes, sin juegos.
+	 */
+	
+	public Page<PlanningOverview> getPlanningOverview() {
+		updateAllPlannings();
+		List<Planning> plannings = this.repository.findByState_nameOrState_name("Vigente", "Pendiente");
+		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>(); 
+		for (Planning planning : plannings) {
+			PlanningOverview pageableOverview = new PlanningOverview();
+			pageableOverview.setStartDate(planning.getStartDate());
+			pageableOverview.setDueDate(planning.getDueDate());
+			pageableOverview.setPatientName(planning.getPatient().getFirstName() + " " + planning.getPatient().getLastName());
+			pageableOverview.setProfessionalName(planning.getProfessional().getFirstName() + " " + planning.getProfessional().getLastName());
+			pageableOverview.setStateName(planning.getState().getName());
+			
+			listOverview.add(pageableOverview);
+		}
+		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
+		
+		return pageOverview;
+	}
 	
 	/**
 	 * Obtiene todas las planificaciones sin paginar.
@@ -203,4 +226,5 @@ public class PlanningService {
 		PlanningList pl = new PlanningList(planningList);
 		return pl;
 	}
+	
 }
