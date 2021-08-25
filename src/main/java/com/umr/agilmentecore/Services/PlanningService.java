@@ -91,9 +91,7 @@ public class PlanningService {
 	 * @throws Exception Si uno de los parámetros es inválido.
 	 */
 	public Planning save(PlanningData planningData) throws Exception {
-		System.out.println(planningData.getStateId());
 		Planning planning = new Planning();
-		System.out.println(this.professionalService.getOne(planningData.getProfessionalId()).get());
 		planning.setProfessional(this.professionalService.getOne(planningData.getProfessionalId()).get());
 		planning.setPatient(this.patientService.getOne(planningData.getPatientId()).get());
 		

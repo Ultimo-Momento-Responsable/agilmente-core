@@ -13,12 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
