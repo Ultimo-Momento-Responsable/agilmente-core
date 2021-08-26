@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
 import com.umr.agilmentecore.Services.PlanningService;
 
 @CrossOrigin(origins = "*")
@@ -33,6 +34,15 @@ public class PlanningController {
 	@GetMapping
 	public Page<Planning> getAll(Pageable page) {
 		return service.getAll(page);
+	}
+	
+	/**
+	 * Obtiene todas las planificaciones vigentes y pendientes paginadas sin juegos.
+	 * @return Página de planificaciones vigentes y pendientes sin juegos.
+	 */
+	@GetMapping(value = "/planningOverview")
+	public Page<PlanningOverview> getOverviews() {
+		return service.getPlanningOverview();
 	}
 	
 	/**

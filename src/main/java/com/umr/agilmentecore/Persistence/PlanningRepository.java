@@ -14,4 +14,8 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 	List<Planning> findByPatient_idAndState_name(Long patientId, String name);
 	
 	Optional<Planning> findByDetail_HayUnoRepetidoSession_Results_Id(Long id);
+	
+	List<Planning> findByStartDateBeforeAndDueDateAfter(Date startDate, Date dueDate);
+	
+	List<Planning> findByState_nameOrState_name(String firstState, String secondState);
 }
