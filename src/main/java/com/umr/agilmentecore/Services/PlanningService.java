@@ -47,17 +47,17 @@ public class PlanningService {
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
 		for (Planning planning : plannings) {
-			Date today = new Date();
-			if (planning.getState().getName().equals("Pendiente") && planning.getStartDate().before(today) && planning.getDueDate().after(today)) {
+			if (isPending(planning)) {
 				planning.setState(stateRepository.getOne((long) 2));
 			}
-			if ((planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) && planning.getDueDate().before(today)) {
+			if (isActiveOrPending(planning)) {
 				planning.setState(stateRepository.getOne((long) 3));
 			}
 			this.repository.save(planning);
 		}
 		
 	}
+	
 	
 	/**
 	 * Cambia el estado de una planning a Cancelada
@@ -226,6 +226,30 @@ public class PlanningService {
 		}
 		PlanningList pl = new PlanningList(planningList);
 		return pl;
+	}
+	
+	/**
+	 * Verifica que una planificacion se encuentra en estado "Pendiente" y dentro del rango de fechas validas.
+	 * @param planning page de planificacion para evaluar.
+	 * @return booleano confirmando la comparacion.
+	 */
+	
+	private boolean isPending(Planning planning) {
+		Date today = new Date();
+		return planning.getState().getName().equals("Pendiente")
+				&& planning.getStartDate().before(today) && 
+				planning.getDueDate().after(today);
+	}
+	
+	/**
+	 * Verifica que una planificacion se encuentra en estado "Pendiente" o "Vigente" y dentro del rango de fechas validas.
+	 * @param planning page de planificacion para evaluar.
+	 * @return booleano confirmando la comparacion.
+	 */
+	private boolean isActiveOrPending(Planning planning) {
+		Date today = new Date();
+		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
+				&& planning.getDueDate().before(today);
 	}
 	
 }
