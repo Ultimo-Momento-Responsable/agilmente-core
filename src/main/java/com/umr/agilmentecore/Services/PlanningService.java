@@ -88,6 +88,7 @@ public class PlanningService {
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>(); 
 		for (Planning planning : plannings) {
 			PlanningOverview pageableOverview = new PlanningOverview();
+			pageableOverview.setPlanningId(planning.getId());
 			pageableOverview.setStartDate(planning.getStartDate());
 			pageableOverview.setDueDate(planning.getDueDate());
 			pageableOverview.setPatientName(planning.getPatient().getFirstName() + " " + planning.getPatient().getLastName());

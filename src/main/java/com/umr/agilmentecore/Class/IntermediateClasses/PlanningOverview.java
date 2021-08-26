@@ -5,6 +5,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PlanningOverview {
+	private Long planningId;
 	private String patientName;
 	private String professionalName;
 	private String stateName;
@@ -32,6 +33,10 @@ public class PlanningOverview {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
+	
+	public void setPlanningId(Long planningId) {
+		this.planningId = planningId;
+	}
 
 	public String getProfessionalName() {
 		return this.professionalName;
@@ -51,6 +56,10 @@ public class PlanningOverview {
 	
 	public Date getDueDate() {
 		return this.dueDate;
+	}
+	
+	public Long getPlanningId() {
+		return planningId;
 	}
 
 }
