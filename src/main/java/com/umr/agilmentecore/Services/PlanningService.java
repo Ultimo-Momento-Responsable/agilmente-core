@@ -3,8 +3,6 @@ package com.umr.agilmentecore.Services;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.print.attribute.standard.PDLOverrideSupported;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
-import com.umr.agilmentecore.Class.Param;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
@@ -262,7 +259,7 @@ public class PlanningService {
 	/**
 	 * Obtiene una planificación.
 	 * @param Long el id de la planificación específica.
-	 * @return Optional Un paciente o nada.
+	 * @return Optional Un planning data o nada.
 	 */
 	public PlanningData getOne(Long id) {
 		updateAllPlannings();

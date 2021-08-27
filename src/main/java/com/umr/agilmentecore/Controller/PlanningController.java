@@ -1,7 +1,6 @@
 package com.umr.agilmentecore.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,6 +44,7 @@ public class PlanningController {
 	public Page<PlanningOverview> getOverviews() {
 		return service.getPlanningOverview();
 	}
+	
 	/**
 	 * Obtiene una planificacion.
 	 * @param id Numero id de la planificación
