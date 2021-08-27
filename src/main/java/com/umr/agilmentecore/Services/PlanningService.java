@@ -1,6 +1,7 @@
 package com.umr.agilmentecore.Services;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
+import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
@@ -250,6 +252,15 @@ public class PlanningService {
 		Date today = new Date();
 		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
 				&& planning.getDueDate().before(today);
+	}
+	
+	/**
+	 * Obtiene una planificación.
+	 * @param Long el id de la planificación específica.
+	 * @return Optional Un paciente o nada.
+	 */
+	public Optional<Planning> getOne(Long id) {
+		return repository.findById(id);
 	}
 	
 }

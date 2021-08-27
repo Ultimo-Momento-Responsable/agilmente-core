@@ -1,6 +1,7 @@
 package com.umr.agilmentecore.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,15 @@ public class PlanningController {
 	@GetMapping(value = "/planningOverview")
 	public Page<PlanningOverview> getOverviews() {
 		return service.getPlanningOverview();
+	}
+	/**
+	 * Obtiene una planificacion.
+	 * @param id Numero id de la planificación
+	 * @return Única planificación.
+	 */
+	@GetMapping(value = "/{id}")
+	public Optional<Planning> getOne(@PathVariable(name = "id") Long id) {
+		return service.getOne(id);
 	}
 	
 	/**
