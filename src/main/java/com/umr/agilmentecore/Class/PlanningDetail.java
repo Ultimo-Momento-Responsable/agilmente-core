@@ -24,6 +24,8 @@ public class PlanningDetail {
 	private Long id;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private HayUnoRepetidoSession hayUnoRepetidoSession;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private EncuentraAlNuevoSession encuentraAlNuevoSession;
 	@Column(name = "max_number_of_sessions")
 	private int maxNumberOfSessions;
 	@Column(name = "number_of_sessions")
@@ -39,11 +41,17 @@ public class PlanningDetail {
 		if(gameSession instanceof HayUnoRepetidoSession) {
 			this.setHayUnoRepetidoSession((HayUnoRepetidoSession) gameSession);
 		}
+		if(gameSession instanceof EncuentraAlNuevoSession) {
+			this.setEncuentraAlNuevoSession((EncuentraAlNuevoSession) gameSession);
+		}
 	}
 	
 	public IGameSession getGameSession() {
         if (this.hayUnoRepetidoSession!=null) {
             return this.hayUnoRepetidoSession;
+        }
+        if (this.encuentraAlNuevoSession!=null) {
+            return this.encuentraAlNuevoSession;
         }
         return null;
     }
