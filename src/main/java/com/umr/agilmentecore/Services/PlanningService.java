@@ -2,6 +2,9 @@ package com.umr.agilmentecore.Services;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import javax.print.attribute.standard.PDLOverrideSupported;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
+import com.umr.agilmentecore.Class.Param;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
+import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
@@ -260,16 +265,37 @@ public class PlanningService {
 	 * @return Optional Un paciente o nada.
 	 */
 	public PlanningData getOne(Long id) {
+		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
-	
+		
+		Optional<Patient> patient = this.patientService.getOne(specificPlanning.getPatient().getId());
+		Patient specificPatient = patient.get();
+		Optional<Professional> professional = this.professionalService.getOne(specificPlanning.getProfessional().getId());
+		Professional specificProfessional = professional.get();
+		
+		//Escarbamos los detalles de la planning
+		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
+		List<IParam> parameters = new ArrayList<IParam>();
+		for (PlanningDetail pd : specificPlanning.getDetail()) {
+			for (IParam param : pd.getGameSession().getSettedParams()) {
+				if (param!=null) {
+					parameters.add(param);
+				}
+			}
+			String game = (pd.getGameSession().getName());
+			int numberOfSession =(pd.getNumberOfSessions());
+			planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+		}
+		
+		PlanningList pl = new PlanningList(planningList);
+		
+		// Enviamos todo a la vista	
 		PlanningData planningData = new PlanningData(
-				specificPlanning.getPatient().getId(),
-				specificPlanning.getProfessional().getId(),
-				specificPlanning.getState().getId(),
-				specificPlanning.getStartDate(),
-				specificPlanning.getDueDate()
-				);
+				specificPatient.getId(), specificPatient.getFirstName(), specificPatient.getLastName(),
+				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
+				specificPlanning.getState().getId(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), pl);
+		
 		return planningData;
 	}
 }
