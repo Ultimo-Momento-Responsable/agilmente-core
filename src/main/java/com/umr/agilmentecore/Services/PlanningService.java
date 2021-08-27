@@ -259,8 +259,17 @@ public class PlanningService {
 	 * @param Long el id de la planificación específica.
 	 * @return Optional Un paciente o nada.
 	 */
-	public Optional<Planning> getOne(Long id) {
-		return repository.findById(id);
-	}
+	public PlanningData getOne(Long id) {
+		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
+		Planning specificPlanning = optSpecificPlanning.get();
 	
+		PlanningData planningData = new PlanningData(
+				specificPlanning.getPatient().getId(),
+				specificPlanning.getProfessional().getId(),
+				specificPlanning.getState().getId(),
+				specificPlanning.getStartDate(),
+				specificPlanning.getDueDate()
+				);
+		return planningData;
+	}
 }
