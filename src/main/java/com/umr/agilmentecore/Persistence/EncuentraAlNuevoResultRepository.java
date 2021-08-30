@@ -33,7 +33,7 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
 			+ "JOIN pd.encuentraAlNuevoSession eans "
-			+ "JOIN hurs.results r "
+			+ "JOIN eans.results r "
 			+ "ORDER BY r.completeDatetime")
 	Page<ResultsListView> findAllResultsListView(Pageable page);
 	
@@ -51,12 +51,12 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "r.timeBetweenSuccesses,"
 			+ "r.totalTime, "
 			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
-			+ "hurs.game.name, "
-			+ "hurs) "
+			+ "eans.game.name, "
+			+ "eans) "
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
-			+ "JOIN pd.encuentraAlNuevoSession hurs "
-			+ "JOIN hurs.results r "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
 			+ "WHERE r.id = ?1")
 	Optional<EncuentraAlNuevoResultDetailView> findEncuentraAlNuevoResultDetailById(Long id);
 }

@@ -48,6 +48,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return "";
 	}
 	
+	@Override
+	public Long getId() {
+		return this.id;
+	}
 
 	//Devuelve el nombre del juego utilizado en la sesion
 	@Override

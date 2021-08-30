@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
 public class EncuentraAlNuevoResultDetailView {
@@ -18,13 +20,14 @@ public class EncuentraAlNuevoResultDetailView {
 	private int successes;
 	private float[] timeBetweenSuccesses;
 	private float totalTime;
-	private Long patient;
+	private String patient;
 	private String game;
+	private Long encuentraAlNuevoSessionId;
 	@Transient
-	private HayUnoRepetidoSession session;
+	private EncuentraAlNuevoSession session;
 
 	public EncuentraAlNuevoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
-		float[] timeBetweenSuccesses, float totalTime, Long patient, String game, HayUnoRepetidoSession session) {
+		float[] timeBetweenSuccesses, float totalTime, String patient, String game, EncuentraAlNuevoSession session) {
 		super();
 		this.id = id;
 		this.completeDatetime = completeDatetime;
@@ -37,6 +40,22 @@ public class EncuentraAlNuevoResultDetailView {
 		this.game = game;
 		this.session = session;
 	}
+	
+	@JsonCreator
+	public EncuentraAlNuevoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
+			@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
+			@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
+			@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
+			this.completeDatetime = completeDatetime;
+			this.canceled = canceled;
+			this.mistakes = mistakes;
+			this.successes = successes;
+			this.timeBetweenSuccesses = timeBetweenSuccesses;
+			this.totalTime = totalTime;
+			this.game = game;
+			this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
+			System.out.println(this.encuentraAlNuevoSessionId);
+		}
 	
 	public Long getId() {
 		return id;
@@ -94,11 +113,11 @@ public class EncuentraAlNuevoResultDetailView {
 		this.totalTime = totalTime;
 	}
 
-	public Long getPatient() {
+	public String getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Long patient) {
+	public void setPatient(String patient) {
 		this.patient = patient;
 	}
 
@@ -112,5 +131,13 @@ public class EncuentraAlNuevoResultDetailView {
 
 	public List<IParam> getParams() {
 		return this.session.getSettedParams();
+	}
+
+	public Long getEncuentraAlNuevoSessionId() {
+		return encuentraAlNuevoSessionId;
+	}
+
+	public void setEncuentraAlNuevoSessionId(Long encuentraAlNuevoSessionId) {
+		this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
 	}
 }

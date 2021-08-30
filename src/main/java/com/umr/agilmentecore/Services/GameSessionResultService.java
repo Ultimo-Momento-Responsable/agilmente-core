@@ -7,14 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
+import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
+import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
+import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
+import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 
 @Service
 public class GameSessionResultService {
 	@Autowired
 	private HayUnoRepetidoResultRepository hayUnoRepetidoResultRepository;
+	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
+	private EncuentraAlNuevoResultRepository encuentraAlNuevoResultRepository;
 	
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
@@ -34,4 +42,17 @@ public class GameSessionResultService {
 		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultDetailById(id);
 	}
 
+	public void saveResults(EncuentraAlNuevoResultDetailView result) {
+		if (result.getGame().equals("Encuentra al Nuevo")) {
+			EncuentraAlNuevoSession eANS = encuentraAlNuevoSessionRepository.getOne(result.getEncuentraAlNuevoSessionId());
+			EncuentraAlNuevoResult eANR = new EncuentraAlNuevoResult();
+			eANR.setMistakes(result.getMistakes());
+			eANR.setCanceled(result.isCanceled());
+			eANR.setCompleteDatetime(result.getCompleteDatetime());
+			eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
+			eANR.setTotalTime(result.getTotalTime());
+			eANS.addResult(eANR);
+			encuentraAlNuevoSessionRepository.save(eANS);
+		}
+	}
 }

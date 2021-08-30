@@ -8,9 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Services.GameSessionResultService;
@@ -39,6 +42,16 @@ public class GameSessionResultController {
 	@GetMapping(value = "/encuentra-al-repetido/{id}")
 	public Optional<HayUnoRepetidoResultDetailView> getOne(@PathVariable(name = "id")Long id) {
 		return this.service.getOneHayUnoRepetido(id);
+	}
+	
+	/**
+	 * Recibe un resultado de Unity y lo guarda.
+	 * @param result Un resultado con los datos de PlanningMobileData.
+	 * @return PlanningMobileData Objeto con los datos necesarios para guardar un resultado.
+	 */
+	@PostMapping
+	public void save(@RequestBody EncuentraAlNuevoResultDetailView result) {
+		service.saveResults(result);
 	}
 	
 }

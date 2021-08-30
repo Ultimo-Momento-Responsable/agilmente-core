@@ -1,6 +1,7 @@
 package com.umr.agilmentecore.Class;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -42,12 +43,19 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	@ManyToOne
 	private Game game;
 	
+	public void addResult(EncuentraAlNuevoResult result) {
+		this.results.add(result);
+	}
 		
 	@Override
 	public String toString() {
 		return "";
 	}
 	
+	@Override
+	public Long getId() {
+		return this.id;
+	}
 
 	//Devuelve el nombre del juego utilizado en la sesion
 	@Override
