@@ -38,7 +38,7 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@Column(name = "results")
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<EncuentraAlNuevoResult> results;
 	@ManyToOne
 	private Game game;

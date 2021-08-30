@@ -54,7 +54,6 @@ public class EncuentraAlNuevoResultDetailView {
 			this.totalTime = totalTime;
 			this.game = game;
 			this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
-			System.out.println(this.encuentraAlNuevoSessionId);
 		}
 	
 	public Long getId() {

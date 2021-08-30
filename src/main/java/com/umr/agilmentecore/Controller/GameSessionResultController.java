@@ -49,9 +49,9 @@ public class GameSessionResultController {
 	 * @param result Un resultado con los datos de PlanningMobileData.
 	 * @return PlanningMobileData Objeto con los datos necesarios para guardar un resultado.
 	 */
-	@PostMapping
+	@PostMapping(path = "/encuentra-al-nuevo")
 	public void save(@RequestBody EncuentraAlNuevoResultDetailView result) {
-		service.saveResults(result);
+		service.saveEncuentraAlNuevo(result);
 	}
 	
 }

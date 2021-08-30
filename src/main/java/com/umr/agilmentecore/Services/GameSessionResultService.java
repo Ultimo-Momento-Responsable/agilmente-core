@@ -21,8 +21,8 @@ import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 public class GameSessionResultService {
 	@Autowired
 	private HayUnoRepetidoResultRepository hayUnoRepetidoResultRepository;
+	@Autowired
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
-	private EncuentraAlNuevoResultRepository encuentraAlNuevoResultRepository;
 	
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
@@ -42,17 +42,15 @@ public class GameSessionResultService {
 		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultDetailById(id);
 	}
 
-	public void saveResults(EncuentraAlNuevoResultDetailView result) {
-		if (result.getGame().equals("Encuentra al Nuevo")) {
-			EncuentraAlNuevoSession eANS = encuentraAlNuevoSessionRepository.getOne(result.getEncuentraAlNuevoSessionId());
-			EncuentraAlNuevoResult eANR = new EncuentraAlNuevoResult();
-			eANR.setMistakes(result.getMistakes());
-			eANR.setCanceled(result.isCanceled());
-			eANR.setCompleteDatetime(result.getCompleteDatetime());
-			eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
-			eANR.setTotalTime(result.getTotalTime());
-			eANS.addResult(eANR);
-			encuentraAlNuevoSessionRepository.save(eANS);
-		}
+	public void saveEncuentraAlNuevo(EncuentraAlNuevoResultDetailView result) {
+		EncuentraAlNuevoSession eANS = this.encuentraAlNuevoSessionRepository.getOne(result.getEncuentraAlNuevoSessionId());
+		EncuentraAlNuevoResult eANR = new EncuentraAlNuevoResult();
+		eANR.setMistakes(result.getMistakes());
+		eANR.setCanceled(result.isCanceled());
+		eANR.setCompleteDatetime(result.getCompleteDatetime());
+		eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
+		eANR.setTotalTime(result.getTotalTime());
+		eANS.addResult(eANR);
+		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 }
