@@ -3,7 +3,6 @@ package com.umr.agilmentecore.Class.IntermediateClasses;
 import java.util.List;
 
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
-import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 
 public class PatientResultsHayUnoRepetidoView {
 	private List<HayUnoRepetidoResult> results;
