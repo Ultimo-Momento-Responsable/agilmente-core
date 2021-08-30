@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Services.GameSessionResultService;
 
@@ -41,4 +43,14 @@ public class GameSessionResultController {
 		return this.service.getOneHayUnoRepetido(id);
 	}
 	
+	/**
+	 * Obtiene una lista de todos los resultados
+	 * a partir del id de un paciente.
+	 * @param id ID del paciente.
+	 * @return Devuelve la vista de los resultados.
+	 */
+	@GetMapping(value = "/by-patient/{id}")
+	public  PatientResultsView getAllResultsByPatient(@PathVariable(name = "id")Long id) {
+		return this.service.getAllResultsByPatient(id);
+	}
 }
