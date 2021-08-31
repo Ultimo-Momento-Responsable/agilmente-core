@@ -1,6 +1,8 @@
 package com.umr.agilmentecore.Services;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
+import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
+import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuilder;
@@ -64,7 +68,7 @@ public class PlanningService {
 	 * Cambia el estado de una planning a Cancelada
 	 * @param planning la planning a cancelar
 	 */
-	private void cancelPlanning(Planning planning) { 
+	public void cancelPlanning(Planning planning) { 
 		planning.setState(stateRepository.getOne((long) 4)); 
 	}
 	
@@ -258,4 +262,41 @@ public class PlanningService {
 				&& planning.getDueDate().before(today);
 	}
 	
+	/**
+	 * Obtiene una planificación.
+	 * @param Long el id de la planificación específica.
+	 * @return Optional Un planning data o nada.
+	 */
+	public PlanningData getOne(Long id) {
+		updateAllPlannings();
+		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
+		Planning specificPlanning = optSpecificPlanning.get();
+		
+		Optional<Patient> patient = this.patientService.getOne(specificPlanning.getPatient().getId());
+		Patient specificPatient = patient.get();
+		Optional<Professional> professional = this.professionalService.getOne(specificPlanning.getProfessional().getId());
+		Professional specificProfessional = professional.get();
+		
+		//Escarbamos los detalles de la planning
+		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
+		List<IParam> parameters = new ArrayList<IParam>();
+		for (PlanningDetail pd : specificPlanning.getDetail()) {
+			for (IParam param : pd.getGameSession().getSettedParams()) {
+				if (param!=null) {
+					parameters.add(param);
+				}
+			}
+			String game = (pd.getGameSession().getName());
+			int numberOfSession =(pd.getNumberOfSessions());
+			planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+		}
+		
+		// Enviamos todo a la vista	
+		PlanningData planningData = new PlanningData(
+				specificPatient.getId(), specificPatient.getFirstName(), specificPatient.getLastName(),
+				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
+				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
+		
+		return planningData;
+	}
 }

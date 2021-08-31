@@ -46,6 +46,16 @@ public class PlanningController {
 	}
 	
 	/**
+	 * Obtiene una planificacion.
+	 * @param id Numero id de la planificación
+	 * @return Única planificación.
+	 */
+	@GetMapping(value = "/{id}")
+	public PlanningData getOne(@PathVariable(name = "id") Long id) {
+		return service.getOne(id);
+	}
+	
+	/**
 	 * Crea una planificación.
 	 * @param planning Datos de la planificación.
 	 * @return Una instancia de planificación.

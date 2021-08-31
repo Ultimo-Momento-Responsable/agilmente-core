@@ -7,8 +7,6 @@ import java.util.Map.Entry;
 import com.umr.agilmentecore.Class.Game;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
-import com.umr.agilmentecore.Class.Params.FigureQuantity;
-import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 
 public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
