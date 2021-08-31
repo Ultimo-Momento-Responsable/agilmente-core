@@ -131,4 +131,21 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	private boolean canAddEndConditionParam() {
 		return (this.figureQuantity == null) && (this.maximumTime == null);
 	}
+
+	/**
+	 * Obtiene la condición de parada de la instancia de Session.
+	 * @return Condición de parada.
+	 */
+	@Override
+	public IParam getEndCondition() {
+		IParam param = null;
+		
+		if (this.figureQuantity != null) {
+			param = figureQuantity;
+		} else if (this.maximumTime != null) {
+			param = maximumTime;
+		}
+		
+		return param;
+	}
 }

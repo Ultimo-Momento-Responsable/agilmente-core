@@ -63,6 +63,7 @@ public class GameSessionResultController {
 		service.saveHayUnoRepetido(result);
 	}
 
+	/**
 	 * Obtiene una lista de todos los resultados
 	 * a partir del id de un paciente.
 	 * @param id ID del paciente.

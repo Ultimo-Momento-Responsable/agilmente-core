@@ -13,7 +13,7 @@ import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
-
+import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsEncuentraAlNuevoView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
