@@ -9,18 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
+import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
+import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
-import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
+import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
 
 @Service
 public class GameSessionResultService {
 	@Autowired
 	private HayUnoRepetidoResultRepository hayUnoRepetidoResultRepository;
+	@Autowired
+	private HayUnoRepetidoSessionRepository hayUnoRepetidoSessionRepository;
 	@Autowired
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
 	
@@ -42,6 +45,10 @@ public class GameSessionResultService {
 		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultDetailById(id);
 	}
 
+	/**
+	 * Guarda un resultado de EncuentraAlNuevo
+	 * @param result el resultado a guardar
+	 */
 	public void saveEncuentraAlNuevo(EncuentraAlNuevoResultDetailView result) {
 		EncuentraAlNuevoSession eANS = this.encuentraAlNuevoSessionRepository.getOne(result.getEncuentraAlNuevoSessionId());
 		EncuentraAlNuevoResult eANR = new EncuentraAlNuevoResult();
@@ -52,5 +59,21 @@ public class GameSessionResultService {
 		eANR.setTotalTime(result.getTotalTime());
 		eANS.addResult(eANR);
 		encuentraAlNuevoSessionRepository.save(eANS);
+	}
+
+	/**
+	 * Guarda un resultado de HayUnoRepetido
+	 * @param result el resultado a guardar
+	 */
+	public void saveHayUnoRepetido(HayUnoRepetidoResultDetailView result) {
+		HayUnoRepetidoSession hURS = this.hayUnoRepetidoSessionRepository.getOne(result.getHayUnoRepetidoSessionId());
+		HayUnoRepetidoResult hURR = new HayUnoRepetidoResult();
+		hURR.setMistakes(result.getMistakes());
+		hURR.setCanceled(result.isCanceled());
+		hURR.setCompleteDatetime(result.getCompleteDatetime());
+		hURR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
+		hURR.setTotalTime(result.getTotalTime());
+		hURS.addResult(hURR);
+		hayUnoRepetidoSessionRepository.save(hURS);
 	}
 }

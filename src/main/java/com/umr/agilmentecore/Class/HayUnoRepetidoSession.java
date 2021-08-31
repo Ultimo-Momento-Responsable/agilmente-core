@@ -37,7 +37,7 @@ public class HayUnoRepetidoSession implements IGameSession {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@Column(name = "results")
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<HayUnoRepetidoResult> results;
 	@ManyToOne
 	private Game game;
@@ -127,5 +127,9 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 */
 	private boolean canAddEndConditionParam() {
 		return (this.figureQuantity == null) && (this.maximumTime == null);
+	}
+
+	public void addResult(HayUnoRepetidoResult hURR) {
+		this.results.add(hURR);
 	}
 }

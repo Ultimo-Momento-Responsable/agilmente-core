@@ -45,13 +45,21 @@ public class GameSessionResultController {
 	}
 	
 	/**
-	 * Recibe un resultado de Unity y lo guarda.
-	 * @param result Un resultado con los datos de PlanningMobileData.
-	 * @return PlanningMobileData Objeto con los datos necesarios para guardar un resultado.
+	 * Recibe un resultado de Encuentra al Nuevo y lo guarda.
+	 * @param result Un resultado con los datos de EncuentraAlNuevoResultDetailView.
 	 */
 	@PostMapping(path = "/encuentra-al-nuevo")
 	public void save(@RequestBody EncuentraAlNuevoResultDetailView result) {
 		service.saveEncuentraAlNuevo(result);
+	}
+	
+	/**
+	 * Recibe un resultado de Encuentra al Repetido y lo guarda.
+	 * @param result Un resultado con los datos de EncuentraAlNuevoResultDetailView.
+	 */
+	@PostMapping(path = "/encuentra-al-repetido")
+	public void save(@RequestBody HayUnoRepetidoResultDetailView result) {
+		service.saveHayUnoRepetido(result);
 	}
 	
 }

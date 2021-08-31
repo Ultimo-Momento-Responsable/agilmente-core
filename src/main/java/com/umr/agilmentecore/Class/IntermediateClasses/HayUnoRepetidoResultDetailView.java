@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
@@ -20,6 +22,7 @@ public class HayUnoRepetidoResultDetailView {
 	private float totalTime;
 	private String patient;
 	private String game;
+	private Long hayUnoRepetidoSessionId;
 	@Transient
 	private HayUnoRepetidoSession session;
 
@@ -36,6 +39,22 @@ public class HayUnoRepetidoResultDetailView {
 		this.patient = patient;
 		this.game = game;
 		this.session = session;
+	}
+	
+	@JsonCreator
+	public HayUnoRepetidoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
+		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
+		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
+		@JsonProperty("game") String game, @JsonProperty("hayUnoRepetidoSessionId") Long hayUnoRepetidoSessionId) {
+		
+		this.completeDatetime = completeDatetime;
+		this.canceled = canceled;
+		this.mistakes = mistakes;
+		this.successes = successes;
+		this.timeBetweenSuccesses = timeBetweenSuccesses;
+		this.totalTime = totalTime;
+		this.game = game;
+		this.hayUnoRepetidoSessionId = hayUnoRepetidoSessionId;
 	}
 	
 	public Long getId() {
@@ -112,5 +131,9 @@ public class HayUnoRepetidoResultDetailView {
 
 	public List<IParam> getParams() {
 		return this.session.getSettedParams();
+	}
+
+	public Long getHayUnoRepetidoSessionId() {
+		return hayUnoRepetidoSessionId;
 	}
 }

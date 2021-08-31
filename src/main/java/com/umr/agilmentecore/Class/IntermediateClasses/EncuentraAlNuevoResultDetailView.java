@@ -43,18 +43,19 @@ public class EncuentraAlNuevoResultDetailView {
 	
 	@JsonCreator
 	public EncuentraAlNuevoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
-			@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
-			@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
-			@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
-			this.completeDatetime = completeDatetime;
-			this.canceled = canceled;
-			this.mistakes = mistakes;
-			this.successes = successes;
-			this.timeBetweenSuccesses = timeBetweenSuccesses;
-			this.totalTime = totalTime;
-			this.game = game;
-			this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
-		}
+		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
+		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
+		@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
+		
+		this.completeDatetime = completeDatetime;
+		this.canceled = canceled;
+		this.mistakes = mistakes;
+		this.successes = successes;
+		this.timeBetweenSuccesses = timeBetweenSuccesses;
+		this.totalTime = totalTime;
+		this.game = game;
+		this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
+	}
 	
 	public Long getId() {
 		return id;
