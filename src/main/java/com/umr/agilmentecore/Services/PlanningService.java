@@ -67,7 +67,7 @@ public class PlanningService {
 	 * Cambia el estado de una planning a Cancelada
 	 * @param planning la planning a cancelar
 	 */
-	private void cancelPlanning(Planning planning) { 
+	public void cancelPlanning(Planning planning) { 
 		planning.setState(stateRepository.getOne((long) 4)); 
 	}
 	
