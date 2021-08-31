@@ -11,13 +11,14 @@ public class PlanningData {
 	private Long professionalId;
 	private String professionalFirstName;
 	private String professionalLastName;
-	private Long stateId;
+	private String stateName;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date startDate;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date dueDate;
 	private List<GameData> games;
-	private PlanningList pl;
+	private List<PlanningMobileData> planningList;
+	private Long stateId;
 	
 	public void setPatientId(Long patientId) {
 		this.patientId = patientId;
@@ -25,10 +26,6 @@ public class PlanningData {
 
 	public void setProfessionalId(Long professionalId) {
 		this.professionalId = professionalId;
-	}
-
-	public void setStateId(Long stateId) {
-		this.stateId = stateId;
 	}
 
 	public void setStartDate(Date startDate) {
@@ -61,10 +58,6 @@ public class PlanningData {
 	
 	public List<GameData> getGames() {
 		return this.games;
-	}
-
-	public Long getStateId() {
-		return stateId;
 	}
 	
 	public String getPatientFirstName() {
@@ -99,17 +92,33 @@ public class PlanningData {
 		this.professionalLastName = professionalLastName;
 	}
 
-	public PlanningList getPl() {
-		return pl;
+	public List<PlanningMobileData> getPlanningList() {
+		return planningList;
 	}
 
-	public void setPl(PlanningList pl) {
-		this.pl = pl;
+	public void setPlanningList(List<PlanningMobileData> planningList) {
+		this.planningList = planningList;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public Long getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
 	}
 
 	public PlanningData(Long patientId, String patFirstName, String patLastName,
 			Long professionalId, String profFirstName, String profLastName,
-			Long stateId, Date startDate, Date dueDate, PlanningList pl)
+			String state, Date startDate, Date dueDate, List<PlanningMobileData> pl)
 	{
 			super();
 			this.patientId = patientId;
@@ -119,10 +128,10 @@ public class PlanningData {
 			this.professionalFirstName = profFirstName;
 			this.professionalLastName = profLastName;
 			
-			this.stateId = stateId;
+			this.stateName = state;
 			this.startDate = startDate;
 			this.dueDate = dueDate;
-			this.pl = pl;
+			this.planningList = pl;
 	}
 	
 	public PlanningData() {

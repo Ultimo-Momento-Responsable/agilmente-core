@@ -285,13 +285,11 @@ public class PlanningService {
 			planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
 		}
 		
-		PlanningList pl = new PlanningList(planningList);
-		
 		// Enviamos todo a la vista	
 		PlanningData planningData = new PlanningData(
 				specificPatient.getId(), specificPatient.getFirstName(), specificPatient.getLastName(),
 				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
-				specificPlanning.getState().getId(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), pl);
+				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
 		return planningData;
 	}
