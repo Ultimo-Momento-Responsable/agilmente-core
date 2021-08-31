@@ -6,11 +6,19 @@ import com.umr.agilmentecore.Interfaces.IParam;
 
 
 public class PlanningMobileData {
+	private Long gameSessionId;
 	private String game;
 	private Integer numberOfSession;
 	private List<IParam> parameters;
 	
 	public PlanningMobileData(String game, int numberOfSession, List<IParam> parameters) {
+		this.setGame(game);
+		this.setNumberOfSession(numberOfSession);
+		this.parameters = parameters;
+	}
+	
+	public PlanningMobileData(Long gameSessionId, String game, int numberOfSession, List<IParam> parameters) {
+		this.setGameSessionId(gameSessionId);
 		this.setGame(game);
 		this.setNumberOfSession(numberOfSession);
 		this.parameters = parameters;
@@ -39,4 +47,13 @@ public class PlanningMobileData {
 	public void setParameters(List<IParam> params) {
 		this.parameters = params;
 	}
+
+	public Long getGameSessionId() {
+		return gameSessionId;
+	}
+
+	public void setGameSessionId(Long gameSessionId) {
+		this.gameSessionId = gameSessionId;
+	}
+
 }

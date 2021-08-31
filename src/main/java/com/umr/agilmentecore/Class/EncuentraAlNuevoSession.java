@@ -27,8 +27,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "hay_uno_repetido_session")
-public class HayUnoRepetidoSession implements IGameSession {
+@Table(name = "encuentra_al_nuevo_session")
+public class EncuentraAlNuevoSession implements IGameSession {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -38,10 +38,13 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private MaximumTime maximumTime;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<HayUnoRepetidoResult> results;
+	private List<EncuentraAlNuevoResult> results;
 	@ManyToOne
 	private Game game;
 	
+	public void addResult(EncuentraAlNuevoResult result) {
+		this.results.add(result);
+	}
 		
 	@Override
 	public String toString() {
@@ -78,20 +81,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 		}
 		
 		return params;
-	}
-	
-	@ColumnTransformer
-	@Override
-	public IParam getEndCondition() {
-		IParam param = null;
-		
-		if (this.figureQuantity != null) {
-			param = figureQuantity;
-		} else if (this.maximumTime != null) {
-			param = maximumTime;
-		}
-		
-		return param;
 	}
 	
 	/**
@@ -141,9 +130,5 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 */
 	private boolean canAddEndConditionParam() {
 		return (this.figureQuantity == null) && (this.maximumTime == null);
-	}
-
-	public void addResult(HayUnoRepetidoResult hURR) {
-		this.results.add(hURR);
 	}
 }

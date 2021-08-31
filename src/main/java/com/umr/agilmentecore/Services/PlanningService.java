@@ -15,6 +15,7 @@ import com.umr.agilmentecore.Class.Game;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
+import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
@@ -144,8 +145,12 @@ public class PlanningService {
 	 */
 	private IGameSessionBuilder getBuilder(Game game) {
 		switch(game.getId()) {
-			default:
+			case 1:
 				return (IGameSessionBuilder) new HayUnoRepetidoSessionBuilder();
+			case 2: 
+				return (IGameSessionBuilder) new EncuentraAlNuevoSessionBuilder();
+			default:
+				return null;
 		}
 	}
 	
@@ -219,9 +224,10 @@ public class PlanningService {
 						parameters.add(param);
 					}
 				}
+				Long gameSessionId = pd.getGameSession().getId();
 				game = (pd.getGameSession().getName());
 				numberOfSession =(pd.getNumberOfSessions());
-				planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
 			}
 		}
 		PlanningList pl = new PlanningList(planningList);

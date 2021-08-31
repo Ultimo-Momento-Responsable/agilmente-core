@@ -14,6 +14,8 @@ public interface IGameSession {
 	 */
 	public void addParam(String type, String value) throws Exception;
 
+	public Long getId();
+	
 	public String getName();
 	
 	public List<Param> getParams();
