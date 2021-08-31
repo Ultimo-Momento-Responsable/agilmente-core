@@ -21,5 +21,7 @@ public interface IGameSession {
 	public List<Param> getParams();
 	
 	public List<IParam> getSettedParams();
+	
+	public IParam getEndCondition();
 
 }

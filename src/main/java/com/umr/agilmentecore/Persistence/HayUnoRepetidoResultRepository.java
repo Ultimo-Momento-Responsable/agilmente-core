@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Persistence;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -59,4 +60,19 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN hurs.results r "
 			+ "WHERE r.id = ?1")
 	Optional<HayUnoRepetidoResultDetailView> findHayUnoRepetidoResultDetailById(Long id);
+	
+	/**
+	 * Busca todos los resultados de HayUnoRepetidoResult a partir
+	 * del id del paciente.
+	 * @param id ID del paciente.
+	 * @return Lista de resultados.
+	 */
+	@Query(value = "SELECT "
+			+ "r "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.hayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "WHERE p.patient.id = ?1")
+	List<HayUnoRepetidoResult> findHayUnoRepetidoResultByPatient_id(Long id);
 }

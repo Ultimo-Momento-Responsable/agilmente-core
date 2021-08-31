@@ -80,6 +80,20 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return params;
 	}
 	
+	@ColumnTransformer
+	@Override
+	public IParam getEndCondition() {
+		IParam param = null;
+		
+		if (this.figureQuantity != null) {
+			param = figureQuantity;
+		} else if (this.maximumTime != null) {
+			param = maximumTime;
+		}
+		
+		return param;
+	}
+	
 	/**
 	 * Agrega un parámetro a la sesión.
 	 * @param type Puede ser:

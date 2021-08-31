@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Services.GameSessionResultService;
 
@@ -61,5 +62,14 @@ public class GameSessionResultController {
 	public void save(@RequestBody HayUnoRepetidoResultDetailView result) {
 		service.saveHayUnoRepetido(result);
 	}
-	
+
+	 * Obtiene una lista de todos los resultados
+	 * a partir del id de un paciente.
+	 * @param id ID del paciente.
+	 * @return Devuelve la vista de los resultados.
+	 */
+	@GetMapping(value = "/by-patient/{id}")
+	public  PatientResultsView getAllResultsByPatient(@PathVariable(name = "id")Long id) {
+		return this.service.getAllResultsByPatient(id);
+	}
 }
