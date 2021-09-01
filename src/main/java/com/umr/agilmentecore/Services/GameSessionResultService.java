@@ -57,6 +57,7 @@ public class GameSessionResultService {
 		EncuentraAlNuevoSession eANS = this.encuentraAlNuevoSessionRepository.getOne(result.getEncuentraAlNuevoSessionId());
 		EncuentraAlNuevoResult eANR = new EncuentraAlNuevoResult();
 		eANR.setMistakes(result.getMistakes());
+		eANR.setSuccesses(result.getSuccesses());
 		eANR.setCanceled(result.isCanceled());
 		eANR.setCompleteDatetime(result.getCompleteDatetime());
 		eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
@@ -73,6 +74,7 @@ public class GameSessionResultService {
 		HayUnoRepetidoSession hURS = this.hayUnoRepetidoSessionRepository.getOne(result.getHayUnoRepetidoSessionId());
 		HayUnoRepetidoResult hURR = new HayUnoRepetidoResult();
 		hURR.setMistakes(result.getMistakes());
+		hURR.setSuccesses(result.getSuccesses());
 		hURR.setCanceled(result.isCanceled());
 		hURR.setCompleteDatetime(result.getCompleteDatetime());
 		hURR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
