@@ -1,11 +1,10 @@
 package com.umr.agilmentecore.Services;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -281,8 +280,8 @@ public class PlanningService {
 		
 		//Escarbamos los detalles de la planning
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
-		List<IParam> parameters = new ArrayList<IParam>();
 		for (PlanningDetail pd : specificPlanning.getDetail()) {
+			List<IParam> parameters = new ArrayList<IParam>();
 			for (IParam param : pd.getGameSession().getSettedParams()) {
 				if (param!=null) {
 					parameters.add(param);
