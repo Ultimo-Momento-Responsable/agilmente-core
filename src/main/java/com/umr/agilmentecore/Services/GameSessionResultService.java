@@ -11,6 +11,7 @@ import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsEncuentraAlNuevoView;
@@ -19,6 +20,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
+import com.umr.agilmentecore.Persistence.PlanningDetailRepository;
 
 @Service
 public class GameSessionResultService {
@@ -28,7 +30,8 @@ public class GameSessionResultService {
 	private HayUnoRepetidoSessionRepository hayUnoRepetidoSessionRepository;
 	@Autowired
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
-	
+	@Autowired
+	private PlanningDetailRepository planningDetailRepository;
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
 	 * @param page Opciones de paginación.
@@ -61,6 +64,11 @@ public class GameSessionResultService {
 		eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
 		eANR.setTotalTime(result.getTotalTime());
 		eANS.addResult(eANR);
+		PlanningDetail pd = planningDetailRepository.findByEncuentraAlNuevoSession_id(result.getEncuentraAlNuevoSessionId());
+		if (pd.getMaxNumberOfSessions() != -1 && !eANR.isCanceled()) {
+			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
+			planningDetailRepository.save(pd);
+		}
 		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 
@@ -78,6 +86,11 @@ public class GameSessionResultService {
 		hURR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
 		hURR.setTotalTime(result.getTotalTime());
 		hURS.addResult(hURR);
+		PlanningDetail pd = planningDetailRepository.findByHayUnoRepetidoSession_id(result.getHayUnoRepetidoSessionId());
+		if (pd.getMaxNumberOfSessions() != -1 && !hURR.isCanceled()) {
+			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
+			planningDetailRepository.save(pd);
+		}
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
   /**
