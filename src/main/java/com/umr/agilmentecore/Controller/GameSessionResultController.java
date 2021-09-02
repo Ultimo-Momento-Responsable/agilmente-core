@@ -76,6 +76,11 @@ public class GameSessionResultController {
 	 */
 	@GetMapping(value = "/by-patient/{id}")
 	public  PatientResultsView getAllResultsByPatient(@PathVariable(name = "id")Long id) {
+		if (this.service.getAllResultsByPatient(id) == null) {
+			throw new ResponseStatusException(
+			  HttpStatus.NOT_FOUND, "Patient not found"
+			);
+		}
 		return this.service.getAllResultsByPatient(id);
 	}
 }

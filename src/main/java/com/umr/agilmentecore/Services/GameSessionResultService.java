@@ -20,6 +20,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
+import com.umr.agilmentecore.Persistence.PatientRepository;
 import com.umr.agilmentecore.Persistence.PlanningDetailRepository;
 
 @Service
@@ -32,6 +33,8 @@ public class GameSessionResultService {
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
 	@Autowired
 	private PlanningDetailRepository planningDetailRepository;
+	@Autowired
+	private PatientRepository patientRepository;
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
 	 * @param page Opciones de paginación.
@@ -100,9 +103,13 @@ public class GameSessionResultService {
 	 * @return Devuelve la lista con la vista de los resultados.
 	 */
 	public PatientResultsView getAllResultsByPatient(Long id) {
-		List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
-		return new PatientResultsView(
-				hayUnoRepetidoResults,
-				new PatientResultsEncuentraAlNuevoView());
+		if (!this.patientRepository.findById(id).isEmpty()) {
+			List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
+			return new PatientResultsView(
+					hayUnoRepetidoResults,
+					new PatientResultsEncuentraAlNuevoView());
+		} else {
+			return null;
+		}
 	}
 }
