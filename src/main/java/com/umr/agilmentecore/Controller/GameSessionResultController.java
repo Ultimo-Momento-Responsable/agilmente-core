@@ -1,10 +1,9 @@
 package com.umr.agilmentecore.Controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
@@ -41,7 +41,12 @@ public class GameSessionResultController {
 	 * @return El resultado buscado.
 	 */
 	@GetMapping(value = "/encuentra-al-repetido/{id}")
-	public Optional<HayUnoRepetidoResultDetailView> getOne(@PathVariable(name = "id")Long id) {
+	public HayUnoRepetidoResultDetailView getOne(@PathVariable(name = "id")Long id) {
+		if (this.service.getOneHayUnoRepetido(id) == null) {
+			throw new ResponseStatusException(
+			  HttpStatus.NOT_FOUND, "Result not found"
+			);
+		}
 		return this.service.getOneHayUnoRepetido(id);
 	}
 	

@@ -1,7 +1,6 @@
 package com.umr.agilmentecore.Persistence;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,7 +58,7 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN pd.hayUnoRepetidoSession hurs "
 			+ "JOIN hurs.results r "
 			+ "WHERE r.id = ?1")
-	Optional<HayUnoRepetidoResultDetailView> findHayUnoRepetidoResultDetailById(Long id);
+	HayUnoRepetidoResultDetailView findHayUnoRepetidoResultDetailById(Long id);
 	
 	/**
 	 * Busca todos los resultados de HayUnoRepetidoResult a partir
