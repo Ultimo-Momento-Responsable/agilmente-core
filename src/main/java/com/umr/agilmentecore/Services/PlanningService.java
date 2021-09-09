@@ -197,7 +197,7 @@ public class PlanningService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente activas o
+	 * Obtiene todas las planificaciones actualmente
 	 * vigentes del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
@@ -208,7 +208,18 @@ public class PlanningService {
 	}
 	
 	/**
-	 * Obtiene todas las planificaciones actualmente activas o
+	 * Obtiene todas las planificaciones actualmente
+	 * vigentes o pendientes del paciente a partir de su id.
+	 * @param patientId
+	 * @return
+	 */
+	public List<Planning> getCurrentAndPendingPlanningsFromPatient(Long patientId) {
+		updateAllPlannings();
+		return this.repository.findByPatient_IdWithTwoStates(patientId,"Vigente","Pendiente");
+	}
+	
+	/**
+	 * Obtiene todas las planificaciones actualmente
 	 * vigentes del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
