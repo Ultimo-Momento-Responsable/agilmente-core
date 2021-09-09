@@ -83,4 +83,13 @@ public class PlanningController {
 	public PlanningList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
 	}
+	
+	/**
+	 * Cancela una planificación
+	 * @param Long el id de la planificación.
+	 */
+	@GetMapping(value = "/cancel_planning/{id}")
+	public void cancelPlanning(@PathVariable(name = "id") Long id) {
+		service.cancel(id);
+	}
 }
