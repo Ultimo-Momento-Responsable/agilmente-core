@@ -35,7 +35,7 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN pd.hayUnoRepetidoSession hurs "
 			+ "JOIN hurs.results r "
 			+ "ORDER BY r.completeDatetime")
-	Page<ResultsListView> findAllResultsListView(Pageable page);
+	List<ResultsListView> findAllResultsListView();
 	
 	/**
 	 * Busca un resultado de HayUnoRepetidoResult a partir del id.

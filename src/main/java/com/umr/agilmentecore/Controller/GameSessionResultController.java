@@ -2,7 +2,6 @@ package com.umr.agilmentecore.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +30,8 @@ public class GameSessionResultController {
 	 * Devuelve una lista de ResultsData
 	 */
 	@GetMapping
-	public Page<ResultsListView> getAllResultsOrdered(Pageable page) {
-		return this.service.getAllResultsOrdered(page);
+	public Page<ResultsListView> getAllResultsOrdered() {
+		return this.service.getAllResultsOrdered();
 	}
 	
 	/**

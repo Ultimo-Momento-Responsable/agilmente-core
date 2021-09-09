@@ -1,10 +1,12 @@
 package com.umr.agilmentecore.Services;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
@@ -17,6 +19,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetai
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsEncuentraAlNuevoView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
+import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
@@ -32,6 +35,8 @@ public class GameSessionResultService {
 	@Autowired
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
 	@Autowired
+	private EncuentraAlNuevoResultRepository encuentraAlNuevoResultRepository;
+	@Autowired
 	private PlanningDetailRepository planningDetailRepository;
 	@Autowired
 	private PatientRepository patientRepository;
@@ -40,8 +45,12 @@ public class GameSessionResultService {
 	 * @param page Opciones de paginación.
 	 * @return Página de resultados.
 	 */
-	public Page<ResultsListView> getAllResultsOrdered(Pageable page) {
-		return this.hayUnoRepetidoResultRepository.findAllResultsListView(page);
+	public Page<ResultsListView> getAllResultsOrdered() {
+		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListView();
+		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListView();
+		List<ResultsListView> results = Stream.concat(hURResults.stream(), eANResults.stream())
+                .collect(Collectors.toList());
+		return new PageImpl<>(results);
 	}	
 	
 	/**
