@@ -31,8 +31,8 @@ public class GameSessionResultController {
 	 * Devuelve una lista de ResultsData
 	 */
 	@GetMapping
-	public Page<ResultsListView> getAllResultsOrdered(Pageable page) {
-		return this.service.getAllResultsOrdered(page);
+	public Page<ResultsListView> getAllResultsOrdered() {
+		return this.service.getAllResultsOrdered();
 	}
 	
 	/**
