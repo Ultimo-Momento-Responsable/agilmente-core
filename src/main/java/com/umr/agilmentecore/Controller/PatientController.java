@@ -95,12 +95,25 @@ public class PatientController {
 		return service.update(p);		
 	}
 	
+//	/**
+//	 * Elimina un paciente.
+//	 * @param id Long el id del paciente a eliminar.
+//	 */
+//	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//	public void delete(@PathVariable(name = "id") Long id) {
+//		service.delete(id);
+//	}
+	
 	/**
-	 * Elimina un paciente.
-	 * @param id Long el id del paciente a eliminar.
+	 * Elimina un paciente, cambiando su estado a deshabilitado
+	 * @param p El paciente a deshabilitar
+	 * @param id El id del paciente a deshabilitar
+	 * @return
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable(name = "id") Long id) {
-		service.delete(id);
+	@RequestMapping(value = "/deletePatient/{id}", method = RequestMethod.PUT)
+	public Patient delete(@PathVariable(name = "id") Long id) throws Exception {
+		return service.delete(id);
 	}
+	
+	
 }

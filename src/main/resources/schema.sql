@@ -56,6 +56,7 @@ CREATE TABLE patient (
 	first_name VARCHAR(255),
 	last_name VARCHAR(255),
 	is_logged BOOLEAN,
+	is_enabled BOOLEAN,
 	login_code VARCHAR(255)
 );
 

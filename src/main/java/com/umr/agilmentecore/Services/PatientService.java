@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Persistence.PatientRepository;
+import com.umr.agilmentecore.Persistence.PlanningRepository;
+import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 
 
 @Service
@@ -19,6 +22,10 @@ public class PatientService {
 	private PatientRepository repository;
 	@Autowired
 	private PlanningService planningService;
+	@Autowired
+	private PlanningStateRepository planningStateRepository;
+	@Autowired
+	private PlanningRepository planningRepository;
 	
 	/**
 	 * Obtiene todos los resultados de Pacientes.
@@ -65,11 +72,30 @@ public class PatientService {
 	}
 	
 	/**
-	 * Elimina un paciente.
-	 * @param id Long el id del paciente a eliminar.
+	 * Elimina un paciente, cambiando su estado a "Deshabilitado", y cancelando todas sus planificaciones pendientes o vigentes
+	 * @param id Id del paciente
+	 * @return El paciente guardado
+	 * @throws Exception Control de errores en caso de que no exista el paciente o ya se encuentre deshabilitado
 	 */
-	public void delete(Long id) {
-		repository.deleteById(id);
+	public Patient delete(Long id) throws Exception {
+		Patient p = repository.getOne(id);
+		PlanningState cancel = planningStateRepository.findByName("Cancelada");
+		if (p.getId() == null) {
+			throw new RuntimeException("Patient id is not defined.");
+		}
+		if (p.isEnabled() == true) {
+			p.setEnabled(false);		
+			List<Planning> patientPlannings = this.planningService.getCurrentAndPendingPlanningsFromPatient(p.getId());
+			patientPlannings.forEach(
+					(planning) -> {
+						planning.setState(cancel);
+						planningRepository.save(planning);
+						}
+					);	
+		} else {
+			throw new RuntimeException("Patient is already deleted.");
+		}		
+		return repository.save(p);
 	}
 	
 	/**
@@ -86,7 +112,7 @@ public class PatientService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente activas o
+	 * Obtiene todas las planificaciones actualmente
 	 * vigentes del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
