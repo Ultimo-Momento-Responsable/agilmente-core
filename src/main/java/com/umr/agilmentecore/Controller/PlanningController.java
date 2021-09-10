@@ -5,13 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
@@ -88,8 +91,17 @@ public class PlanningController {
 	 * Cancela una planificación
 	 * @param Long el id de la planificación.
 	 */
-	@GetMapping(value = "/cancel_planning/{id}")
+	@RequestMapping(value = "/cancel_planning/{id}", method = RequestMethod.PUT)
 	public void cancelPlanning(@PathVariable(name = "id") Long id) {
-		service.cancel(id);
+		boolean flag = service.cancel(id);
+		if (flag) {
+			throw new ResponseStatusException(
+			  HttpStatus.ACCEPTED, "Planning canceled"
+			);
+		} else {
+			throw new ResponseStatusException(
+			  HttpStatus.BAD_REQUEST, "Planning is already canceled or finished"
+			);
+		}
 	}
 }
