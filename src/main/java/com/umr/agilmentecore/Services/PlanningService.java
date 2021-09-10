@@ -68,7 +68,8 @@ public class PlanningService {
 	 * @param planning la planning a cancelar
 	 */
 	public void cancelPlanning(Planning planning) { 
-		planning.setState(stateRepository.getOne((long) 4)); 
+		planning.setState(stateRepository.getOne((long) 4));
+		this.repository.save(planning);
 	}
 	
 	/**
@@ -310,5 +311,17 @@ public class PlanningService {
 				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
 		return planningData;
+	}
+	
+	/**
+	 * Cancela una planificación
+	 * @param Long el id de la planificación específica.
+	 */
+	public void cancel(Long id) {
+		updateAllPlannings();
+		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
+		Planning specificPlanning = optSpecificPlanning.get();
+		
+		cancelPlanning(specificPlanning);
 	}
 }
