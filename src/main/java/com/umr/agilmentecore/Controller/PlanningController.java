@@ -93,8 +93,8 @@ public class PlanningController {
 	 */
 	@RequestMapping(value = "/cancel_planning/{id}", method = RequestMethod.PUT)
 	public void cancelPlanning(@PathVariable(name = "id") Long id) {
-		boolean isCancelable = service.cancel(id);
-		if (isCancelable) {
+		boolean isCancellable = service.cancel(id);
+		if (isCancellable) {
 			throw new ResponseStatusException(
 			  HttpStatus.ACCEPTED, "Planning canceled"
 			);
