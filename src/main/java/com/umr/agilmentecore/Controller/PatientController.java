@@ -94,16 +94,7 @@ public class PatientController {
 	public Patient update(@RequestBody Patient p, @PathVariable(name = "id") Long id) {
 		return service.update(p);		
 	}
-	
-//	/**
-//	 * Elimina un paciente.
-//	 * @param id Long el id del paciente a eliminar.
-//	 */
-//	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-//	public void delete(@PathVariable(name = "id") Long id) {
-//		service.delete(id);
-//	}
-	
+
 	/**
 	 * Elimina un paciente, cambiando su estado a deshabilitado
 	 * @param p El paciente a deshabilitar
