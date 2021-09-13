@@ -231,9 +231,9 @@ public class PlanningService {
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 		for (Planning plan : plannings) {
 			String game = null;
-			List<IParam> parameters = new ArrayList<IParam>();
 			int numberOfSession = -1;
 			for (PlanningDetail pd : plan.getDetail()) {
+				List<IParam> parameters = new ArrayList<IParam>();
 				if (pd.getNumberOfSessions() != 0) {
 					for (IParam param : pd.getGameSession().getSettedParams()) {
 						if (param!=null) {
