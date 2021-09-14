@@ -84,7 +84,8 @@ public class PatientService {
 			throw new RuntimeException("Patient id is not defined.");
 		}
 		if (p.isEnabled() == true) {
-			p.setEnabled(false);		
+			p.setEnabled(false);
+			p.setLogged(false);
 			List<Planning> patientPlannings = this.planningService.getCurrentAndPendingPlanningsFromPatient(p.getId());
 			patientPlannings.forEach(
 					(planning) -> {
