@@ -86,6 +86,7 @@ public class PatientService {
 		if (p.isEnabled() == true) {
 			p.setEnabled(false);
 			p.setLogged(false);
+			p.setLoginCode(null);
 			List<Planning> patientPlannings = this.planningService.getCurrentAndPendingPlanningsFromPatient(p.getId());
 			patientPlannings.forEach(
 					(planning) -> {
