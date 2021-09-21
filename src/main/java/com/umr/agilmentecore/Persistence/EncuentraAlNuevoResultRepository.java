@@ -57,5 +57,5 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "JOIN pd.encuentraAlNuevoSession eans "
 			+ "JOIN eans.results r "
 			+ "WHERE r.id = ?1")
-	Optional<EncuentraAlNuevoResultDetailView> findEncuentraAlNuevoResultDetailById(Long id);
+	EncuentraAlNuevoResultDetailView findEncuentraAlNuevoResultDetailById(Long id);
 }
