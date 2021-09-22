@@ -64,7 +64,7 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	
 	@Override
 	public List<Param> getParams() {
-		return this.game.getParam();
+		return this.game.getParams();
 	}
 	
 	@ColumnTransformer

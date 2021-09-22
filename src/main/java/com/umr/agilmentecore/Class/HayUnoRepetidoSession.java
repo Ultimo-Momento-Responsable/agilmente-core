@@ -18,6 +18,7 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
+import com.umr.agilmentecore.Class.Params.VariableSize;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
@@ -36,6 +37,8 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private FigureQuantity figureQuantity;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private VariableSize variableSize;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<HayUnoRepetidoResult> results;
@@ -61,7 +64,7 @@ public class HayUnoRepetidoSession implements IGameSession {
 	
 	@Override
 	public List<Param> getParams() {
-		return this.game.getParam();
+		return this.game.getParams();
 	}
 	
 	@ColumnTransformer
@@ -75,6 +78,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 		
 		if (this.maximumTime != null) {
 			params.add(maximumTime);
+		}
+		
+		if (this.variableSize != null) {
+			params.add(variableSize);
 		}
 		
 		return params;
@@ -113,6 +120,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 				this.figureQuantity.setValue(value);
 			} 
 		}
+		if (this.isVariableSizeParam(type)) {
+			this.variableSize = new VariableSize();
+			this.variableSize.setValue(value);
+		}
 	}
 	
 	/**
@@ -133,6 +144,14 @@ public class HayUnoRepetidoSession implements IGameSession {
 		return type.equals("FigureQuantity");
 	}
 	
+	/**
+	 * Verifica si el tipo de parámetro es "VariableSize".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "VariableSize".
+	 */
+	private boolean isVariableSizeParam(String type) {
+		return type.equals("VariableSize");
+	}
 	/**
 	 * Verifica si se puede añadir un parámetro "FigureQuantity" o
 	 * "MaximumTime".
