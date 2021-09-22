@@ -15,38 +15,40 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "sprite_set")
-public class SpriteSet implements IParam {
+@Table(name = "variable_size")
+public class VariableSize implements IParam{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "sprite_set")
-	private int spriteSet;
+	@Column(name = "variable_size")
+	private boolean variableSize;
 	
 	@Override
 	public String getValue() {
-		return Integer.toString(this.spriteSet);
+		return Boolean.toString(this.variableSize);
 	}
-	
-	@Override
-	public void setValue(String value) throws Exception {
-		int parsed = Integer.parseInt(value);
-		this.spriteSet = parsed;
-	}
-	
-	@Override
-	public String toString() {
-		return this.getValue();
-	}
-	
+
 	@Override
 	public String getName() {
-		return "spriteSet";
+		return "variableSize";
 	}
 	
 	@Override
 	public String getSpanishName() {
-		return "Conjunto de figuras";
+		return "Tamaño Variable";
 	}
 	
+	@Override
+	public void setValue(String value) throws Exception {
+		if (value.equals("true")) {
+			this.variableSize = true;
+		}else {
+			this.variableSize = false;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return this.getValue();
+	}
 }

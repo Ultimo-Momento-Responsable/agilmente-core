@@ -1,20 +1,39 @@
 INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
-INSERT INTO param (name, class_name, type, min_value, max_value) VALUES ('Cantidad de Figuras', 'FigureQuantity', 0, 3, 20);
-INSERT INTO param (name, class_name, type, min_value, max_value) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 1, -1);
-INSERT INTO param (name, class_name, type, min_value, max_value) VALUES ('Conjunto de figuras', 'SpriteSet', 2, -1, -1);
+
+INSERT INTO param (name, class_name, type) VALUES ('Cantidad de Figuras', 'FigureQuantity', 0);
+INSERT INTO param (name, class_name, type) VALUES ('Tiempo Máximo', 'MaximumTime', 0);
+INSERT INTO param (name, class_name, type) VALUES ('Tamaño Variable', 'VariableSize', 1);
+INSERT INTO param (name, class_name, type) VALUES ('Conjunto de figuras', 'SpriteSet', 2);
+
 INSERT INTO game (name) VALUES ('Encuentra al Repetido');
 INSERT INTO game (name) VALUES ('Encuentra al Nuevo');
-INSERT INTO sprite_set (sprite_set, sprite_set_name) VALUES (1, 'Frutas');
-INSERT INTO sprite_set (sprite_set, sprite_set_name) VALUES (2, 'Flores');
+
 INSERT INTO cognitive_domain (name) VALUES ('Procesos Atencionales');
-INSERT INTO game_param (game_id, param_id) VALUES (1, 1);
-INSERT INTO game_param (game_id, param_id) VALUES (1, 2);
-INSERT INTO game_param (game_id, param_id) VALUES (2, 1);
-INSERT INTO game_param (game_id, param_id) VALUES (2, 2);
-INSERT INTO game_param (game_id, param_id) VALUES (1, 3);
-INSERT INTO game_param (game_id, param_id) VALUES (2, 3);
+INSERT INTO cognitive_domain (name) VALUES ('Memoria');
+
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 120);
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 60);
+INSERT INTO game_param (param_id) VALUES (3);
+INSERT INTO game_param (param_id) VALUES (4);
+
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 1);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 2);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 3);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 4);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 5);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 6);
+
+INSERT INTO sprite_set_content(name) VALUES ('Flores');
+INSERT INTO sprite_set_content(name) VALUES ('Frutas');
+
+INSERT INTO game_param_sprite_set_content(sprite_set_content_id, game_param_id) VALUES (1, 6);
+INSERT INTO game_param_sprite_set_content(sprite_set_content_id, game_param_id) VALUES (2, 6);
+
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (1, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 1);
+INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 2);
 
 INSERT INTO patient (born_date, city, description, first_name, last_name, is_logged, is_enabled) VALUES ('1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez',false,true);
 INSERT INTO professional (first_name, last_name) VALUES ('Jorgelina', 'Cordero');
