@@ -18,6 +18,7 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
+import com.umr.agilmentecore.Class.Params.SpriteSet;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
@@ -36,6 +37,8 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	private FigureQuantity figureQuantity;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private SpriteSet spriteSet;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<EncuentraAlNuevoResult> results;

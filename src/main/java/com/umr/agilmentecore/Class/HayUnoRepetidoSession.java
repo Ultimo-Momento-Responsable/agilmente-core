@@ -18,6 +18,7 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
+import com.umr.agilmentecore.Class.Params.SpriteSet;
 import com.umr.agilmentecore.Class.Params.VariableSize;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
@@ -37,6 +38,8 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private FigureQuantity figureQuantity;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private SpriteSet spriteSet;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private VariableSize variableSize;
 	@Column(name = "results")
@@ -80,6 +83,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 			params.add(maximumTime);
 		}
 		
+		if (this.spriteSet != null) {
+			params.add(spriteSet);
+		}
+		
 		if (this.variableSize != null) {
 			params.add(variableSize);
 		}
@@ -120,6 +127,12 @@ public class HayUnoRepetidoSession implements IGameSession {
 				this.figureQuantity.setValue(value);
 			} 
 		}
+		
+		if (this.isSpriteSetParam(type)) {
+			this.spriteSet = new SpriteSet();
+			this.spriteSet.setValue(value);
+		}
+		
 		if (this.isVariableSizeParam(type)) {
 			this.variableSize = new VariableSize();
 			this.variableSize.setValue(value);
@@ -160,6 +173,15 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 */
 	private boolean canAddEndConditionParam() {
 		return (this.figureQuantity == null) && (this.maximumTime == null);
+	}
+	
+	/**
+	 * Verifica si el tipo de parámetro es "SpriteSet".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "SpriteSet".
+	 */
+	private boolean isSpriteSetParam(String type) {
+		return type.equals("SpriteSet");
 	}
 
 	public void addResult(HayUnoRepetidoResult hURR) {

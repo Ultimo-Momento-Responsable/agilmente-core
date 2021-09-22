@@ -6,6 +6,7 @@ CREATE SEQUENCE hibernate_sequence
 	INCREMENT BY 1;
 
 /* TABLAS */
+
 DROP TABLE IF EXISTS cognitive_domain CASCADE;
 CREATE TABLE cognitive_domain (
 	id SERIAL NOT NULL PRIMARY KEY,
@@ -24,10 +25,17 @@ CREATE TABLE figure_quantity (
 	figure_quantity INTEGER NOT NULL
 );
 
+DROP TABLE IF EXISTS sprite_set CASCADE;
+CREATE TABLE sprite_set (
+	id SERIAL NOT NULL PRIMARY KEY,
+	sprite_set INTEGER NOT NULL
+);
+
 DROP TABLE IF EXISTS variable_size CASCADE;
 CREATE TABLE variable_size (
 	id SERIAL NOT NULL PRIMARY KEY,
 	variable_size BOOLEAN NOT NULL
+
 );
 
 DROP TABLE IF EXISTS game CASCADE;
@@ -95,11 +103,13 @@ CREATE TABLE hay_uno_repetido_session (
 	figure_quantity_id INTEGER,
 	game_id INTEGER NOT NULL,
 	maximum_time_id INTEGER,
+	sprite_set_id INTEGER,
 	variable_size_id INTEGER,
 	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id),
 	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id),
-	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id)
+	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id),
+	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id)
 );
 
 DROP TABLE IF EXISTS hay_uno_repetido_session_results CASCADE;
@@ -136,10 +146,31 @@ CREATE TABLE planning_detail (
 
 DROP TABLE IF EXISTS game_param CASCADE;
 CREATE TABLE game_param (
-	game_id BIGINT NOT NULL,
+	id SERIAL NOT NULL PRIMARY KEY,
 	param_id BIGINT NOT NULL,
 	min_value INT,
 	max_value INT,
-	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (param_id) REFERENCES param(id)
+);
+
+DROP TABLE IF EXISTS sprite_set_content CASCADE;
+CREATE TABLE sprite_set_content (
+	id SERIAL NOT NULL PRIMARY KEY,
+	name VARCHAR(128) NOT NULL
+);
+
+DROP TABLE IF EXISTS game_param_sprite_set_content CASCADE;
+CREATE TABLE game_param_sprite_set_content (
+	sprite_set_content_id BIGINT,
+	game_param_id BIGINT,
+	FOREIGN KEY (sprite_set_content_id) REFERENCES sprite_set_content(id),
+	FOREIGN KEY (game_param_id) REFERENCES game_param(id)
+);
+
+DROP TABLE IF EXISTS game_game_param CASCADE;
+CREATE TABLE game_game_param (
+	game_id BIGINT,
+	game_param_id BIGINT,
+	FOREIGN KEY (game_id) REFERENCES game(id),
+	FOREIGN KEY (game_param_id) REFERENCES game_param(id)
 );

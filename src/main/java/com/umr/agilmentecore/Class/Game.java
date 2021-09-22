@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Class;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,15 +30,13 @@ public class Game {
 	@ManyToMany
 	private List<CognitiveDomain> cognitiveDomain;
 	@OneToMany
-	private List<GameParam> gameParams;
+	private List<GameParam> gameParam;
 
 	public List<Param> getParams() {
-		List<Param> paramList = null;
-		for (GameParam gp : gameParams) {
+		List<Param> paramList = new ArrayList<Param>();
+		for (GameParam gp : gameParam) {
 			paramList.add(gp.getParam());
 		}
 		return paramList;
 	}
-	
-	
 }
