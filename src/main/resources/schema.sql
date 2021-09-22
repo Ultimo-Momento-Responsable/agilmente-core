@@ -78,9 +78,7 @@ CREATE TABLE param (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(255),
 	class_name VARCHAR(255),
-	type INT,
-	max_value INT,
-	min_value INT
+	type INT
 );
 
 DROP TABLE IF EXISTS game_cognitive_domain CASCADE;
@@ -140,6 +138,8 @@ DROP TABLE IF EXISTS game_param CASCADE;
 CREATE TABLE game_param (
 	game_id BIGINT NOT NULL,
 	param_id BIGINT NOT NULL,
+	min_value INT,
+	max_value INT,
 	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (param_id) REFERENCES param(id)
 );
