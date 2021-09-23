@@ -82,4 +82,19 @@ public class GameSessionResultController {
 		}
 		return this.service.getAllResultsByPatient(id);
 	}
+	
+	/**
+	 * Obtiene un resultado de Encuentra al Nuevo a partir del id.
+	 * @param id Id del resultado.
+	 * @return El resultado buscado.
+	 */
+	@GetMapping(value = "/encuentra-al-nuevo/{id}")
+	public EncuentraAlNuevoResultDetailView getOneEAN(@PathVariable(name = "id")Long id) {
+		if (this.service.getOneEncuentraAlNuevo(id) == null) {
+			throw new ResponseStatusException(
+			  HttpStatus.NOT_FOUND, "Result not found"
+			);
+		}
+		return this.service.getOneEncuentraAlNuevo(id);
+	}
 }

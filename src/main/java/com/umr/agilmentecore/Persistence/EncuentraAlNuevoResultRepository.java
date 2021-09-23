@@ -1,7 +1,6 @@
 package com.umr.agilmentecore.Persistence;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -57,5 +56,5 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "JOIN pd.encuentraAlNuevoSession eans "
 			+ "JOIN eans.results r "
 			+ "WHERE r.id = ?1")
-	Optional<EncuentraAlNuevoResultDetailView> findEncuentraAlNuevoResultDetailById(Long id);
+	EncuentraAlNuevoResultDetailView findEncuentraAlNuevoResultDetailById(Long id);
 }

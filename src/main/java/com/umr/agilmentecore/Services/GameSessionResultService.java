@@ -61,6 +61,15 @@ public class GameSessionResultService {
 	public HayUnoRepetidoResultDetailView getOneHayUnoRepetido(Long id) {
 		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultDetailById(id);
 	}
+	
+	/**
+	 * Obtiene un resultado de EncuentraAlNuevo.
+	 * @param Long el id del juego específico.
+	 * @return Optional un resultado de un juego o nada.
+	 */
+	public EncuentraAlNuevoResultDetailView getOneEncuentraAlNuevo(Long id) {
+		return this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultDetailById(id);
+	}
 
 	/**
 	 * Guarda un resultado de EncuentraAlNuevo
