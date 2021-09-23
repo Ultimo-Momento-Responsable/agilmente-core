@@ -19,10 +19,10 @@ CREATE TABLE planning_state (
 	name VARCHAR(128) NOT NULL
 );
 
-DROP TABLE IF EXISTS figure_quantity CASCADE;
-CREATE TABLE figure_quantity (
+DROP TABLE IF EXISTS max_level CASCADE;
+CREATE TABLE max_level (
 	id SERIAL NOT NULL PRIMARY KEY,
-	figure_quantity INTEGER NOT NULL
+	max_level INTEGER NOT NULL
 );
 
 DROP TABLE IF EXISTS sprite_set CASCADE;
@@ -100,13 +100,13 @@ CREATE TABLE game_cognitive_domain (
 DROP TABLE IF EXISTS hay_uno_repetido_session CASCADE; 
 CREATE TABLE hay_uno_repetido_session (
 	id SERIAL NOT NULL PRIMARY KEY,
-	figure_quantity_id INTEGER,
+	max_level_id INTEGER,
 	game_id INTEGER NOT NULL,
 	maximum_time_id INTEGER,
 	sprite_set_id INTEGER,
 	variable_size_id INTEGER,
 	FOREIGN KEY (game_id) REFERENCES game(id),
-	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id),
+	FOREIGN KEY (max_level_id) REFERENCES max_level(id),
 	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id),
 	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id),
 	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id)
