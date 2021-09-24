@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "param_type_2_content")
+@Table(name = "param_type2content")
 public class ParamType2Content {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -153,17 +153,17 @@ CREATE TABLE game_param (
 	FOREIGN KEY (param_id) REFERENCES param(id)
 );
 
-DROP TABLE IF EXISTS param_type_2_content CASCADE;
-CREATE TABLE param_type_2_content (
+DROP TABLE IF EXISTS param_type2content CASCADE;
+CREATE TABLE param_type2content (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(128) NOT NULL
 );
 
-DROP TABLE IF EXISTS game_param_param_type_2_content CASCADE;
-CREATE TABLE game_param_param_type_2_content (
-	param_type_2_content_id BIGINT,
+DROP TABLE IF EXISTS game_param_param_type2content CASCADE;
+CREATE TABLE game_param_param_type2content (
+	param_type2content_id BIGINT,
 	game_param_id BIGINT,
-	FOREIGN KEY (param_type_2_content_id) REFERENCES param_type_2_content(id),
+	FOREIGN KEY (param_type2content_id) REFERENCES param_type2content(id),
 	FOREIGN KEY (game_param_id) REFERENCES game_param(id)
 );
 

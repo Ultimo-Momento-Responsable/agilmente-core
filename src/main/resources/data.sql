@@ -28,11 +28,11 @@ INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 5);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 6);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 7);
 
-INSERT INTO param_type_2_content(name) VALUES ('Flores');
-INSERT INTO param_type_2_content(name) VALUES ('Frutas');
+INSERT INTO param_type2content(name) VALUES ('Flores');
+INSERT INTO param_type2content(name) VALUES ('Frutas');
 
-INSERT INTO game_param_param_type_2_content(param_type_2_content_id, game_param_id) VALUES (1, 7);
-INSERT INTO game_param_param_type_2_content(param_type_2_content_id, game_param_id) VALUES (2, 7);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (1, 7);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (2, 7);
 
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (1, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 1);
