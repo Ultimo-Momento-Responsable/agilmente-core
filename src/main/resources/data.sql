@@ -1,6 +1,6 @@
 INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
 
-INSERT INTO param (name, class_name, type) VALUES ('Cantidad de Figuras', 'FigureQuantity', 0);
+INSERT INTO param (name, class_name, type) VALUES ('Nivel Maximo', 'MaxLevel', 0);
 INSERT INTO param (name, class_name, type) VALUES ('Tiempo Máximo', 'MaximumTime', 0);
 INSERT INTO param (name, class_name, type) VALUES ('Tamaño Variable', 'VariableSize', 1);
 INSERT INTO param (name, class_name, type) VALUES ('Conjunto de figuras', 'SpriteSet', 2);
