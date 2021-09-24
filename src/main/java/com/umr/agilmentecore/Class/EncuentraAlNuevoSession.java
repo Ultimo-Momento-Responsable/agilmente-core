@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnTransformer;
 
-import com.umr.agilmentecore.Class.Params.FigureQuantity;
+import com.umr.agilmentecore.Class.Params.MaxLevel;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Class.Params.SpriteSet;
 import com.umr.agilmentecore.Interfaces.IGameSession;
@@ -34,7 +34,7 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private FigureQuantity figureQuantity;
+	private MaxLevel maxLevel;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private MaximumTime maximumTime;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -75,8 +75,8 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	public List<IParam> getSettedParams() {
 		List<IParam> params = new ArrayList<IParam>();
 		
-		if (this.figureQuantity != null) {
-			params.add(figureQuantity);
+		if (this.maxLevel != null) {
+			params.add(maxLevel);
 		}
 		
 		if (this.maximumTime != null) {
@@ -90,8 +90,8 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	 * Agrega un parámetro a la sesión.
 	 * @param type Puede ser:
 	 *   - "MaximumTime": Límite de tiempo para la sesión.
-	 *   - "FigureQuantity": Límite de figuras para la sesión.
-	 * "FigureQuantity" y "MaximumTime" son mutuamente exclueyentes. 
+	 *   - "MaxLevel": Límite de figuras para la sesión.
+	 * "MaxLevel" y "MaximumTime" son mutuamente exclueyentes. 
 	 * @param value Valor del parámetro.
 	 */
 	@Override
@@ -100,9 +100,9 @@ public class EncuentraAlNuevoSession implements IGameSession {
 			if (this.isMaximumTimeParam(type)) {
 				this.maximumTime = new MaximumTime();
 				this.maximumTime.setValue(value);
-			} else if(this.isFigureQuantityParam(type)) {
-				this.figureQuantity = new FigureQuantity();
-				this.figureQuantity.setValue(value);
+			} else if(this.isMaxLevelParam(type)) {
+				this.maxLevel = new MaxLevel();
+				this.maxLevel.setValue(value);
 			} 
 		}
 	}
@@ -117,22 +117,22 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	}
 	
 	/**
-	 * Verifica si el tipo de parámetro es "FigureQuantity".
+	 * Verifica si el tipo de parámetro es "MaxLevel".
 	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "FigureQuantity".
+	 * @return Verdadero si es "MaxLevel".
 	 */
-	private boolean isFigureQuantityParam(String type) {
-		return type.equals("FigureQuantity");
+	private boolean isMaxLevelParam(String type) {
+		return type.equals("MaxLevel");
 	}
 	
 	/**
-	 * Verifica si se puede añadir un parámetro "FigureQuantity" o
+	 * Verifica si se puede añadir un parámetro "MaxLevel" o
 	 * "MaximumTime".
 	 * No tiene que existir un valor anterior para ninguna de las dos.
 	 * @return Verdadero si puede añadir una condición de parada.
 	 */
 	private boolean canAddEndConditionParam() {
-		return (this.figureQuantity == null) && (this.maximumTime == null);
+		return (this.maxLevel == null) && (this.maximumTime == null);
 	}
 
 	/**
@@ -143,8 +143,8 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	public IParam getEndCondition() {
 		IParam param = null;
 		
-		if (this.figureQuantity != null) {
-			param = figureQuantity;
+		if (this.maxLevel != null) {
+			param = maxLevel;
 		} else if (this.maximumTime != null) {
 			param = maximumTime;
 		}

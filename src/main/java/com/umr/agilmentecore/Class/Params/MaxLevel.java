@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "figure_quantity")
-public class FigureQuantity implements IParam {
+@Table(name = "max_level")
+public class MaxLevel implements IParam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "figure_quantity")
-	private int figureQuantity;
+	@Column(name = "max_level")
+	private int maxLevel;
 	private static int MAX_VALUE = 20;
 	private static int MIN_VALUE = 3;
 	
 	@Override
 	public String getValue() {
-		return Integer.toString(this.figureQuantity);
+		return Integer.toString(this.maxLevel);
 	}
 	
 	@Override
@@ -35,9 +35,9 @@ public class FigureQuantity implements IParam {
 		int parsed  = Integer.parseInt(value);
 		
 		if (this.checkIfValid(parsed)) {
-			this.figureQuantity = parsed;
+			this.maxLevel = parsed;
 		} else {
-			throw new Exception("FigureQuantity parameter can't be greater than " + MAX_VALUE + " or lesser than "+ MIN_VALUE +".");
+			throw new Exception("MaxLevel parameter can't be greater than " + MAX_VALUE + " or lesser than "+ MIN_VALUE +".");
 		}
 	}
 	
@@ -48,12 +48,12 @@ public class FigureQuantity implements IParam {
 	
 	@Override
 	public String getName() {
-		return "figureQuantity";
+		return "maxLevel";
 	}
 	
 	@Override
 	public String getSpanishName() {
-		return "Cantidad de Figuras";
+		return "Nivel Máximo";
 	}
 	
 	/**
