@@ -179,9 +179,9 @@ public class HayUnoRepetidoSession implements IGameSession {
 	}
 	
 	/**
-	 * Verifica si el tipo de parámetro es "VariableSize".
+	 * Verifica si el tipo de parámetro es "Distractors".
 	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "VariableSize".
+	 * @return Verdadero si es "Distractors".
 	 */
 	private boolean isDistractorsParam(String type) {
 		return type.equals("Distractors");
