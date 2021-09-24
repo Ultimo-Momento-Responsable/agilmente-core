@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnTransformer;
 
+import com.umr.agilmentecore.Class.Params.Distractors;
 import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Class.Params.SpriteSet;
@@ -42,6 +43,8 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private SpriteSet spriteSet;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private VariableSize variableSize;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Distractors distractors;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<HayUnoRepetidoResult> results;
@@ -91,6 +94,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 			params.add(variableSize);
 		}
 		
+		if (this.distractors != null) {
+			params.add(distractors);
+		}
+		
 		return params;
 	}
 	
@@ -137,6 +144,11 @@ public class HayUnoRepetidoSession implements IGameSession {
 			this.variableSize = new VariableSize();
 			this.variableSize.setValue(value);
 		}
+		
+		if (this.isDistractorsParam(type)) {
+			this.distractors = new Distractors();
+			this.distractors.setValue(value);
+		}
 	}
 	
 	/**
@@ -165,6 +177,16 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private boolean isVariableSizeParam(String type) {
 		return type.equals("VariableSize");
 	}
+	
+	/**
+	 * Verifica si el tipo de parámetro es "VariableSize".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "VariableSize".
+	 */
+	private boolean isDistractorsParam(String type) {
+		return type.equals("Distractors");
+	}
+	
 	/**
 	 * Verifica si se puede añadir un parámetro "FigureQuantity" o
 	 * "MaximumTime".

@@ -153,17 +153,17 @@ CREATE TABLE game_param (
 	FOREIGN KEY (param_id) REFERENCES param(id)
 );
 
-DROP TABLE IF EXISTS sprite_set_content CASCADE;
-CREATE TABLE sprite_set_content (
+DROP TABLE IF EXISTS param_type_2_content CASCADE;
+CREATE TABLE param_type_2_content (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(128) NOT NULL
 );
 
-DROP TABLE IF EXISTS game_param_sprite_set_content CASCADE;
-CREATE TABLE game_param_sprite_set_content (
-	sprite_set_content_id BIGINT,
+DROP TABLE IF EXISTS game_param_param_type_2_content CASCADE;
+CREATE TABLE game_param_param_type_2_content (
+	param_type_2_content_id BIGINT,
 	game_param_id BIGINT,
-	FOREIGN KEY (sprite_set_content_id) REFERENCES sprite_set_content(id),
+	FOREIGN KEY (param_type_2_content_id) REFERENCES param_type_2_content(id),
 	FOREIGN KEY (game_param_id) REFERENCES game_param(id)
 );
 

@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.umr.agilmentecore.Class.Param;
-import com.umr.agilmentecore.Class.SpriteSetContent;
+import com.umr.agilmentecore.Class.ParamType2Content;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,5 +32,5 @@ public class GameParam {
 	@Column(name = "min_value")
 	private Integer minValue;
 	@OneToMany
-	private List<SpriteSetContent> spriteSetContent;
+	private List<ParamType2Content> paramType2Content;
 }
