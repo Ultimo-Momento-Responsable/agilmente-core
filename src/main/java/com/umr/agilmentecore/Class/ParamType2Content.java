@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "sprite_set_content")
-public class SpriteSetContent {
+@Table(name = "param_type2content")
+public class ParamType2Content {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

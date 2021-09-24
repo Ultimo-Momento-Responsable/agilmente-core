@@ -3,6 +3,7 @@ INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada
 INSERT INTO param (name, class_name, type) VALUES ('Nivel Maximo', 'MaxLevel', 0);
 INSERT INTO param (name, class_name, type) VALUES ('Tiempo Máximo', 'MaximumTime', 0);
 INSERT INTO param (name, class_name, type) VALUES ('Tamaño Variable', 'VariableSize', 1);
+INSERT INTO param (name, class_name, type) VALUES ('Distractores', 'Distractors', 1);
 INSERT INTO param (name, class_name, type) VALUES ('Conjunto de figuras', 'SpriteSet', 2);
 
 INSERT INTO game (name) VALUES ('Encuentra al Repetido');
@@ -17,6 +18,7 @@ INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 60);
 INSERT INTO game_param (param_id) VALUES (3);
 INSERT INTO game_param (param_id) VALUES (4);
+INSERT INTO game_param (param_id) VALUES (5);
 
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 1);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 2);
@@ -24,12 +26,13 @@ INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 3);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 4);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 5);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 6);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 7);
 
-INSERT INTO sprite_set_content(name) VALUES ('Flores');
-INSERT INTO sprite_set_content(name) VALUES ('Frutas');
+INSERT INTO param_type2content(name) VALUES ('Flores');
+INSERT INTO param_type2content(name) VALUES ('Frutas');
 
-INSERT INTO game_param_sprite_set_content(sprite_set_content_id, game_param_id) VALUES (1, 6);
-INSERT INTO game_param_sprite_set_content(sprite_set_content_id, game_param_id) VALUES (2, 6);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (1, 7);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (2, 7);
 
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (1, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 1);
