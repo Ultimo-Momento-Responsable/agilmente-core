@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnTransformer;
 
 import com.umr.agilmentecore.Class.Params.Distractors;
+import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaxLevel;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Class.Params.SpriteSet;
@@ -45,6 +46,8 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private VariableSize variableSize;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Distractors distractors;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private FigureQuantity figureQuantity;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<HayUnoRepetidoResult> results;

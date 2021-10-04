@@ -25,6 +25,12 @@ CREATE TABLE max_level (
 	max_level INTEGER NOT NULL
 );
 
+DROP TABLE IF EXISTS figure_quantity CASCADE;
+CREATE TABLE figure_quantity (
+	id SERIAL NOT NULL PRIMARY KEY,
+	figure_quantity INTEGER NOT NULL
+);
+
 DROP TABLE IF EXISTS sprite_set CASCADE;
 CREATE TABLE sprite_set (
 	id SERIAL NOT NULL PRIMARY KEY,
@@ -105,11 +111,13 @@ CREATE TABLE hay_uno_repetido_session (
 	maximum_time_id INTEGER,
 	sprite_set_id INTEGER,
 	variable_size_id INTEGER,
+	figure_quantity_id INTEGER,
 	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (max_level_id) REFERENCES max_level(id),
 	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id),
 	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id),
-	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id)
+	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id),
+	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id)
 );
 
 DROP TABLE IF EXISTS hay_uno_repetido_session_results CASCADE;
