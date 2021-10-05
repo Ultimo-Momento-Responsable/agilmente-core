@@ -101,6 +101,10 @@ public class HayUnoRepetidoSession implements IGameSession {
 			params.add(distractors);
 		}
 		
+		if (this.figureQuantity != null) {
+			params.add(figureQuantity);
+		}
+		
 		return params;
 	}
 	
@@ -152,6 +156,11 @@ public class HayUnoRepetidoSession implements IGameSession {
 			this.distractors = new Distractors();
 			this.distractors.setValue(value);
 		}
+		
+		if (this.isFigureQuantityParam(type)) {
+			this.figureQuantity = new FigureQuantity();
+			this.figureQuantity.setValue(value);
+		}
 	}
 	
 	/**
@@ -191,6 +200,24 @@ public class HayUnoRepetidoSession implements IGameSession {
 	}
 	
 	/**
+	 * Verifica si el tipo de parámetro es "SpriteSet".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "SpriteSet".
+	 */
+	private boolean isSpriteSetParam(String type) {
+		return type.equals("SpriteSet");
+	}
+	
+	/**
+	 * Verifica si el tipo de parámetro es "FigureQuantity".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "FigureQuantity".
+	 */
+	private boolean isFigureQuantityParam(String type) {
+		return type.equals("FigureQuantity");
+	}
+	
+	/**
 	 * Verifica si se puede añadir un parámetro "MaxLevel" o
 	 * "MaximumTime".
 	 * No tiene que existir un valor anterior para ninguna de las dos.
@@ -198,15 +225,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 	 */
 	private boolean canAddEndConditionParam() {
 		return (this.maxLevel == null) && (this.maximumTime == null);
-	}
-	
-	/**
-	 * Verifica si el tipo de parámetro es "SpriteSet".
-	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "SpriteSet".
-	 */
-	private boolean isSpriteSetParam(String type) {
-		return type.equals("SpriteSet");
 	}
 
 	public void addResult(HayUnoRepetidoResult hURR) {

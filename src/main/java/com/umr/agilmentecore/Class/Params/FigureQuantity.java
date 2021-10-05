@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "max_level")
+@Table(name = "figure_quantity")
 public class FigureQuantity implements IParam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class FigureQuantity implements IParam {
 	
 	@Override
 	public String getSpanishName() {
-		return "Cantidad de Figuras";
+		return "Cantidad Máxima de Figuras";
 	}
 	
 	/**
