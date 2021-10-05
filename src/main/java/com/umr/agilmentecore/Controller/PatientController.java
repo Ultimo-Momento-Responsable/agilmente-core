@@ -56,6 +56,18 @@ public class PatientController {
 	}
 	
 	/**
+	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda.
+	 * @param fullName nombre y apellido de paciente.
+	 * @param Contiene las opciones de paginación.
+	 * @return patientPage Una página de resultados.
+	 */
+	@GetMapping(value = {"/fn/{fullName}"})
+	public Page<Patient> getAll(@PathVariable(name = "fullName") String fullName, Pageable patientPage) {
+
+		return service.findAllPatientsByFirstOrLastName(fullName, patientPage);
+	}
+	
+	/**
 	 * Obtiene la lista de Planning activas de un paciente.
 	 * @param Long el id del paciente específico.
 	 * @return List<Planning> un paciente o nada.
