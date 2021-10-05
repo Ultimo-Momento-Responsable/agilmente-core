@@ -24,6 +24,7 @@ INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 1);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 2);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 3);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 4);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 7);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 5);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 6);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 7);

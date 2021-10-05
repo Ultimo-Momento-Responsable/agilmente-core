@@ -83,6 +83,10 @@ public class EncuentraAlNuevoSession implements IGameSession {
 			params.add(maximumTime);
 		}
 		
+		if (this.spriteSet != null) {
+			params.add(spriteSet);
+		}
+		
 		return params;
 	}
 	
@@ -104,6 +108,11 @@ public class EncuentraAlNuevoSession implements IGameSession {
 				this.maxLevel = new MaxLevel();
 				this.maxLevel.setValue(value);
 			} 
+		}
+		
+		if (this.isSpriteSetParam(type)) {
+			this.spriteSet = new SpriteSet();
+			this.spriteSet.setValue(value);
 		}
 	}
 	
@@ -150,5 +159,14 @@ public class EncuentraAlNuevoSession implements IGameSession {
 		}
 		
 		return param;
+	}
+	
+	/**
+	 * Verifica si el tipo de parámetro es "SpriteSet".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "SpriteSet".
+	 */
+	private boolean isSpriteSetParam(String type) {
+		return type.equals("SpriteSet");
 	}
 }
