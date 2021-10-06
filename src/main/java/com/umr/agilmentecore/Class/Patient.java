@@ -39,4 +39,5 @@ public class Patient {
 	private boolean isLogged = false;
 	@Column(name = "is_enabled")
 	private boolean isEnabled = true;
+
 }

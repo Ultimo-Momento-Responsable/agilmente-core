@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.umr.agilmentecore.Class.Patient;
 
+import org.springframework.data.jpa.repository.Query;
+
+
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long>{
 	
@@ -17,4 +20,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	Optional<Patient> findById(Long id);
 	Optional<Patient> findByLoginCode(String loginCode);
 	ArrayList<Patient> findAll();
+	
+	@Query("select p from Patient p where LOWER(p.firstName || ' ' || p.lastName) like %?1%")
+	Page<Patient> findByFullNameContainingIgnoreCase(String fullName, Pageable page);
+	
 }

@@ -45,6 +45,17 @@ public class PatientService {
 	}
 	
 	/**
+	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda.
+	 * @param fullName nombre y apellido de paciente.
+	 * @param page Contiene las opciones de paginación.
+	 * @return Una pagina de resultados.
+	 */
+	public Page<Patient> findAllPatientsByFirstOrLastName(String fullName, Pageable page) {
+		fullName =  fullName.toLowerCase();
+		return repository.findByFullNameContainingIgnoreCase(fullName, page);
+	}
+	
+	/**
 	 * Guarda un paciente.
 	 * @param p Un paciente.
 	 * @return el paciente guardado.
