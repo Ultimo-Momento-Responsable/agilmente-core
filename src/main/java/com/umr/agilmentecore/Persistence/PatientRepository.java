@@ -21,7 +21,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	Optional<Patient> findByLoginCode(String loginCode);
 	ArrayList<Patient> findAll();
 	
-	@Query("select p from Patient p where LOWER(p.firstName || ' ' || p.lastName) like %?1%")
+	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1%")
 	Page<Patient> findByFullNameContainingIgnoreCase(String fullName, Pageable page);
 	
 }
