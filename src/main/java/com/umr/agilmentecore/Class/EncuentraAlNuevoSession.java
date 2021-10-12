@@ -19,6 +19,7 @@ import org.hibernate.annotations.ColumnTransformer;
 import com.umr.agilmentecore.Class.Params.MaxLevel;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Class.Params.SpriteSet;
+import com.umr.agilmentecore.Class.Params.VariableSize;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
@@ -39,6 +40,8 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	private MaximumTime maximumTime;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private SpriteSet spriteSet;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private VariableSize variableSize;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<EncuentraAlNuevoResult> results;
@@ -87,6 +90,10 @@ public class EncuentraAlNuevoSession implements IGameSession {
 			params.add(spriteSet);
 		}
 		
+		if (this.variableSize != null) {
+			params.add(variableSize);
+		}
+		
 		return params;
 	}
 	
@@ -113,6 +120,11 @@ public class EncuentraAlNuevoSession implements IGameSession {
 		if (this.isSpriteSetParam(type)) {
 			this.spriteSet = new SpriteSet();
 			this.spriteSet.setValue(value);
+		}
+		
+		if (this.isVariableSizeParam(type)) {
+			this.variableSize = new VariableSize();
+			this.variableSize.setValue(value);
 		}
 	}
 	
@@ -168,5 +180,14 @@ public class EncuentraAlNuevoSession implements IGameSession {
 	 */
 	private boolean isSpriteSetParam(String type) {
 		return type.equals("SpriteSet");
+	}
+	
+	/**
+	 * Verifica si el tipo de parámetro es "VariableSize".
+	 * @param type Tipo de parámetro.
+	 * @return Verdadero si es "VariableSize".
+	 */
+	private boolean isVariableSizeParam(String type) {
+		return type.equals("VariableSize");
 	}
 }
