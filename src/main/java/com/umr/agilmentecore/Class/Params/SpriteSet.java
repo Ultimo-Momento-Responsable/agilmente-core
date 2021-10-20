@@ -46,7 +46,7 @@ public class SpriteSet implements IParam {
 	
 	@Override
 	public String getSpanishName() {
-		return "Conjunto de figuras";
+		return "Conjunto de Figuras";
 	}
 	
 }
