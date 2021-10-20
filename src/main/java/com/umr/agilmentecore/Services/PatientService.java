@@ -37,11 +37,39 @@ public class PatientService {
 	}
 	
 	/**
-	 * Obtiene todos los resultados de Pacientes.
+	 * Obtiene todos los resultados de pacientes que tengan el atributo isEnabled = true
+	 * @param page Contiene las opciones de paginación.
+	 * @return Una pagina de resultados filtrada por el valor isEnabled
+	 */
+	public Page<Patient> getAllActive(Pageable page) {
+		return repository.findAllByIsEnabledTrue(page);
+	}
+	
+	/**
+	 * Obtiene todos los resultados de Pacientes, usado en filtros de busqueda.
 	 * @return Una lista con todos los pacientes.
 	 */
 	public List<Patient> getAllList() {
 		return repository.findAll();
+	}
+	
+	/**
+	 * Obtiene todos los resultados de Pacientes habilitados, usado en filtros de busqueda
+	 * @return Una lista con todos los pacientes habilitados.
+	 */
+	public List<Patient> getAllActiveList() {
+		return repository.findAllByIsEnabledTrue();
+	}
+	
+	/**
+	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda, que se encuentren habilitados.
+	 * @param fullName nombre y apellido de paciente.
+	 * @param page Contiene las opciones de paginación.
+	 * @return Una pagina de resultados.
+	 */
+	public Page<Patient> findAllActivePatientsByFirstOrLastName(String fullName, Pageable page) {
+		fullName = fullName.toLowerCase();
+		return repository.findByFullNameContainingIgnoreCaseActive(fullName, page);
 	}
 	
 	/**
@@ -51,7 +79,7 @@ public class PatientService {
 	 * @return Una pagina de resultados.
 	 */
 	public Page<Patient> findAllPatientsByFirstOrLastName(String fullName, Pageable page) {
-		fullName =  fullName.toLowerCase();
+		fullName = fullName.toLowerCase();
 		return repository.findByFullNameContainingIgnoreCase(fullName, page);
 	}
 	
@@ -139,5 +167,7 @@ public class PatientService {
 		
 		return this.planningService.getCurrentPlanningsFromPatient(patient.get().getId());
 	}
+
+	
 }
       
