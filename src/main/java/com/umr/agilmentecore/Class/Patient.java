@@ -33,11 +33,14 @@ public class Patient {
 	private Date bornDate;
 	@Column(name = "city")
 	private String city;
+	@Column(name = "telephone")
+	private String telephone;
+	@Column(name = "email")
+	private String email;
 	@Column(name = "login_code")
 	private String loginCode;
 	@Column(name = "is_logged")
 	private boolean isLogged = false;
 	@Column(name = "is_enabled")
 	private boolean isEnabled = true;
-
 }
