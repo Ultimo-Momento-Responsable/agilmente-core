@@ -23,7 +23,7 @@ public class MaximumTime implements IParam {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "maximum_time")
-	private float maximumTime;
+	private int maximumTime;
 
 	@Override
 	public String getValue() {
@@ -49,7 +49,7 @@ public class MaximumTime implements IParam {
 		} else {
 			throw new Exception("MaximumTime parameter can't be less than " + MIN_VALUE + ".");
 		}
-		this.maximumTime = Float.parseFloat(value);
+		this.maximumTime = Integer.parseInt(value);
 	}
 
 	@Override
