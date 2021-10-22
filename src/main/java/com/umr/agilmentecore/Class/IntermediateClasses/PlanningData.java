@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PlanningData {
 	private Long patientId;
+	private String planningName;
 	private String patientFirstName;
 	private String patientLastName;
 	private Long professionalId;
@@ -116,7 +117,7 @@ public class PlanningData {
 		this.stateId = stateId;
 	}
 
-	public PlanningData(Long patientId, String patFirstName, String patLastName,
+	public PlanningData(Long patientId, String planningName, String patFirstName, String patLastName,
 			Long professionalId, String profFirstName, String profLastName,
 			String state, Date startDate, Date dueDate, List<PlanningMobileData> pl)
 	{
@@ -127,7 +128,7 @@ public class PlanningData {
 			this.professionalId = professionalId;
 			this.professionalFirstName = profFirstName;
 			this.professionalLastName = profLastName;
-			
+			this.planningName = planningName;
 			this.stateName = state;
 			this.startDate = startDate;
 			this.dueDate = dueDate;
@@ -135,6 +136,14 @@ public class PlanningData {
 	}
 	
 	public PlanningData() {
+	}
+
+	public String getPlanningName() {
+		return planningName;
+	}
+
+	public void setPlanningName(String planningName) {
+		this.planningName = planningName;
 	}
 	
 }

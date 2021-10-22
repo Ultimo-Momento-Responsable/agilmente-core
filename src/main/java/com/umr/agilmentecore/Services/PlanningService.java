@@ -94,6 +94,7 @@ public class PlanningService {
 		for (Planning planning : plannings) {
 			PlanningOverview pageableOverview = new PlanningOverview();
 			pageableOverview.setPlanningId(planning.getId());
+			pageableOverview.setPlanningName(planning.getName());
 			pageableOverview.setStartDate(planning.getStartDate());
 			pageableOverview.setDueDate(planning.getDueDate());
 			pageableOverview.setPatientName(planning.getPatient().getFirstName() + " " + planning.getPatient().getLastName());
@@ -129,6 +130,8 @@ public class PlanningService {
 		planning.setPatient(this.patientService.getOne(planningData.getPatientId()).get());
 		
 		planning.setState(this.stateRepository.getOne(planningData.getStateId()));
+		
+		planning.setName(planningData.getPlanningName());
 		
 		planning.setStartDate(planningData.getStartDate());
 		planning.setDueDate(planningData.getDueDate());
@@ -306,7 +309,7 @@ public class PlanningService {
 		
 		// Enviamos todo a la vista	
 		PlanningData planningData = new PlanningData(
-				specificPatient.getId(), specificPatient.getFirstName(), specificPatient.getLastName(),
+				specificPatient.getId(), specificPlanning.getName(),specificPatient.getFirstName(), specificPatient.getLastName(),
 				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
 				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
