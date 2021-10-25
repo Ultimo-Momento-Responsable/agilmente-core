@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PlanningOverview {
 	private Long planningId;
+	private String planningName;
 	private String patientName;
 	private String professionalName;
 	private String stateName;
@@ -60,6 +61,14 @@ public class PlanningOverview {
 	
 	public Long getPlanningId() {
 		return planningId;
+	}
+
+	public String getPlanningName() {
+		return planningName;
+	}
+
+	public void setPlanningName(String planningName) {
+		this.planningName = planningName;
 	}
 
 }

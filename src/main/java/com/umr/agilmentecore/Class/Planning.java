@@ -32,6 +32,8 @@ public class Planning {
 	private Professional professional;
 	@ManyToOne
 	private Patient patient;
+	@Column(name = "name")
+	private String name;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	@Column(name = "creation_datetime")
 	private Date creationDatetime;

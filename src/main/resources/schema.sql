@@ -133,6 +133,7 @@ CREATE TABLE hay_uno_repetido_session_results (
 DROP TABLE IF EXISTS planning CASCADE;
 CREATE TABLE planning (
 	id SERIAL NOT NULL PRIMARY KEY,
+	name VARCHAR(255),
 	creation_datetime TIMESTAMP,
 	due_date TIMESTAMP,
 	start_date TIMESTAMP,
