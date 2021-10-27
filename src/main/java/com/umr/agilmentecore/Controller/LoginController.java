@@ -20,11 +20,21 @@ public class LoginController {
 	@Autowired
 	private LoginService service;
 	
+	/**
+	 * Función que se encarga de chequear el login y setear el tiempo de expiración del mismo.
+	 * @param user Objeto con usuario y contraseña
+	 * @return Devuelve el token de inicio de sesión o nulo si el usuario no existe
+	 */
 	@PostMapping	
     public String login(@RequestBody LoginData user) {
         return service.login(user);
     }
 	
+	/**
+	 * Chequea si el token es válido y si no se ha expirado
+	 * @param token el token que viene del front
+	 * @return devuelve true o false si es válido o no el token
+	 */
 	@GetMapping(value = "/token/{token}")	
     public Boolean checkIfLogged(@PathVariable(name = "token") String token) {
         return service.checkIfLogged(token);
