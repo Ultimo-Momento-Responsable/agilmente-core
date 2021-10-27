@@ -2,6 +2,7 @@ package com.umr.agilmentecore.Services;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ public class LoginService {
 	private ProfessionalRepository repository;
 	
 	public String login(LoginData user) {
-		try {
-			Professional professional = repository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+		
+		Professional professional = repository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+		if (Objects.nonNull(professional)) {
 			String token = generateString();
 			professional.setToken(token);
 			Calendar cal = Calendar.getInstance();
@@ -26,8 +28,6 @@ public class LoginService {
 			professional.setTokenExpiration(cal.getTime());
 			repository.save(professional);
 			return token;
-		}catch(Exception e) {
-			System.out.println(e);
 		}
 		return null;
 	}
@@ -37,8 +37,8 @@ public class LoginService {
 	}
 
 	public Boolean checkIfLogged(String token) {
-		try {
-			Professional professional = repository.findByToken(token);
+		Professional professional = repository.findByToken(token);
+		if (Objects.nonNull(professional)) {
 			Date today = new Date();
 			if (professional.getTokenExpiration().after(today)) {
 				Calendar cal = Calendar.getInstance();
@@ -47,9 +47,6 @@ public class LoginService {
 				repository.save(professional);
 				return true;
 			}
-		}catch(Exception e) {
-			System.out.println(e);
-			return false;
 		}
 		return false;
 	}
