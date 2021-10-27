@@ -41,7 +41,6 @@ DROP TABLE IF EXISTS variable_size CASCADE;
 CREATE TABLE variable_size (
 	id SERIAL NOT NULL PRIMARY KEY,
 	variable_size BOOLEAN NOT NULL
-
 );
 
 DROP TABLE IF EXISTS game CASCADE;
@@ -86,7 +85,11 @@ DROP TABLE IF EXISTS professional CASCADE;
 CREATE TABLE professional (
 	id SERIAL NOT NULL PRIMARY KEY,
 	first_name VARCHAR(255),
-	last_name VARCHAR(255)
+	last_name VARCHAR(255),
+	user_name VARCHAR(255),
+	password VARCHAR(255),
+	token VARCHAR(255),
+	token_expiration TIMESTAMP
 );
 
 DROP TABLE IF EXISTS param CASCADE;

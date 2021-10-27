@@ -44,4 +44,4 @@ INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 2);
 
 INSERT INTO patient (born_date, city, description, first_name, last_name, is_logged, is_enabled) VALUES ('1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez',false,true);
-INSERT INTO professional (first_name, last_name) VALUES ('Jorgelina', 'Cordero');
+INSERT INTO professional (first_name, last_name, user_name, password) VALUES ('Jorgelina', 'Cordero', 'JCordero', '1234');
