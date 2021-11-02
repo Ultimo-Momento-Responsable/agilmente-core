@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
+import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
 import com.umr.agilmentecore.Persistence.ProfessionalRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class LoginService {
 	 * @param user Objeto con usuario y contraseña
 	 * @return Devuelve el token de inicio de sesión o nulo si el usuario no existe
 	 */
-	public String login(LoginData user) {
+	public ProfessionalData login(LoginData user) {
 		Professional professional = repository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
 		if (Objects.nonNull(professional)) {
 			String token = generateString();
@@ -31,7 +32,8 @@ public class LoginService {
 			cal.add(Calendar.DAY_OF_MONTH, 3);
 			professional.setTokenExpiration(cal.getTime());
 			repository.save(professional);
-			return token;
+			ProfessionalData pd = new ProfessionalData(professional.getFirstName(),professional.getLastName(),professional.getToken());
+			return pd;
 		}
 		return null;
 	}

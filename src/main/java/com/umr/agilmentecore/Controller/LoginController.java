@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
+import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
 import com.umr.agilmentecore.Services.LoginService;
 
 @CrossOrigin(origins = "*")
@@ -26,7 +27,7 @@ public class LoginController {
 	 * @return Devuelve el token de inicio de sesión o nulo si el usuario no existe
 	 */
 	@PostMapping	
-    public String login(@RequestBody LoginData user) {
+    public ProfessionalData login(@RequestBody LoginData user) {
         return service.login(user);
     }
 	
