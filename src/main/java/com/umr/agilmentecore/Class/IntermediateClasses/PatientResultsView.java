@@ -2,6 +2,7 @@ package com.umr.agilmentecore.Class.IntermediateClasses;
 
 import java.util.List;
 
+import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 
 public class PatientResultsView {
@@ -9,10 +10,10 @@ public class PatientResultsView {
 	private PatientResultsEncuentraAlNuevoView encuentraAlNuevo;
 	
 	public PatientResultsView(List<HayUnoRepetidoResult> hayUnoRepetido,
-			PatientResultsEncuentraAlNuevoView encuentraAlNuevo) {
-		super();
-		this.hayUnoRepetido = new PatientResultsHayUnoRepetidoView(hayUnoRepetido);
-		this.encuentraAlNuevo = encuentraAlNuevo;
+		List<EncuentraAlNuevoResult> encuentraAlNuevo) {
+			super();
+			this.hayUnoRepetido = new PatientResultsHayUnoRepetidoView(hayUnoRepetido);
+			this.encuentraAlNuevo = new PatientResultsEncuentraAlNuevoView(encuentraAlNuevo);
 	}
 	
 	public PatientResultsHayUnoRepetidoView getHayUnoRepetido() {

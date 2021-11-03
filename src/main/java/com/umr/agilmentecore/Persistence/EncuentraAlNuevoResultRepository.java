@@ -57,4 +57,19 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "JOIN eans.results r "
 			+ "WHERE r.id = ?1")
 	EncuentraAlNuevoResultDetailView findEncuentraAlNuevoResultDetailById(Long id);
+	
+	/**
+	 * Busca todos los resultados de EncuentraAlNuevo a partir
+	 * del id del paciente.
+	 * @param id ID del paciente.
+	 * @return Lista de resultados.
+	 */
+	@Query(value = "SELECT "
+			+ "r "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
+			+ "WHERE p.patient.id = ?1")
+	List<EncuentraAlNuevoResult> findEncuentraAlNuevoResultByPatient_id(Long id);
 }

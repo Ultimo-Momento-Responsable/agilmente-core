@@ -16,7 +16,6 @@ import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
-import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsEncuentraAlNuevoView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
@@ -123,9 +122,11 @@ public class GameSessionResultService {
 	public PatientResultsView getAllResultsByPatient(Long id) {
 		if (!this.patientRepository.findById(id).isEmpty()) {
 			List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
+			List<EncuentraAlNuevoResult> encuentraAlNuevoResults = this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByPatient_id(id);
 			return new PatientResultsView(
 					hayUnoRepetidoResults,
-					new PatientResultsEncuentraAlNuevoView());
+					encuentraAlNuevoResults
+					);
 		} else {
 			return null;
 		}
