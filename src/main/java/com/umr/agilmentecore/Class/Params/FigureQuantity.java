@@ -56,6 +56,12 @@ public class FigureQuantity implements IParam {
 		return "Cantidad Máxima de Figuras";
 	}
 	
+	@Override
+	public String getUnit() {
+		return "Figuras";
+	}
+	
+	
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.

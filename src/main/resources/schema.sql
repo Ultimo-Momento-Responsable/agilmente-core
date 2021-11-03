@@ -97,7 +97,8 @@ CREATE TABLE param (
 	id SERIAL NOT NULL PRIMARY KEY,
 	name VARCHAR(255),
 	class_name VARCHAR(255),
-	type INT
+	type INT,
+	unit VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS game_cognitive_domain CASCADE;

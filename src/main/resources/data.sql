@@ -1,11 +1,11 @@
 INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
 
-INSERT INTO param (name, class_name, type) VALUES ('Nivel Máximo', 'MaxLevel', 0);
-INSERT INTO param (name, class_name, type) VALUES ('Tiempo Máximo', 'MaximumTime', 0);
-INSERT INTO param (name, class_name, type) VALUES ('Tamaño Variable', 'VariableSize', 1);
-INSERT INTO param (name, class_name, type) VALUES ('Distractores', 'Distractors', 1);
-INSERT INTO param (name, class_name, type) VALUES ('Conjunto de Figuras', 'SpriteSet', 2);
-INSERT INTO param (name, class_name, type) VALUES ('Cantidad Máxima de Figuras', 'FigureQuantity', 3);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Nivel Máximo', 'MaxLevel', 0, 'Niveles');
+INSERT INTO param (name, class_name, type, unit) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 'Segundos');
+INSERT INTO param (name, class_name, type, unit) VALUES ('Tamaño Variable', 'VariableSize', 1, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Distractores', 'Distractors', 1, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Conjunto de Figuras', 'SpriteSet', 2, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Cantidad Máxima de Figuras', 'FigureQuantity', 3, 'Figuras');
 
 INSERT INTO game (name) VALUES ('Encuentra al Repetido');
 INSERT INTO game (name) VALUES ('Encuentra al Nuevo');

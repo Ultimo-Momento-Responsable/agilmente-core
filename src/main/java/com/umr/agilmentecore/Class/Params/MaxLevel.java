@@ -56,6 +56,11 @@ public class MaxLevel implements IParam {
 		return "Nivel Máximo";
 	}
 	
+	@Override
+	public String getUnit() {
+		return "Niveles";
+	}
+	
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.
