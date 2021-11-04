@@ -61,6 +61,11 @@ public class FigureQuantity implements IParam {
 		return "Figuras";
 	}
 	
+	@Override
+	public String getContextualHelp() {
+		return "Cantidad de aciertos que debe lograr el paciente para que finalice el juego";
+	}
+	
 	
 	/**
 	 * Verifica si el valor ingresado es válido.

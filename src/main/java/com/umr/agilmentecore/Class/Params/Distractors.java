@@ -44,6 +44,11 @@ public class Distractors implements IParam{
 	}
 	
 	@Override
+	public String getContextualHelp() {
+		return "Agrega aleatoriamente figuras que no corresponden al conjunto de figuras a utilizar";
+	}
+	
+	@Override
 	public void setValue(String value) throws Exception {
 		if (value.equals("true")) {
 			this.distractors = true;

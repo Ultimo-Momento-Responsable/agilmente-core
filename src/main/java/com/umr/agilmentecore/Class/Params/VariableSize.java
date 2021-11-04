@@ -44,6 +44,11 @@ public class VariableSize implements IParam{
 	}
 	
 	@Override
+	public String getContextualHelp() {
+		return "Conjunto de gráficos a utilizar en las figuras del juego";
+	}
+	
+	@Override
 	public void setValue(String value) throws Exception {
 		if (value.equals("true")) {
 			this.variableSize = true;

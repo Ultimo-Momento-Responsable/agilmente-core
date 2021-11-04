@@ -61,6 +61,11 @@ public class MaxLevel implements IParam {
 		return "Niveles";
 	}
 	
+	@Override
+	public String getContextualHelp() {
+		return "Cantidad de figuras máximas presentes en el juego";
+	}
+	
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.
