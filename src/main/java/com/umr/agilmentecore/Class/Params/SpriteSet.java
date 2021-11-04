@@ -49,4 +49,9 @@ public class SpriteSet implements IParam {
 		return "Conjunto de Figuras";
 	}
 	
+	@Override
+	public String getUnit() {
+		return null;
+	}
+	
 }

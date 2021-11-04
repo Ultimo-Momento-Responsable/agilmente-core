@@ -24,4 +24,6 @@ public class Param {
 	private String className;
 	@Column(name = "type")
 	private Integer type;
+	@Column(name = "unit")
+	private String unit;
 }

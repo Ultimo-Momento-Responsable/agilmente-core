@@ -39,6 +39,11 @@ public class Distractors implements IParam{
 	}
 	
 	@Override
+	public String getUnit() {
+		return null;
+	}
+	
+	@Override
 	public void setValue(String value) throws Exception {
 		if (value.equals("true")) {
 			this.distractors = true;
