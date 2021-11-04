@@ -92,6 +92,16 @@ CREATE TABLE professional (
 	token_expiration TIMESTAMP
 );
 
+DROP TABLE IF EXISTS comment CASCADE;
+CREATE TABLE comment (
+	id SERIAL NOT NULL PRIMARY KEY,
+	comment VARCHAR(3000),
+	datetime TIMESTAMP,
+	author_id BIGINT,
+	edited BOOLEAN DEFAULT false,
+	FOREIGN KEY (author_id) REFERENCES professional(id)
+);
+
 DROP TABLE IF EXISTS param CASCADE;
 CREATE TABLE param (
 	id SERIAL NOT NULL PRIMARY KEY,

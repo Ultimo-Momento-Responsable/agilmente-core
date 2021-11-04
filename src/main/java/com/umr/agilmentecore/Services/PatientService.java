@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.umr.agilmentecore.Class.Comment;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningState;
+import com.umr.agilmentecore.Class.Professional;
+import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
+import com.umr.agilmentecore.Persistence.CommentRepository;
 import com.umr.agilmentecore.Persistence.PatientRepository;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
 import com.umr.agilmentecore.Persistence.PlanningStateRepository;
+import com.umr.agilmentecore.Persistence.ProfessionalRepository;
 
 
 @Service
@@ -26,6 +32,10 @@ public class PatientService {
 	private PlanningStateRepository planningStateRepository;
 	@Autowired
 	private PlanningRepository planningRepository;
+	@Autowired
+	private ProfessionalRepository professionalRepository;
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	/**
 	 * Obtiene todos los resultados de Pacientes.
@@ -166,6 +176,58 @@ public class PatientService {
 		}
 		
 		return this.planningService.getCurrentPlanningsFromPatient(patient.get().getId());
+	}
+
+	/**
+	 * Agrega un comentario al comment box del paciente.
+	 * @param pc Datos del comentario, del paciente y del profesional
+	 * @return true si todo sale bien
+	 */
+	public boolean addComment(PatientComment pc) {
+		Professional professional = professionalRepository.findByFirstNameAndLastName(pc.getProfessionalFirstName(), pc.getProfessionalLastName());
+		Patient patient = repository.getOne(pc.getPatientId());
+		List<Comment> comments = patient.getComments();
+		Comment comment = new Comment();
+		comment.setAuthor(professional);
+		comment.setDatetime(new Date());
+		comment.setComment(pc.getComment());
+		comments.add(comment);
+		patient.setComments(comments);
+		repository.save(patient);
+		return true;
+	}
+
+	/**
+	 * Elimina un comentario del comment box del paciente.
+	 * @param pc id del comentario y del paciente
+	 * @return true si todo sale bien
+	 */
+	public boolean deleteComment(PatientComment pc) {
+		Patient patient = repository.getOne(pc.getPatientId());
+		List<Comment> comments = patient.getComments();
+		Comment comment = commentRepository.getOne(pc.getCommentId());
+		comments.remove(comment);
+		patient.setComments(comments);
+		repository.save(patient);
+		return true;
+	}
+
+	/**
+	 * Edita un comentario del comment box del paciente.
+	 * @param pc Datos del comentario y del paciente
+	 * @return true si todo sale bien
+	 */
+	public boolean editComment(PatientComment pc) {
+		Patient patient = repository.getOne(pc.getPatientId());
+		List<Comment> comments = patient.getComments();
+		Comment comment = commentRepository.getOne(pc.getCommentId());
+		int indexComment = comments.indexOf(comment);
+		comment.setComment(pc.getComment());
+		comment.setEdited(true);
+		comments.set(indexComment, comment);
+		patient.setComments(comments);
+		repository.save(patient);
+		return true;
 	}
 
 	

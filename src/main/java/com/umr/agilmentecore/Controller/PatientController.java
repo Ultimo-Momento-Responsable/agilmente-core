@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Services.PatientService;
 
 @CrossOrigin(origins = "*")
@@ -137,5 +140,34 @@ public class PatientController {
 		return service.delete(id);
 	}
 	
+	/**
+	 * Guarda un comentario
+	 * @param pc Comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/comment")
+	public boolean addComment(@RequestBody PatientComment pc) {
+		return service.addComment(pc);
+	}
+	
+	/**
+	 * Borra un comentario
+	 * @param id del comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/deleteComment")
+	public boolean deleteComment(@RequestBody PatientComment pc) {
+		return service.deleteComment(pc);
+	}
+	
+	/**
+	 * Edita un comentario
+	 * @param id del comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/editComment")
+	public boolean editComment(@RequestBody PatientComment pc) {
+		return service.editComment(pc);
+	}
 	
 }
