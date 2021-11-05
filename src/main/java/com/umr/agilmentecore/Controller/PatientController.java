@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Services.PatientService;
 
 @CrossOrigin(origins = "*")
@@ -137,5 +138,34 @@ public class PatientController {
 		return service.delete(id);
 	}
 	
+	/**
+	 * Guarda un comentario
+	 * @param pc Comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/comment")
+	public boolean addComment(@RequestBody PatientComment pc) {
+		return service.addComment(pc);
+	}
+	
+	/**
+	 * Borra un comentario
+	 * @param id del comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/deleteComment")
+	public boolean deleteComment(@RequestBody PatientComment pc) {
+		return service.deleteComment(pc);
+	}
+	
+	/**
+	 * Edita un comentario
+	 * @param id del comentario
+	 * @return true o false
+	 */
+	@PostMapping(value = "/editComment")
+	public boolean editComment(@RequestBody PatientComment pc) {
+		return service.editComment(pc);
+	}
 	
 }
