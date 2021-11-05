@@ -180,7 +180,8 @@ public class PatientService {
 
 	/**
 	 * Agrega un comentario al comment box del paciente.
-	 * @param pc Datos del comentario, del paciente y del profesional
+	 * @param pc instancia de objeto PatientComment con 
+	 * los Datos del comentario, del paciente y del profesional
 	 * @return true si todo sale bien
 	 */
 	public boolean addComment(PatientComment pc) {
@@ -199,7 +200,8 @@ public class PatientService {
 
 	/**
 	 * Elimina un comentario del comment box del paciente.
-	 * @param pc id del comentario y del paciente
+	 * @param pc instancia de objeto PatientComment con 
+	 * el id del comentario y del paciente
 	 * @return true si todo sale bien
 	 */
 	public boolean deleteComment(PatientComment pc) {
@@ -214,7 +216,8 @@ public class PatientService {
 
 	/**
 	 * Edita un comentario del comment box del paciente.
-	 * @param pc Datos del comentario y del paciente
+	 * @param pc instancia de objeto PatientComment con 
+	 * los Datos del comentario y del paciente
 	 * @return true si todo sale bien
 	 */
 	public boolean editComment(PatientComment pc) {
