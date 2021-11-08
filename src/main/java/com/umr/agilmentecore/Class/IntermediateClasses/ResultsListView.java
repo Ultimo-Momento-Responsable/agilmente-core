@@ -27,6 +27,10 @@ public class ResultsListView {
 		this.game = game;
 	}
 
+	public Date getCompleteDatetime() {
+		return completeDatetime;
+	}
+
 	public String getPatient() {
 		return patient;
 	}
