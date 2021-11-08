@@ -158,7 +158,16 @@ public class PatientService {
 		if (p.getId() == null) {
 			throw new RuntimeException("Patient id is not defined.");
 		}
-		
+		Patient prevPat = repository.getOne(p.getId());
+		if (p.getComments() == null && prevPat.getComments() != null) {
+			p.setComments(prevPat.getComments());
+		}
+		if (p.getEmail() == null && prevPat.getEmail() != null) {
+			p.setEmail(prevPat.getEmail());
+		}
+		if (p.getTelephone() == null && prevPat.getTelephone() != null) {
+			p.setTelephone(prevPat.getTelephone());
+		}
 		return repository.save(p);
 	}
 
