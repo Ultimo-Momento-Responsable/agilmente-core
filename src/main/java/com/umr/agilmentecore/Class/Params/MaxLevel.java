@@ -63,7 +63,7 @@ public class MaxLevel implements IParam {
 	
 	@Override
 	public String getContextualHelp() {
-		return "Cantidad de figuras máximas presentes en el juego";
+		return "Cantidad de aciertos que debe lograr el paciente para que finalice el juego";
 	}
 	
 	/**

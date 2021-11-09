@@ -45,7 +45,7 @@ public class VariableSize implements IParam{
 	
 	@Override
 	public String getContextualHelp() {
-		return "Conjunto de gráficos a utilizar en las figuras del juego";
+		return "Las figuras varían en tamaño, pudiendo ser más grandes o pequeñas";
 	}
 	
 	@Override
