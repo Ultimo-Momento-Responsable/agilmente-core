@@ -44,6 +44,11 @@ public class VariableSize implements IParam{
 	}
 	
 	@Override
+	public String getContextualHelp() {
+		return "Las figuras varían en tamaño, pudiendo ser más grandes o pequeñas";
+	}
+	
+	@Override
 	public void setValue(String value) throws Exception {
 		if (value.equals("true")) {
 			this.variableSize = true;

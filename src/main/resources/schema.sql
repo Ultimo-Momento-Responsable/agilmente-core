@@ -108,7 +108,8 @@ CREATE TABLE param (
 	name VARCHAR(255),
 	class_name VARCHAR(255),
 	type INT,
-	unit VARCHAR(255)
+	unit VARCHAR(255),
+	contextual_help VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS game_cognitive_domain CASCADE;

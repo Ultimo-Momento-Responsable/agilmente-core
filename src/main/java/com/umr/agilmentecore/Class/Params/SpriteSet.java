@@ -54,4 +54,9 @@ public class SpriteSet implements IParam {
 		return null;
 	}
 	
+	@Override
+	public String getContextualHelp() {
+		return "Conjunto de gráficos a utilizar en las figuras del juego";
+	}
+	
 }
