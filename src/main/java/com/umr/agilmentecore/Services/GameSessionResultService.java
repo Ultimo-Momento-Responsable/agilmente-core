@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Services;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,6 +50,10 @@ public class GameSessionResultService {
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListView();
 		List<ResultsListView> results = Stream.concat(hURResults.stream(), eANResults.stream())
                 .collect(Collectors.toList());
+		Comparator<ResultsListView> comparator = (c1, c2) -> {
+			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
+		};
+		results.sort(comparator);
 		return new PageImpl<>(results);
 	}	
 	
