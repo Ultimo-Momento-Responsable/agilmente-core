@@ -13,17 +13,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "param")
-public class Param {
+@Table(name = "param_type2content")
+public class ParamType2Content {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private long id;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "class_name")
-	private String className;
-	@Column(name = "type")
-	private Integer type;
-	@Column(name = "unit")
-	private String unit;
 }

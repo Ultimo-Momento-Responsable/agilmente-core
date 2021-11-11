@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
+import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Class.Game;
-import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
-import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 
-public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
-	private HayUnoRepetidoSession gameSession;
+public class EncuentraAlNuevoSessionBuilder implements IGameSessionBuilder {
+	private EncuentraAlNuevoSession gameSession;
 	
 	/**
 	 * Construye los diferentes params para el HayUnoRepetidoSession.
@@ -33,10 +33,10 @@ public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
 	 */
 	@Override
 	public void buildProduct(Game game) {
-		this.gameSession = new HayUnoRepetidoSession();
-		this.gameSession.setResults(new ArrayList<HayUnoRepetidoResult>());
+		this.gameSession = new EncuentraAlNuevoSession();
+		this.gameSession.setResults(new ArrayList<EncuentraAlNuevoResult>());
 		this.gameSession.setGame(game);
-		this.gameSession.setResults(new ArrayList<HayUnoRepetidoResult>());
+		this.gameSession.setResults(new ArrayList<EncuentraAlNuevoResult>());
 	}
 
 	@Override
@@ -46,6 +46,6 @@ public class HayUnoRepetidoSessionBuilder implements IGameSessionBuilder {
 
 	@Override
 	public void setGameSession(IGameSession gameSession) {
-		this.gameSession = (HayUnoRepetidoSession) gameSession;		
+		this.gameSession = (EncuentraAlNuevoSession) gameSession;		
 	}
 }

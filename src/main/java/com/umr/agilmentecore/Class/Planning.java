@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "planning")
 public class Planning {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,6 +32,8 @@ public class Planning {
 	private Professional professional;
 	@ManyToOne
 	private Patient patient;
+	@Column(name = "name")
+	private String name;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	@Column(name = "creation_datetime")
 	private Date creationDatetime;
@@ -43,4 +46,7 @@ public class Planning {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "planning_id")
 	private List<PlanningDetail> detail;
+	@ManyToOne
+	private PlanningState state;
+	
 }

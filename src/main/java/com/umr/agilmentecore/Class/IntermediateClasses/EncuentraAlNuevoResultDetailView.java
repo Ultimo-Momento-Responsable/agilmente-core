@@ -8,10 +8,10 @@ import org.springframework.data.annotation.Transient;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 
-public class HayUnoRepetidoResultDetailView {
+public class EncuentraAlNuevoResultDetailView {
 	private Long id;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date completeDatetime;
@@ -22,12 +22,12 @@ public class HayUnoRepetidoResultDetailView {
 	private float totalTime;
 	private String patient;
 	private String game;
-	private Long hayUnoRepetidoSessionId;
+	private Long encuentraAlNuevoSessionId;
 	@Transient
-	private HayUnoRepetidoSession session;
+	private EncuentraAlNuevoSession session;
 
-	public HayUnoRepetidoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
-		float[] timeBetweenSuccesses, float totalTime, String patient, String game, HayUnoRepetidoSession session) {
+	public EncuentraAlNuevoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
+		float[] timeBetweenSuccesses, float totalTime, String patient, String game, EncuentraAlNuevoSession session) {
 		super();
 		this.id = id;
 		this.completeDatetime = completeDatetime;
@@ -42,10 +42,10 @@ public class HayUnoRepetidoResultDetailView {
 	}
 	
 	@JsonCreator
-	public HayUnoRepetidoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
+	public EncuentraAlNuevoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
 		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
 		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
-		@JsonProperty("game") String game, @JsonProperty("hayUnoRepetidoSessionId") Long hayUnoRepetidoSessionId) {
+		@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
 		
 		this.completeDatetime = completeDatetime;
 		this.canceled = canceled;
@@ -54,7 +54,7 @@ public class HayUnoRepetidoResultDetailView {
 		this.timeBetweenSuccesses = timeBetweenSuccesses;
 		this.totalTime = totalTime;
 		this.game = game;
-		this.hayUnoRepetidoSessionId = hayUnoRepetidoSessionId;
+		this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
 	}
 	
 	public Long getId() {
@@ -133,7 +133,11 @@ public class HayUnoRepetidoResultDetailView {
 		return this.session.getSettedParams();
 	}
 
-	public Long getHayUnoRepetidoSessionId() {
-		return hayUnoRepetidoSessionId;
+	public Long getEncuentraAlNuevoSessionId() {
+		return encuentraAlNuevoSessionId;
+	}
+
+	public void setEncuentraAlNuevoSessionId(Long encuentraAlNuevoSessionId) {
+		this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
 	}
 }

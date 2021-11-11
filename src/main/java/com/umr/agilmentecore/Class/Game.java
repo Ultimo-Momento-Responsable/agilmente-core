@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Class;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.umr.agilmentecore.Class.IntermediateClasses.GameParam;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,13 +24,19 @@ import lombok.NoArgsConstructor;
 public class Game {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	@Column(name = "name")
 	private String name;
 	@ManyToMany
 	private List<CognitiveDomain> cognitiveDomain;
-	@ManyToMany
-	private List<Param> param;
-	@ManyToMany
-	private List<Param> stopConditions;
+	@OneToMany
+	private List<GameParam> gameParam;
+
+	public List<Param> getParams() {
+		List<Param> paramList = new ArrayList<Param>();
+		for (GameParam gp : gameParam) {
+			paramList.add(gp.getParam());
+		}
+		return paramList;
+	}
 }

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.umr.agilmentecore.Interfaces.IResult;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,22 +18,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "professional")
-public class Professional {
+@Table(name = "encuentra_al_nuevo_result")
+public class EncuentraAlNuevoResult implements IResult {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name = "first_name")
-	private String firstName;
-	@Column(name = "last_name")
-	private String lastName;
-	@Column(name = "user_name")
-	private String userName;
-	@Column(name = "password")
-	private String password;
-	@Column(name = "token")
-	private String token;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	@Column(name = "token_expiration")
-	private Date tokenExpiration;
+	@Column(name = "complete_datetime")
+	private Date completeDatetime;
+	@Column(name = "canceled")
+	private boolean canceled;
+	@Column(name = "mistakes")
+	private int mistakes;
+	@Column(name = "successes")
+	private int successes;
+	@Column(name = "time_between_successes")
+	private float[] timeBetweenSuccesses;
+	@Column(name = "total_time")
+	private float totalTime;
 }

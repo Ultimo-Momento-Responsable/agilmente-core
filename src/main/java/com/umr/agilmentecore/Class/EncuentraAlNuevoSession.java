@@ -16,8 +16,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnTransformer;
 
-import com.umr.agilmentecore.Class.Params.Distractors;
-import com.umr.agilmentecore.Class.Params.FigureQuantity;
 import com.umr.agilmentecore.Class.Params.MaxLevel;
 import com.umr.agilmentecore.Class.Params.MaximumTime;
 import com.umr.agilmentecore.Class.Params.SpriteSet;
@@ -31,8 +29,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "hay_uno_repetido_session")
-public class HayUnoRepetidoSession implements IGameSession {
+@Table(name = "encuentra_al_nuevo_session")
+public class EncuentraAlNuevoSession implements IGameSession {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -44,16 +42,15 @@ public class HayUnoRepetidoSession implements IGameSession {
 	private SpriteSet spriteSet;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private VariableSize variableSize;
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Distractors distractors;
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private FigureQuantity figureQuantity;
 	@Column(name = "results")
 	@OneToMany(cascade=CascadeType.ALL)
-	private List<HayUnoRepetidoResult> results;
+	private List<EncuentraAlNuevoResult> results;
 	@ManyToOne
 	private Game game;
 	
+	public void addResult(EncuentraAlNuevoResult result) {
+		this.results.add(result);
+	}
 		
 	@Override
 	public String toString() {
@@ -97,36 +94,14 @@ public class HayUnoRepetidoSession implements IGameSession {
 			params.add(variableSize);
 		}
 		
-		if (this.distractors != null) {
-			params.add(distractors);
-		}
-		
-		if (this.figureQuantity != null) {
-			params.add(figureQuantity);
-		}
-		
 		return params;
-	}
-	
-	@ColumnTransformer
-	@Override
-	public IParam getEndCondition() {
-		IParam param = null;
-		
-		if (this.maxLevel != null) {
-			param = maxLevel;
-		} else if (this.maximumTime != null) {
-			param = maximumTime;
-		}
-		
-		return param;
 	}
 	
 	/**
 	 * Agrega un parámetro a la sesión.
 	 * @param type Puede ser:
 	 *   - "MaximumTime": Límite de tiempo para la sesión.
-	 *   - "MaxLevel": Límite de niveles para la sesión.
+	 *   - "MaxLevel": Límite de figuras para la sesión.
 	 * "MaxLevel" y "MaximumTime" son mutuamente exclueyentes. 
 	 * @param value Valor del parámetro.
 	 */
@@ -151,16 +126,6 @@ public class HayUnoRepetidoSession implements IGameSession {
 			this.variableSize = new VariableSize();
 			this.variableSize.setValue(value);
 		}
-		
-		if (this.isDistractorsParam(type)) {
-			this.distractors = new Distractors();
-			this.distractors.setValue(value);
-		}
-		
-		if (this.isFigureQuantityParam(type)) {
-			this.figureQuantity = new FigureQuantity();
-			this.figureQuantity.setValue(value);
-		}
 	}
 	
 	/**
@@ -182,21 +147,30 @@ public class HayUnoRepetidoSession implements IGameSession {
 	}
 	
 	/**
-	 * Verifica si el tipo de parámetro es "VariableSize".
-	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "VariableSize".
+	 * Verifica si se puede añadir un parámetro "MaxLevel" o
+	 * "MaximumTime".
+	 * No tiene que existir un valor anterior para ninguna de las dos.
+	 * @return Verdadero si puede añadir una condición de parada.
 	 */
-	private boolean isVariableSizeParam(String type) {
-		return type.equals("VariableSize");
+	private boolean canAddEndConditionParam() {
+		return (this.maxLevel == null) && (this.maximumTime == null);
 	}
-	
+
 	/**
-	 * Verifica si el tipo de parámetro es "Distractors".
-	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "Distractors".
+	 * Obtiene la condición de parada de la instancia de Session.
+	 * @return Condición de parada.
 	 */
-	private boolean isDistractorsParam(String type) {
-		return type.equals("Distractors");
+	@Override
+	public IParam getEndCondition() {
+		IParam param = null;
+		
+		if (this.maxLevel != null) {
+			param = maxLevel;
+		} else if (this.maximumTime != null) {
+			param = maximumTime;
+		}
+		
+		return param;
 	}
 	
 	/**
@@ -209,25 +183,11 @@ public class HayUnoRepetidoSession implements IGameSession {
 	}
 	
 	/**
-	 * Verifica si el tipo de parámetro es "FigureQuantity".
+	 * Verifica si el tipo de parámetro es "VariableSize".
 	 * @param type Tipo de parámetro.
-	 * @return Verdadero si es "FigureQuantity".
+	 * @return Verdadero si es "VariableSize".
 	 */
-	private boolean isFigureQuantityParam(String type) {
-		return type.equals("FigureQuantity");
-	}
-	
-	/**
-	 * Verifica si se puede añadir un parámetro "MaxLevel" o
-	 * "MaximumTime".
-	 * No tiene que existir un valor anterior para ninguna de las dos.
-	 * @return Verdadero si puede añadir una condición de parada.
-	 */
-	private boolean canAddEndConditionParam() {
-		return (this.maxLevel == null) && (this.maximumTime == null);
-	}
-
-	public void addResult(HayUnoRepetidoResult hURR) {
-		this.results.add(hURR);
+	private boolean isVariableSizeParam(String type) {
+		return type.equals("VariableSize");
 	}
 }

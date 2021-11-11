@@ -15,59 +15,45 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "maximum_time")
-public class MaximumTime implements IParam {
-	
-	private static int MIN_VALUE = 1;
+@Table(name = "variable_size")
+public class VariableSize implements IParam{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "maximum_time")
-	private int maximumTime;
-
+	@Column(name = "variable_size")
+	private boolean variableSize;
+	
 	@Override
 	public String getValue() {
-		return Float.toString(this.maximumTime);
+		return Boolean.toString(this.variableSize);
 	}
 
 	@Override
 	public String getName() {
-		return "maximumTime";
+		return "variableSize";
 	}
 	
 	@Override
 	public String getSpanishName() {
-		return "Tiempo Máximo";
+		return "Tamaño Variable";
 	}
 	
 	@Override
 	public String getUnit() {
-		return "Segundos";
+		return null;
 	}
 	
 	@Override
 	public void setValue(String value) throws Exception {
-		int parsed  = Integer.parseInt(value);
-		
-		if (this.checkIfValid(parsed)) {
-			this.maximumTime = parsed;
-		} else {
-			throw new Exception("MaximumTime parameter can't be less than " + MIN_VALUE + ".");
+		if (value.equals("true")) {
+			this.variableSize = true;
+		}else {
+			this.variableSize = false;
 		}
-		this.maximumTime = Integer.parseInt(value);
 	}
 
 	@Override
 	public String toString() {
 		return this.getValue();
-	}
-	
-	/**
-	 * Verifica si el valor ingresado es válido.
-	 * @param value Tiempo.
-	 * @return Verdadero si es mayor o igual a 1.
-	 */
-	private boolean checkIfValid(int value) {
-		return (value >= MIN_VALUE);
 	}
 }

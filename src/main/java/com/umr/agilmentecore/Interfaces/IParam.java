@@ -15,4 +15,9 @@ public interface IParam {
 	public String getValue();
 	
 	public String getName();
+	
+	public String getSpanishName();
+	
+	public String getUnit();
+	
 }

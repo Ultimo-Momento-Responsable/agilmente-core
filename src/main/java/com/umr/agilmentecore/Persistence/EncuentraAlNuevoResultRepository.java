@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
-import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
+import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 
 @Repository
-public interface HayUnoRepetidoResultRepository extends org.springframework.data.repository.Repository<HayUnoRepetidoResult, Long> {
+public interface EncuentraAlNuevoResultRepository extends org.springframework.data.repository.Repository<EncuentraAlNuevoResult, Long> {
 	// TODO: Pasar esto a un repositorio genérico de resultados.
 	/**
 	 * Obtiene todos los resultados de todos los juegos
@@ -27,11 +27,11 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "r.timeBetweenSuccesses,"
 			+ "r.totalTime, "
 			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
-			+ "hurs.game.name) "
+			+ "eans.game.name) "
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
-			+ "JOIN pd.hayUnoRepetidoSession hurs "
-			+ "JOIN hurs.results r "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
 			+ "ORDER BY r.completeDatetime")
 	List<ResultsListView> findAllResultsListView();
 	
@@ -40,7 +40,7 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 	 * @param id Id del resultado.
 	 * @return Vista del detalle del resultado.
 	 */
-	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView( "
+	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView( "
 			+ "r.id, "
 			+ "r.completeDatetime, "
 			+ "r.canceled, "
@@ -49,17 +49,17 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "r.timeBetweenSuccesses,"
 			+ "r.totalTime, "
 			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
-			+ "hurs.game.name, "
-			+ "hurs) "
+			+ "eans.game.name, "
+			+ "eans) "
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
-			+ "JOIN pd.hayUnoRepetidoSession hurs "
-			+ "JOIN hurs.results r "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
 			+ "WHERE r.id = ?1")
-	HayUnoRepetidoResultDetailView findHayUnoRepetidoResultDetailById(Long id);
+	EncuentraAlNuevoResultDetailView findEncuentraAlNuevoResultDetailById(Long id);
 	
 	/**
-	 * Busca todos los resultados de HayUnoRepetidoResult a partir
+	 * Busca todos los resultados de EncuentraAlNuevo a partir
 	 * del id del paciente.
 	 * @param id ID del paciente.
 	 * @return Lista de resultados.
@@ -68,8 +68,8 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "r "
 			+ "FROM Planning p "
 			+ "JOIN p.detail pd "
-			+ "JOIN pd.hayUnoRepetidoSession hurs "
-			+ "JOIN hurs.results r "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
 			+ "WHERE p.patient.id = ?1")
-	List<HayUnoRepetidoResult> findHayUnoRepetidoResultByPatient_id(Long id);
+	List<EncuentraAlNuevoResult> findEncuentraAlNuevoResultByPatient_id(Long id);
 }
