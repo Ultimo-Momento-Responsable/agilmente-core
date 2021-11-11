@@ -61,11 +61,6 @@ public class MaxLevel implements IParam {
 		return "Niveles";
 	}
 	
-	@Override
-	public String getContextualHelp() {
-		return "Cantidad de aciertos que debe lograr el paciente para que finalice el juego";
-	}
-	
 	/**
 	 * Verifica si el valor ingresado es válido.
 	 * @param value Cantidad de figuras.

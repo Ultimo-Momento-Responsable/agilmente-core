@@ -1,11 +1,12 @@
 INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
 
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Nivel Máximo', 'MaxLevel', 0, 'Niveles','Cantidad de aciertos que debe lograr el paciente para que finalice el juego');
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 'Segundos', 'Tiempo que debe transcurrir para que finalice el juego');
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Tamaño Variable', 'VariableSize', 1, NULL, 'Las figuras varían en tamaño, pudiendo ser más grandes o pequeñas');
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Distractores', 'Distractors', 1, NULL, 'Agrega aleatoriamente figuras que no corresponden al conjunto de figuras a utilizar');
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Conjunto de Figuras', 'SpriteSet', 2, NULL, 'Conjunto de gráficos a utilizar en las figuras del juego');
-INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Cantidad Máxima de Figuras', 'FigureQuantity', 3, 'Figuras', 'Cantidad de figuras máximas presentes en el juego');
+INSERT INTO param (name, class_name, type, unit) VALUES ('Nivel Máximo', 'MaxLevel', 0, 'Niveles');
+INSERT INTO param (name, class_name, type, unit) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 'Segundos');
+INSERT INTO param (name, class_name, type, unit) VALUES ('Tamaño Variable', 'VariableSize', 1, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Distractores', 'Distractors', 1, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Conjunto de Figuras', 'SpriteSet', 2, NULL);
+INSERT INTO param (name, class_name, type, unit) VALUES ('Cantidad Máxima de Figuras', 'FigureQuantity', 3, 'Figuras');
+
 INSERT INTO game (name) VALUES ('Encuentra al Repetido');
 INSERT INTO game (name) VALUES ('Encuentra al Nuevo');
 

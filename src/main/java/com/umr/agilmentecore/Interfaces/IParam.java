@@ -20,5 +20,4 @@ public interface IParam {
 	
 	public String getUnit();
 	
-	public String getContextualHelp();
 }

@@ -61,11 +61,6 @@ public class FigureQuantity implements IParam {
 		return "Figuras";
 	}
 	
-	@Override
-	public String getContextualHelp() {
-		return "Cantidad de figuras máximas presentes en el juego";
-	}
-	
 	
 	/**
 	 * Verifica si el valor ingresado es válido.

@@ -46,11 +46,6 @@ public class MaximumTime implements IParam {
 	}
 	
 	@Override
-	public String getContextualHelp() {
-		return "Tiempo que debe transcurrir para que finalice el juego";
-	}
-	
-	@Override
 	public void setValue(String value) throws Exception {
 		int parsed  = Integer.parseInt(value);
 		
