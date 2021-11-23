@@ -48,4 +48,7 @@ public class Patient {
 	private boolean isEnabled = true;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Comment> comments;
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+	@Column(name = "join_date")
+	private Date joinDate;
 }
