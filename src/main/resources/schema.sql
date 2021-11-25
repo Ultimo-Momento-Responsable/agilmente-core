@@ -78,7 +78,8 @@ CREATE TABLE patient (
 	telephone VARCHAR(255),
 	is_logged BOOLEAN,
 	is_enabled BOOLEAN,
-	login_code VARCHAR(255)
+	login_code VARCHAR(255),
+	join_date TIMESTAMP
 );
 
 DROP TABLE IF EXISTS professional CASCADE;
