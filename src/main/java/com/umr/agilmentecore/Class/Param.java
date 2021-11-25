@@ -26,4 +26,6 @@ public class Param {
 	private Integer type;
 	@Column(name = "unit")
 	private String unit;
+	@Column(name = "contextual_help")
+	private String contextualHelp;
 }
