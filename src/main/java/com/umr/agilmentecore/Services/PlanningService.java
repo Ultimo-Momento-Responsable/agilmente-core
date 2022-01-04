@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -116,6 +118,17 @@ public class PlanningService {
 	public List<Planning> getAll() {
 		updateAllPlannings();
 		return this.repository.findAll();
+	}
+	
+	/**
+	 * Obtiene las planning filtradas
+	 * @param search búsqueda realizada
+	 * @return Lista con todas las plannings filtradas
+	 */
+	public List<Planning> getPlanningsFiltered(String search) {
+		updateAllPlannings();
+		List<Planning> planningList = this.repository.findByNameContainsOrPatient_FirstNameLastNameContains(search);
+		return planningList;
 	}
 
 	/**

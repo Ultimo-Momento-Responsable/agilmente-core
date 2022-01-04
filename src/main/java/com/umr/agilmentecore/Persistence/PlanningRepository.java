@@ -27,4 +27,9 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 	List<Planning> findByStartDateBeforeAndDueDateAfter(Date startDate, Date dueDate);
 	
 	List<Planning> findByState_nameOrState_name(String firstState, String secondState);
+	
+	@Query("select p from Planning p WHERE name LIKE %?1% OR TRANSLATE(LOWER(p.patient.firstName || ' ' "
+			+ "|| p.patient.lastName),'áéíóú', 'aeiou') like %?1% AND (p.state.name='Pendiente' OR p.state.name='Vigente')")
+	List<Planning> findByNameContainsOrPatient_FirstNameLastNameContains(String planningName);
+
 }

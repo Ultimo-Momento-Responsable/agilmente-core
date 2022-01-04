@@ -51,4 +51,8 @@ public class Patient {
 	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
 	@Column(name = "join_date")
 	private Date joinDate;
+	
+	public String getFirstNameLastName() {
+		return this.firstName + " " + this.lastName;
+	}
 }
