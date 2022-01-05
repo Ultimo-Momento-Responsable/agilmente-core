@@ -54,7 +54,7 @@ public class PlanningController {
 	 * @return Listado de plannings con filtro
 	 */
 	@GetMapping(value = "/filter/{search}")
-	public List<Planning> getPlanningsFiltered(@PathVariable(name = "search") String search) {
+	public Page<PlanningOverview> getPlanningsFiltered(@PathVariable(name = "search") String search) {
 		return service.getPlanningsFiltered(search);
 	}
 	
