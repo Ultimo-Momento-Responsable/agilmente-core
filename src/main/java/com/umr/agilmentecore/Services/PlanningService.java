@@ -105,7 +105,7 @@ public class PlanningService {
 	 */
 	public Page<PlanningOverview> getPlanningsFiltered(String search) {
 		updateAllPlannings();
-		List<Planning> plannings = this.repository.findByNameContainsOrPatient_FirstNameLastNameContains(search);
+		List<Planning> plannings = this.repository.findFiltered(search);
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
 		listOverview = planningToPlanningOverview(plannings, listOverview);
 		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
