@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,11 +88,37 @@ public class PlanningService {
 	 * Obtiene todas las planificaciones vigentes y pendientes de vista general (sin juegos)
 	 * @return Página de planificaciones vigentes o pendientes, sin juegos.
 	 */
-	
 	public Page<PlanningOverview> getPlanningOverview() {
 		updateAllPlannings();
 		List<Planning> plannings = this.repository.findByState_nameOrState_name("Vigente", "Pendiente");
-		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>(); 
+		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
+		listOverview = planningToPlanningOverview(plannings, listOverview);
+		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
+		
+		return pageOverview;
+	}
+	
+	/**
+	 * Obtiene las planning filtradas
+	 * @param search búsqueda realizada
+	 * @return Lista con todas las plannings filtradas
+	 */
+	public Page<PlanningOverview> getPlanningsFiltered(String search) {
+		updateAllPlannings();
+		List<Planning> plannings = this.repository.findFiltered(search);
+		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
+		listOverview = planningToPlanningOverview(plannings, listOverview);
+		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
+		return pageOverview;
+	}	
+	
+	/**
+	 * Convierte una lista de plannings en una lista de planningOverview
+	 * @param plannings 
+	 * @param listOverview
+	 * @return Una lista de planningOverview
+	 */
+	private List<PlanningOverview> planningToPlanningOverview(List<Planning> plannings, List<PlanningOverview> listOverview){
 		for (Planning planning : plannings) {
 			PlanningOverview pageableOverview = new PlanningOverview();
 			pageableOverview.setPlanningId(planning.getId());
@@ -103,9 +131,7 @@ public class PlanningService {
 			
 			listOverview.add(pageableOverview);
 		}
-		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
-		
-		return pageOverview;
+		return listOverview;
 	}
 	
 	/**
@@ -117,6 +143,7 @@ public class PlanningService {
 		updateAllPlannings();
 		return this.repository.findAll();
 	}
+	
 
 	/**
 	 * Crea una planificación.

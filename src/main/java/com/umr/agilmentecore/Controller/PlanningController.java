@@ -49,6 +49,16 @@ public class PlanningController {
 	}
 	
 	/**
+	 * Obtiene las plannings vigentes y pendientes con el filtro
+	 * @param search filtro
+	 * @return Listado de plannings con filtro
+	 */
+	@GetMapping(value = "/filter/{search}")
+	public Page<PlanningOverview> getPlanningsFiltered(@PathVariable(name = "search") String search) {
+		return service.getPlanningsFiltered(search);
+	}
+	
+	/**
 	 * Obtiene una planificacion.
 	 * @param id Numero id de la planificación
 	 * @return Única planificación.
