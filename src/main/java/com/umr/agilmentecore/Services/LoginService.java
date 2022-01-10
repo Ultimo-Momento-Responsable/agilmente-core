@@ -32,7 +32,7 @@ public class LoginService {
 			cal.add(Calendar.DAY_OF_MONTH, 3);
 			professional.setTokenExpiration(cal.getTime());
 			repository.save(professional);
-			ProfessionalData pd = new ProfessionalData(professional.getFirstName(),professional.getLastName(),professional.getToken());
+			ProfessionalData pd = new ProfessionalData(professional.getId(), professional.getFirstName(),professional.getLastName(),professional.getToken());
 			return pd;
 		}
 		return null;
