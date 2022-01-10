@@ -105,6 +105,7 @@ public class PlanningService {
 	 */
 	public Page<PlanningOverview> getPlanningsFiltered(String search) {
 		updateAllPlannings();
+		search = search.toLowerCase();
 		List<Planning> plannings = this.repository.findFiltered(search);
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
 		listOverview = planningToPlanningOverview(plannings, listOverview);
