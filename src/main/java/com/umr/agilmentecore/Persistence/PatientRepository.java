@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface PatientRepository extends JpaRepository<Patient, Long>{
 	
 	Page<Patient> findAll(Pageable page);
-	Page<Patient> findAllByIsEnabledTrue(Pageable page);
 	Optional<Patient> findById(Long id);
 	Optional<Patient> findByLoginCode(String loginCode);
 	ArrayList<Patient> findAll();
@@ -25,6 +24,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	
 	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1% AND p.isEnabled = TRUE")
 	Page<Patient> findByFullNameContainingIgnoreCaseActive(String fullName, Pageable page);
+	
+	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1%")
+	Page<Patient> findAllByFullNameContainingIgnoreCaseActive(String fullName, Pageable page);
 	
 	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1%")
 	Page<Patient> findByFullNameContainingIgnoreCase(String fullName, Pageable page);
