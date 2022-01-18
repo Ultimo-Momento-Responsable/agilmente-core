@@ -37,23 +37,6 @@ public class PatientService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	/**
-	 * Obtiene todos los resultados de Pacientes.
-	 * @param page Contiene las opciones de paginación.
-	 * @return Una página de resultados.
-	 */
-	public Page<Patient> getAll(Pageable page) {
-		return repository.findAll(page);
-	}
-	
-	/**
-	 * Obtiene todos los resultados de pacientes que tengan el atributo isEnabled = true
-	 * @param page Contiene las opciones de paginación.
-	 * @return Una pagina de resultados filtrada por el valor isEnabled
-	 */
-	public Page<Patient> getAllActive(Pageable page) {
-		return repository.findAllByIsEnabledTrue(page);
-	}
 	
 	/**
 	 * Obtiene todos los resultados de Pacientes, usado en filtros de busqueda.
@@ -77,9 +60,13 @@ public class PatientService {
 	 * @param page Contiene las opciones de paginación.
 	 * @return Una pagina de resultados.
 	 */
-	public Page<Patient> findAllActivePatientsByFirstOrLastName(String fullName, Pageable page) {
+	public Page<Patient> findAllActivePatientsByFirstOrLastName(String fullName, boolean all, Pageable page) {
 		fullName = fullName.toLowerCase();
-		return repository.findByFullNameContainingIgnoreCaseActive(fullName, page);
+		if (!all) {
+			return repository.findByFullNameContainingIgnoreCaseActive(fullName, page);
+		} 
+		return repository.findAllByFullNameContainingIgnoreCaseActive(fullName, page);
+		
 	}
 	
 	/**
