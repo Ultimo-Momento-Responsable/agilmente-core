@@ -23,11 +23,12 @@ public class EncuentraAlNuevoResultDetailView {
 	private String patient;
 	private String game;
 	private Long encuentraAlNuevoSessionId;
+	private int score;
 	@Transient
 	private EncuentraAlNuevoSession session;
 
 	public EncuentraAlNuevoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
-		float[] timeBetweenSuccesses, float totalTime, String patient, String game, EncuentraAlNuevoSession session) {
+		float[] timeBetweenSuccesses, float totalTime, String patient, String game, int score, EncuentraAlNuevoSession session) {
 		super();
 		this.id = id;
 		this.completeDatetime = completeDatetime;
@@ -39,13 +40,15 @@ public class EncuentraAlNuevoResultDetailView {
 		this.patient = patient;
 		this.game = game;
 		this.session = session;
+		this.score = score;
 	}
 	
 	@JsonCreator
 	public EncuentraAlNuevoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
 		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
 		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
-		@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
+		@JsonProperty("game") String game, @JsonProperty("score") int score,
+		@JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
 		
 		this.completeDatetime = completeDatetime;
 		this.canceled = canceled;
@@ -55,6 +58,7 @@ public class EncuentraAlNuevoResultDetailView {
 		this.totalTime = totalTime;
 		this.game = game;
 		this.encuentraAlNuevoSessionId = encuentraAlNuevoSessionId;
+		this.score = score;
 	}
 	
 	public Long getId() {
@@ -127,6 +131,14 @@ public class EncuentraAlNuevoResultDetailView {
 
 	public void setGame(String game) {
 		this.game = game;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public List<IParam> getParams() {

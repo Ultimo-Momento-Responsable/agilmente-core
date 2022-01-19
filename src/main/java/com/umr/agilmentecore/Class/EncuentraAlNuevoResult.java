@@ -36,4 +36,6 @@ public class EncuentraAlNuevoResult implements IResult {
 	private float[] timeBetweenSuccesses;
 	@Column(name = "total_time")
 	private float totalTime;
+	@Column (name = "score")
+	private int score;
 }

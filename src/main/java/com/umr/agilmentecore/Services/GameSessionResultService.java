@@ -88,6 +88,7 @@ public class GameSessionResultService {
 		eANR.setCompleteDatetime(result.getCompleteDatetime());
 		eANR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
 		eANR.setTotalTime(result.getTotalTime());
+		eANR.setScore(result.getScore());
 		eANS.addResult(eANR);
 		PlanningDetail pd = planningDetailRepository.findByEncuentraAlNuevoSession_id(result.getEncuentraAlNuevoSessionId());
 		if (pd.getMaxNumberOfSessions() != -1 && !eANR.isCanceled()) {
@@ -110,6 +111,7 @@ public class GameSessionResultService {
 		hURR.setCompleteDatetime(result.getCompleteDatetime());
 		hURR.setTimeBetweenSuccesses(result.getTimeBetweenSuccesses());
 		hURR.setTotalTime(result.getTotalTime());
+		hURR.setScore(result.getScore());
 		hURS.addResult(hURR);
 		PlanningDetail pd = planningDetailRepository.findByHayUnoRepetidoSession_id(result.getHayUnoRepetidoSessionId());
 		if (pd.getMaxNumberOfSessions() != -1 && !hURR.isCanceled()) {
