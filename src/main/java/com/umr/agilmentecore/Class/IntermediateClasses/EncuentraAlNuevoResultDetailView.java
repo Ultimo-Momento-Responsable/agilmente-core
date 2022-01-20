@@ -28,7 +28,7 @@ public class EncuentraAlNuevoResultDetailView {
 	private EncuentraAlNuevoSession session;
 
 	public EncuentraAlNuevoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
-		float[] timeBetweenSuccesses, float totalTime, String patient, String game, int score, EncuentraAlNuevoSession session) {
+		float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game, EncuentraAlNuevoSession session) {
 		super();
 		this.id = id;
 		this.completeDatetime = completeDatetime;
@@ -46,9 +46,9 @@ public class EncuentraAlNuevoResultDetailView {
 	@JsonCreator
 	public EncuentraAlNuevoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
 		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
-		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
-		@JsonProperty("game") String game, @JsonProperty("score") int score,
-		@JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
+		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime,
+		@JsonProperty("score") int score,
+		@JsonProperty("game") String game, @JsonProperty("encuentraAlNuevoSessionId") Long encuentraAlNuevoSessionId) {
 		
 		this.completeDatetime = completeDatetime;
 		this.canceled = canceled;

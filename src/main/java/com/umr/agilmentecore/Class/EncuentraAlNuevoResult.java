@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.umr.agilmentecore.Interfaces.IResult;
 
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "encuentra_al_nuevo_result")
 public class EncuentraAlNuevoResult implements IResult {
 	@Id

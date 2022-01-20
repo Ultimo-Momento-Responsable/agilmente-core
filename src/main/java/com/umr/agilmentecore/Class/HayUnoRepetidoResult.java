@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.umr.agilmentecore.Interfaces.IResult;
 
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "hay_uno_repetido_result")
 public class HayUnoRepetidoResult implements IResult {
 	@Id
