@@ -18,6 +18,8 @@ import com.umr.agilmentecore.Class.Game;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
+import com.umr.agilmentecore.Class.PlanningFilterStates;
+import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
@@ -103,12 +105,19 @@ public class PlanningService {
 	 * @param search búsqueda realizada
 	 * @return Lista con todas las plannings filtradas
 	 */
-	public Page<PlanningOverview> getPlanningsFiltered(String search) {
+	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
 		updateAllPlannings();
-		search = search.toLowerCase();
+		String search = pFS.getSearch().toLowerCase();
 		List<Planning> plannings = this.repository.findFiltered(search);
+		List<Planning> effectivePlannings = new ArrayList<Planning>();
+		for (Planning p : plannings) {
+			PlanningState pS = p.getState();
+			if (pFS.getStates().contains(pS.getName())) {
+				effectivePlannings.add(p);
+			}
+		}
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
-		listOverview = planningToPlanningOverview(plannings, listOverview);
+		listOverview = planningToPlanningOverview(effectivePlannings, listOverview);
 		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
 		return pageOverview;
 	}	
@@ -358,5 +367,10 @@ public class PlanningService {
 			return true;
 		}
 		return false;
+	}
+
+
+	public List<PlanningState> getPlanningStates() {
+		return stateRepository.findAll();
 	}
 }
