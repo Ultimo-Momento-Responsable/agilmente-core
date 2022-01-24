@@ -28,7 +28,7 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 	
 	List<Planning> findByState_nameOrState_name(String firstState, String secondState);
 	
-	@Query("select p from Planning p WHERE (p.state.id=1 OR p.state.id=2) AND "
+	@Query("select p from Planning p WHERE "
 			+ "(TRANSLATE(LOWER(name),'áéíóú', 'aeiou') LIKE %?1% OR "
 			+ "TRANSLATE(LOWER(p.patient.firstName || ' ' || "
 			+ "p.patient.lastName),'áéíóú', 'aeiou') LIKE %?1%)")
