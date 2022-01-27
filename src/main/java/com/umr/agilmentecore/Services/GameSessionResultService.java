@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Services;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
+import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
@@ -120,7 +122,7 @@ public class GameSessionResultService {
 		}
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
-  /**
+	/**
 	 * Obtiene una lista de todos los resultados
 	 * a partir del id de un paciente.
 	 * @param id ID del paciente.
@@ -137,5 +139,30 @@ public class GameSessionResultService {
 		} else {
 			return null;
 		}
+	}
+
+	public List<ResultListHistory> getAllResultsByPatientOrdered(Long id) {
+		List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
+		List<EncuentraAlNuevoResult> encuentraAlNuevoResults = this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByPatient_id(id);
+		List<ResultListHistory> results = new ArrayList<ResultListHistory>();
+		for (HayUnoRepetidoResult h : hayUnoRepetidoResults) {
+			ResultListHistory result = new ResultListHistory();
+			result.setCompleteDatetime(h.getCompleteDatetime());
+			result.setGame("Encuentra al Repetido");
+			result.setScore(h.getScore());
+			results.add(result);
+		}
+		for (EncuentraAlNuevoResult e : encuentraAlNuevoResults) {
+			ResultListHistory result = new ResultListHistory();
+			result.setCompleteDatetime(e.getCompleteDatetime());
+			result.setGame("Encuentra al Nuevo");
+			result.setScore(e.getScore());
+			results.add(result);
+		}
+		Comparator<ResultListHistory> comparator = (c1, c2) -> {
+			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
+		};
+		results.sort(comparator);
+		return results;
 	}
 }
