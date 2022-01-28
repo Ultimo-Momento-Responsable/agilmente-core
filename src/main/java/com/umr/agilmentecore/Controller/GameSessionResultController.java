@@ -1,5 +1,7 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
+import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Services.GameSessionResultService;
 
@@ -81,6 +84,22 @@ public class GameSessionResultController {
 			);
 		}
 		return this.service.getAllResultsByPatient(id);
+	}
+	
+	/**
+	 * Obtiene una lista de los resultados de un paciente ordenados por fecha
+	 * El formato del resultado es del formato ResultListHistory
+	 * @param id
+	 * @return Devuelve una lista con los resultados.
+	 */
+	@GetMapping(value = "/by-patient-ordered/{id}")
+	public  List<ResultListHistory> getAllResultsByPatientOrdered(@PathVariable(name = "id")Long id) {
+		if (this.service.getAllResultsByPatient(id) == null) {
+			throw new ResponseStatusException(
+			  HttpStatus.NOT_FOUND, "Patient not found"
+			);
+		}
+		return this.service.getAllResultsByPatientOrdered(id);
 	}
 	
 	/**
