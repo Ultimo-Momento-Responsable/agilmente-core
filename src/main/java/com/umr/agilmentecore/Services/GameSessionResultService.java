@@ -141,6 +141,12 @@ public class GameSessionResultService {
 		}
 	}
 
+	/**
+	 * Obtiene una lista de los resultados de un paciente ordenados por fecha
+	 * El formato del resultado es del formato ResultListHistory
+	 * @param id
+	 * @return Devuelve una lista con los resultados.
+	 */
 	public List<ResultListHistory> getAllResultsByPatientOrdered(Long id) {
 		List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
 		List<EncuentraAlNuevoResult> encuentraAlNuevoResults = this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByPatient_id(id);

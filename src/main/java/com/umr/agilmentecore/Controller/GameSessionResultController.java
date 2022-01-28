@@ -86,6 +86,12 @@ public class GameSessionResultController {
 		return this.service.getAllResultsByPatient(id);
 	}
 	
+	/**
+	 * Obtiene una lista de los resultados de un paciente ordenados por fecha
+	 * El formato del resultado es del formato ResultListHistory
+	 * @param id
+	 * @return Devuelve una lista con los resultados.
+	 */
 	@GetMapping(value = "/by-patient-ordered/{id}")
 	public  List<ResultListHistory> getAllResultsByPatientOrdered(@PathVariable(name = "id")Long id) {
 		if (this.service.getAllResultsByPatient(id) == null) {
