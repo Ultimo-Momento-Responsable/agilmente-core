@@ -46,7 +46,9 @@ CREATE TABLE variable_size (
 DROP TABLE IF EXISTS game CASCADE;
 CREATE TABLE game (
 	id SERIAL NOT NULL PRIMARY KEY,
-	name VARCHAR(255)
+	name VARCHAR(255),
+	description VARCHAR(255),
+	param_description VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS hay_uno_repetido_result CASCADE;
