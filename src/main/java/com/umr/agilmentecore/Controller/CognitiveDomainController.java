@@ -31,13 +31,4 @@ public class CognitiveDomainController {
 		return service.getAll(page);
 	}
 	
-	/**
-	 * Guarda un Dominio Cognitivo
-	 * @param cd Un Dominio Cognitivo
-	 * @return el Dominio Cognitivo guardado
-	 */
-	@PostMapping
-	public CognitiveDomain save(@RequestBody CognitiveDomain cd) {
-		return service.save(cd);
-	}
 }
