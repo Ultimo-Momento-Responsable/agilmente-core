@@ -9,8 +9,11 @@ INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Canti
 INSERT INTO game (name,description,param_description) VALUES ('Encuentra al Repetido', 'En este ejercicio, el paciente tiene que encontrar las figuras que se repiten para avanzar. A medida que va avanzando se le muestran nuevas figuras, aumentando progresivamente la dificultad.', 'Se puede cambiar la duración del ejercicio, la cantidad de estímulos se muestran en pantalla, y el conjunto de figuras que se utilizará durante el mismo.');
 INSERT INTO game (name,description,param_description) VALUES ('Encuentra al Nuevo', 'En este ejercicio, el paciente tiene que prestar atención a las figuras que hay en pantalla. En cada nivel, las figuras se reordenan y se agrega una nueva. El paciente tiene que reconocer la nueva figura para avanzar.', 'Se puede cambiar la duración del ejercicio y el conjunto de figuras que se utilizará durante el mismo.');
 
-INSERT INTO cognitive_domain (name) VALUES ('Procesos Atencionales');
+INSERT INTO cognitive_domain (name) VALUES ('Atención');
 INSERT INTO cognitive_domain (name) VALUES ('Memoria');
+INSERT INTO cognitive_domain (name) VALUES ('Funciones ejecutivas');
+INSERT INTO cognitive_domain (name) VALUES ('Visoespacial');
+INSERT INTO cognitive_domain (name) VALUES ('Lenguaje');
 
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 120);
