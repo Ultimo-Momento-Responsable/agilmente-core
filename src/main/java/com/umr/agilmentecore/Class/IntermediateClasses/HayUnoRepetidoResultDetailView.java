@@ -23,11 +23,12 @@ public class HayUnoRepetidoResultDetailView {
 	private String patient;
 	private String game;
 	private Long hayUnoRepetidoSessionId;
+	private int score;
 	@Transient
 	private HayUnoRepetidoSession session;
 
 	public HayUnoRepetidoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
-		float[] timeBetweenSuccesses, float totalTime, String patient, String game, HayUnoRepetidoSession session) {
+		float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game, HayUnoRepetidoSession session) {
 		super();
 		this.id = id;
 		this.completeDatetime = completeDatetime;
@@ -39,12 +40,15 @@ public class HayUnoRepetidoResultDetailView {
 		this.patient = patient;
 		this.game = game;
 		this.session = session;
+		this.score = score;
 	}
 	
 	@JsonCreator
-	public HayUnoRepetidoResultDetailView(@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
+	public HayUnoRepetidoResultDetailView(
+		@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
 		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
 		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
+		@JsonProperty("score") int score,
 		@JsonProperty("game") String game, @JsonProperty("hayUnoRepetidoSessionId") Long hayUnoRepetidoSessionId) {
 		
 		this.completeDatetime = completeDatetime;
@@ -55,6 +59,7 @@ public class HayUnoRepetidoResultDetailView {
 		this.totalTime = totalTime;
 		this.game = game;
 		this.hayUnoRepetidoSessionId = hayUnoRepetidoSessionId;
+		this.score = score;
 	}
 	
 	public Long getId() {
@@ -127,6 +132,14 @@ public class HayUnoRepetidoResultDetailView {
 
 	public void setGame(String game) {
 		this.game = game;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	public List<IParam> getParams() {

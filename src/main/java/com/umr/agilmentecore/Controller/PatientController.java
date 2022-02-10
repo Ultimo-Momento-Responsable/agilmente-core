@@ -46,26 +46,6 @@ public class PatientController {
 	}
 	
 	/**
-	 * Obtiene todos los pacientes.
-	 * @param page Contiene las opciones de paginación.
-	 * @return Page<Patient> Una página de resultados.
-	 */
-	@GetMapping
-	public Page<Patient> getAll(Pageable page) {
-		return service.getAll(page);
-	}
-	
-	/**
-	 * Obtiene todos los pacientes activos
-	 * @param page Contiene las opciones de paginación.
-	 * @return Page<Patient> Una página de resultados.
-	 */
-	@GetMapping(value = "/activePatients")
-	public Page<Patient> getAllActive(Pageable page) {
-		return service.getAllActive(page);
-	}
-	
-	/**
 	 * Obtiene un Paciente.
 	 * @param Long el id del paciente específico.
 	 * @return Optional un paciente o nada.
@@ -81,10 +61,9 @@ public class PatientController {
 	 * @param Contiene las opciones de paginación.
 	 * @return patientPage Una página de resultados.
 	 */
-	@GetMapping(value = {"/fn/{fullName}"})
-	public Page<Patient> getAll(@PathVariable(name = "fullName") String fullName, Pageable patientPage) {
-
-		return service.findAllActivePatientsByFirstOrLastName(fullName, patientPage);
+	@GetMapping(params = {"fullName","all"})
+	public Page<Patient> getAll(String fullName, boolean all, Pageable patientPage) {
+		return service.findAllActivePatientsByFirstOrLastName(fullName, all, patientPage);
 	}
 	
 	/**

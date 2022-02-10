@@ -16,6 +16,8 @@ import com.umr.agilmentecore.Class.Game;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
+import com.umr.agilmentecore.Class.PlanningFilterStates;
+import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
@@ -86,11 +88,45 @@ public class PlanningService {
 	 * Obtiene todas las planificaciones vigentes y pendientes de vista general (sin juegos)
 	 * @return Página de planificaciones vigentes o pendientes, sin juegos.
 	 */
-	
 	public Page<PlanningOverview> getPlanningOverview() {
 		updateAllPlannings();
 		List<Planning> plannings = this.repository.findByState_nameOrState_name("Vigente", "Pendiente");
-		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>(); 
+		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
+		listOverview = planningToPlanningOverview(plannings, listOverview);
+		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
+		
+		return pageOverview;
+	}
+	
+	/**
+	 * Obtiene las planning filtradas
+	 * @param search búsqueda realizada
+	 * @return Lista con todas las plannings filtradas
+	 */
+	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
+		updateAllPlannings();
+		String search = pFS.getSearch().toLowerCase();
+		List<Planning> plannings = this.repository.findFiltered(search);
+		List<Planning> effectivePlannings = new ArrayList<Planning>();
+		for (Planning p : plannings) {
+			PlanningState pS = p.getState();
+			if (pFS.getStates().contains(pS.getName())) {
+				effectivePlannings.add(p);
+			}
+		}
+		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
+		listOverview = planningToPlanningOverview(effectivePlannings, listOverview);
+		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
+		return pageOverview;
+	}	
+	
+	/**
+	 * Convierte una lista de plannings en una lista de planningOverview
+	 * @param plannings 
+	 * @param listOverview
+	 * @return Una lista de planningOverview
+	 */
+	private List<PlanningOverview> planningToPlanningOverview(List<Planning> plannings, List<PlanningOverview> listOverview){
 		for (Planning planning : plannings) {
 			PlanningOverview pageableOverview = new PlanningOverview();
 			pageableOverview.setPlanningId(planning.getId());
@@ -103,9 +139,7 @@ public class PlanningService {
 			
 			listOverview.add(pageableOverview);
 		}
-		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
-		
-		return pageOverview;
+		return listOverview;
 	}
 	
 	/**
@@ -117,6 +151,7 @@ public class PlanningService {
 		updateAllPlannings();
 		return this.repository.findAll();
 	}
+	
 
 	/**
 	 * Crea una planificación.
@@ -330,5 +365,10 @@ public class PlanningService {
 			return true;
 		}
 		return false;
+	}
+
+
+	public List<PlanningState> getPlanningStates() {
+		return stateRepository.findAll();
 	}
 }

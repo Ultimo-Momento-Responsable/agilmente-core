@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.PlanningFilterStates;
+import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
@@ -46,6 +48,16 @@ public class PlanningController {
 	@GetMapping(value = "/planningOverview")
 	public Page<PlanningOverview> getOverviews() {
 		return service.getPlanningOverview();
+	}
+	
+	/**
+	 * Obtiene las plannings vigentes y pendientes con el filtro
+	 * @param search filtro
+	 * @return Listado de plannings con filtro
+	 */
+	@PostMapping(value = "/filter")
+	public Page<PlanningOverview> getPlanningsFiltered(@RequestBody PlanningFilterStates pFS) {
+		return service.getPlanningsFiltered(pFS);
 	}
 	
 	/**
@@ -85,6 +97,15 @@ public class PlanningController {
 	@GetMapping(value = "/mobile_patient_{id}")
 	public PlanningList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
+	}
+	
+	/**
+	 * Obtiene una lista con todos los posibles estados de planificación
+	 * @return lista de PlanningState
+	 */
+	@GetMapping(value = "/states")
+	public List<PlanningState> getPlanningStates() {
+		return service.getPlanningStates();
 	}
 	
 	/**
