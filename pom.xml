@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.umr</groupId>
 	<artifactId>agilmente-core</artifactId>
-	<version>0.15.0</version>
+	<version>0.16.0</version>
 	<name>agilmente-core</name>
 	<description>AgilMente es un software de rehabilitación neuronal que utiliza un enfoque de gamificación para facilitar a los pacientes la realización de los ejercicios de su tratamiento. Además, se ofrece una serie de funcionalidades al profesional de la salud para planificación y seguimiento del tratamiento. </description>
 	<properties>
