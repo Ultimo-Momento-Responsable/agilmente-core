@@ -18,6 +18,7 @@ public class HayUnoRepetidoResultDetailView {
 	private boolean canceled;
 	private int mistakes;
 	private int successes;
+	private int productivity;
 	private float[] timeBetweenSuccesses;
 	private float totalTime;
 	private String patient;
@@ -27,7 +28,7 @@ public class HayUnoRepetidoResultDetailView {
 	@Transient
 	private HayUnoRepetidoSession session;
 
-	public HayUnoRepetidoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
+	public HayUnoRepetidoResultDetailView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, int productivity,
 		float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game, HayUnoRepetidoSession session) {
 		super();
 		this.id = id;
@@ -35,6 +36,7 @@ public class HayUnoRepetidoResultDetailView {
 		this.canceled = canceled;
 		this.mistakes = mistakes;
 		this.successes = successes;
+		this.productivity = productivity;
 		this.timeBetweenSuccesses = timeBetweenSuccesses;
 		this.totalTime = totalTime;
 		this.patient = patient;
@@ -46,7 +48,7 @@ public class HayUnoRepetidoResultDetailView {
 	@JsonCreator
 	public HayUnoRepetidoResultDetailView(
 		@JsonProperty("completeDatetime") Date completeDatetime, @JsonProperty("canceled") boolean canceled, 
-		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes,
+		@JsonProperty("mistakes") int mistakes, @JsonProperty("successes") int successes, @JsonProperty("productivity") int productivity,
 		@JsonProperty("timeBetweenSuccesses") float[] timeBetweenSuccesses, @JsonProperty("totalTime") float totalTime, 
 		@JsonProperty("score") int score,
 		@JsonProperty("game") String game, @JsonProperty("hayUnoRepetidoSessionId") Long hayUnoRepetidoSessionId) {
@@ -55,6 +57,7 @@ public class HayUnoRepetidoResultDetailView {
 		this.canceled = canceled;
 		this.mistakes = mistakes;
 		this.successes = successes;
+		this.productivity = productivity;
 		this.timeBetweenSuccesses = timeBetweenSuccesses;
 		this.totalTime = totalTime;
 		this.game = game;
@@ -148,5 +151,13 @@ public class HayUnoRepetidoResultDetailView {
 
 	public Long getHayUnoRepetidoSessionId() {
 		return hayUnoRepetidoSessionId;
+	}
+
+	public int getProductivity() {
+		return productivity;
+	}
+
+	public void setProductivity(int productivity) {
+		this.productivity = productivity;
 	}
 }

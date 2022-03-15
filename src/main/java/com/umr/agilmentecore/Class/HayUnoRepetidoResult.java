@@ -35,6 +35,8 @@ public class HayUnoRepetidoResult implements IResult {
 	private int mistakes;
 	@Column(name = "successes")
 	private int successes;
+	@Column(name = "productivity")
+	private int productivity;
 	@Column(name = "time_between_successes")
 	private float[] timeBetweenSuccesses;
 	@Column(name = "total_time")
