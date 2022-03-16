@@ -56,6 +56,7 @@ CREATE TABLE hay_uno_repetido_result (
 	id SERIAL NOT NULL PRIMARY KEY,
 	mistakes INTEGER,
 	successes INTEGER,
+	productivity INTEGER,
 	total_time NUMERIC,
 	time_between_successes BYTEA,
 	complete_datetime TIMESTAMP,

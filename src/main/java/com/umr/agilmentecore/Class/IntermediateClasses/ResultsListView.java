@@ -10,18 +10,21 @@ public class ResultsListView {
 	private boolean canceled;
 	private int mistakes;
 	private int successes;
+	private int productivity;
 	private float[] timeBetweenSuccesses;
 	private float totalTime;
 	private String patient;
 	private String game;
 	private int score;
-	
-	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game) {
+
+	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes,
+			int productivity, float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game) {
 		this.setId(id);
 		this.completeDatetime = completeDatetime;
 		this.setCanceled(canceled);
 		this.setMistakes(mistakes);
 		this.setSuccesses(successes);
+		this.setProductivity(productivity);
 		this.setTimeBetweenSuccesses(timeBetweenSuccesses);
 		this.setTotalTime(totalTime);
 		this.patient = patient;
@@ -104,6 +107,13 @@ public class ResultsListView {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	
+
+	public int getProductivity() {
+		return productivity;
+	}
+
+	public void setProductivity(int productivity) {
+		this.productivity = productivity;
+	}
+
 }
