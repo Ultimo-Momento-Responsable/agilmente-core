@@ -23,6 +23,7 @@ import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder
 import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
+import com.umr.agilmentecore.Class.GameSessionBuilder.MemorillaSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
@@ -191,6 +192,8 @@ public class PlanningService {
 				return (IGameSessionBuilder) new HayUnoRepetidoSessionBuilder();
 			case 2: 
 				return (IGameSessionBuilder) new EncuentraAlNuevoSessionBuilder();
+			case 3: 
+				return (IGameSessionBuilder) new MemorillaSessionBuilder();
 			default:
 				return null;
 		}
