@@ -135,6 +135,10 @@ public class GameSessionResultService {
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
 	
+	/**
+	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
+	 * @param p Planificación a chequear
+	 */
 	private void checkIfCompleted(Planning p) {
 		boolean completed = true;
 		for (PlanningDetail pDetail : p.getDetail()) {
