@@ -1,4 +1,4 @@
-INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Terminada'), ('Cancelada');
+INSERT INTO planning_state (name) VALUES ('Pendiente'), ('Vigente'), ('Incompleta'), ('Cancelada'), ('Completada') ;
 
 INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Nivel Máximo', 'MaxLevel', 0, 'Niveles','Cantidad de aciertos que debe lograr el paciente para que finalice el juego');
 INSERT INTO param (name, class_name, type, unit, contextual_help) VALUES ('Tiempo Máximo', 'MaximumTime', 0, 'Segundos', 'Tiempo que debe transcurrir para que finalice el juego');
