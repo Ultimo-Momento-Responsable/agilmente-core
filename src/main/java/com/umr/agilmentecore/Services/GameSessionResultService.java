@@ -47,7 +47,7 @@ public class GameSessionResultService {
 	@Autowired
 	private PlanningRepository planningRepository;
 	@Autowired
-	private PlanningStateRepository planningStateRepository;
+	private PlanningService planningService;
 	@Autowired
 	private PatientRepository patientRepository;
 	/**
@@ -106,7 +106,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		checkIfCompleted(p);
+		planningService.checkIfCompleted(p);
 		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 
@@ -131,26 +131,8 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		checkIfCompleted(p);
+		planningService.checkIfCompleted(p);
 		hayUnoRepetidoSessionRepository.save(hURS);
-	}
-	
-	/**
-	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
-	 * @param p Planificación a chequear
-	 */
-	private void checkIfCompleted(Planning p) {
-		boolean completed = true;
-		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()>0) {
-				completed = false;
-			}
-		}
-		if (completed) {
-			PlanningState ps = planningStateRepository.getOne((long) 5);
-			p.setState(ps);
-			planningRepository.save(p);
-		}
 	}
 	
 	/**
