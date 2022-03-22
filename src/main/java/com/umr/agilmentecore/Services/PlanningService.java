@@ -60,6 +60,7 @@ public class PlanningService {
 			if (isActiveOrPending(planning)) {
 				planning.setState(stateRepository.getOne((long) 3));
 			}
+			checkIfCompleted(planning);
 			this.repository.save(planning);
 		}
 		
@@ -179,6 +180,26 @@ public class PlanningService {
 		
 		return this.repository.save(planning);
 	}
+	
+	/**
+	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
+	 * @param p Planificación a chequear
+	 */
+	public void checkIfCompleted(Planning p) {
+		boolean completed = true;
+		for (PlanningDetail pDetail : p.getDetail()) {
+			if (pDetail.getNumberOfSessions()!=0) {
+				completed = false;
+			}
+		}
+		if (completed) {
+			PlanningState ps = stateRepository.getOne((long) 5);
+			p.setState(ps);
+			repository.save(p);
+		}
+	}
+	
+	
 	
 	/**
 	 * Obtiene la clase concreta de builder adecuada en 
