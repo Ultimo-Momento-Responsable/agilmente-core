@@ -23,6 +23,7 @@ import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder
 import com.umr.agilmentecore.Class.GameSessionBuilder.EncuentraAlNuevoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.HayUnoRepetidoSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
+import com.umr.agilmentecore.Class.GameSessionBuilder.MemorillaSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
@@ -59,6 +60,7 @@ public class PlanningService {
 			if (isActiveOrPending(planning)) {
 				planning.setState(stateRepository.getOne((long) 3));
 			}
+			checkIfCompleted(planning);
 			this.repository.save(planning);
 		}
 		
@@ -180,6 +182,26 @@ public class PlanningService {
 	}
 	
 	/**
+	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
+	 * @param p Planificación a chequear
+	 */
+	public void checkIfCompleted(Planning p) {
+		boolean completed = true;
+		for (PlanningDetail pDetail : p.getDetail()) {
+			if (pDetail.getNumberOfSessions()!=0) {
+				completed = false;
+			}
+		}
+		if (completed) {
+			PlanningState ps = stateRepository.getOne((long) 5);
+			p.setState(ps);
+			repository.save(p);
+		}
+	}
+	
+	
+	
+	/**
 	 * Obtiene la clase concreta de builder adecuada en 
 	 * base al id del juego y crea una instancia de la misma.
 	 * @param game Juego.
@@ -191,6 +213,8 @@ public class PlanningService {
 				return (IGameSessionBuilder) new HayUnoRepetidoSessionBuilder();
 			case 2: 
 				return (IGameSessionBuilder) new EncuentraAlNuevoSessionBuilder();
+			case 3: 
+				return (IGameSessionBuilder) new MemorillaSessionBuilder();
 			default:
 				return null;
 		}

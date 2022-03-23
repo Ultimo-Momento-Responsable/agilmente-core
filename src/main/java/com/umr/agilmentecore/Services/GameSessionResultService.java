@@ -15,7 +15,9 @@ import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
+import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
@@ -27,6 +29,8 @@ import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
 import com.umr.agilmentecore.Persistence.PatientRepository;
 import com.umr.agilmentecore.Persistence.PlanningDetailRepository;
+import com.umr.agilmentecore.Persistence.PlanningRepository;
+import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 
 @Service
 public class GameSessionResultService {
@@ -40,6 +44,10 @@ public class GameSessionResultService {
 	private EncuentraAlNuevoResultRepository encuentraAlNuevoResultRepository;
 	@Autowired
 	private PlanningDetailRepository planningDetailRepository;
+	@Autowired
+	private PlanningRepository planningRepository;
+	@Autowired
+	private PlanningService planningService;
 	@Autowired
 	private PatientRepository patientRepository;
 	/**
@@ -93,10 +101,12 @@ public class GameSessionResultService {
 		eANR.setScore(result.getScore());
 		eANS.addResult(eANR);
 		PlanningDetail pd = planningDetailRepository.findByEncuentraAlNuevoSession_id(result.getEncuentraAlNuevoSessionId());
+		Planning p = planningRepository.findByPlanningDetail(pd).get();
 		if (pd.getMaxNumberOfSessions() != -1 && !eANR.isCanceled()) {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
+		planningService.checkIfCompleted(p);
 		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 
@@ -116,12 +126,15 @@ public class GameSessionResultService {
 		hURR.setScore(result.getScore());
 		hURS.addResult(hURR);
 		PlanningDetail pd = planningDetailRepository.findByHayUnoRepetidoSession_id(result.getHayUnoRepetidoSessionId());
+		Planning p = planningRepository.findByPlanningDetail(pd).get();
 		if (pd.getMaxNumberOfSessions() != -1 && !hURR.isCanceled()) {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
+		planningService.checkIfCompleted(p);
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
+	
 	/**
 	 * Obtiene una lista de todos los resultados
 	 * a partir del id de un paciente.

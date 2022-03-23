@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.umr.agilmentecore.Class.Planning;
+import com.umr.agilmentecore.Class.PlanningDetail;
 
 @Repository
 public interface PlanningRepository extends JpaRepository<Planning, Long> {
@@ -33,5 +34,8 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 			+ "TRANSLATE(LOWER(p.patient.firstName || ' ' || "
 			+ "p.patient.lastName),'áéíóú', 'aeiou') LIKE %?1%)")
 	List<Planning> findFiltered(String planningName);
-
+	
+	@Query(value = "Select p FROM Planning p JOIN p.detail pd WHERE ?1 IN pd")
+	Optional<Planning> findByPlanningDetail(PlanningDetail pd);
+	
 }
