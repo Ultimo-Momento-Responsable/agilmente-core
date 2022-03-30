@@ -9,5 +9,6 @@ import com.umr.agilmentecore.Class.PlanningDetail;
 public interface PlanningDetailRepository extends JpaRepository<PlanningDetail, Long> {
 	PlanningDetail findByHayUnoRepetidoSession_id(Long id);
 	PlanningDetail findByEncuentraAlNuevoSession_id(Long id);
+	PlanningDetail findByMemorillaSession_id(Long id);
 	
 }

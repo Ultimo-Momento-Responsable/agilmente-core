@@ -15,11 +15,13 @@ import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
 import com.umr.agilmentecore.Class.EncuentraAlNuevoSession;
 import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
+import com.umr.agilmentecore.Class.MemorillaResult;
+import com.umr.agilmentecore.Class.MemorillaSession;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
-import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
@@ -27,10 +29,11 @@ import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoSessionRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoResultRepository;
 import com.umr.agilmentecore.Persistence.HayUnoRepetidoSessionRepository;
+import com.umr.agilmentecore.Persistence.MemorillaResultRepository;
+import com.umr.agilmentecore.Persistence.MemorillaSessionRepository;
 import com.umr.agilmentecore.Persistence.PatientRepository;
 import com.umr.agilmentecore.Persistence.PlanningDetailRepository;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
-import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 
 @Service
 public class GameSessionResultService {
@@ -42,6 +45,10 @@ public class GameSessionResultService {
 	private EncuentraAlNuevoSessionRepository encuentraAlNuevoSessionRepository;
 	@Autowired
 	private EncuentraAlNuevoResultRepository encuentraAlNuevoResultRepository;
+	@Autowired
+	private MemorillaSessionRepository memorillaSessionRepository;
+	@Autowired
+	private MemorillaResultRepository memorillaResultRepository;
 	@Autowired
 	private PlanningDetailRepository planningDetailRepository;
 	@Autowired
@@ -58,7 +65,10 @@ public class GameSessionResultService {
 	public Page<ResultsListView> getAllResultsOrdered() {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListView();
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListView();
+		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListView();
 		List<ResultsListView> results = Stream.concat(hURResults.stream(), eANResults.stream())
+                .collect(Collectors.toList());
+		results = Stream.concat(results.stream(), mResults.stream())
                 .collect(Collectors.toList());
 		Comparator<ResultsListView> comparator = (c1, c2) -> {
 			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
@@ -83,6 +93,15 @@ public class GameSessionResultService {
 	 */
 	public EncuentraAlNuevoResultDetailView getOneEncuentraAlNuevo(Long id) {
 		return this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultDetailById(id);
+	}
+	
+	/**
+	 * Obtiene un resultado de Memorilla.
+	 * @param Long el id del juego específico.
+	 * @return Optional un resultado de un juego o nada.
+	 */
+	public MemorillaResultDetailView getOneMemorilla(Long id) {
+		return this.memorillaResultRepository.findMemorillaResultDetailById(id);
 	}
 
 	/**
@@ -136,6 +155,33 @@ public class GameSessionResultService {
 	}
 	
 	/**
+	 * Guarda un resultado de Memorilla
+	 * @param result el resultado a guardar
+	 */
+	public void saveMemorilla(MemorillaResultDetailView result) {
+		MemorillaSession mS = this.memorillaSessionRepository.getOne(result.getMemorillaSessionId());
+		MemorillaResult mR = new MemorillaResult();
+		mR.setMistakesPerLevel(result.getMistakesPerLevel());
+		mR.setSuccessesPerLevel(result.getSuccessesPerLevel());
+		mR.setStreak(result.getStreak());
+		mR.setCanceled(result.isCanceled());
+		mR.setCompleteDatetime(result.getCompleteDatetime());
+		mR.setTimePerLevel(result.getTimePerLevel());
+		mR.setTotalTime(result.getTotalTime());
+		mR.setScore(result.getScore());
+		mS.addResult(mR);
+		PlanningDetail pd = planningDetailRepository.findByMemorillaSession_id(result.getMemorillaSessionId());
+		Planning p = planningRepository.findByPlanningDetail(pd).get();
+		if (pd.getMaxNumberOfSessions() != -1 && !mR.isCanceled()) {
+			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
+			planningDetailRepository.save(pd);
+		}
+		planningService.checkIfCompleted(p);
+		memorillaSessionRepository.save(mS);
+		
+	}
+	
+	/**
 	 * Obtiene una lista de todos los resultados
 	 * a partir del id de un paciente.
 	 * @param id ID del paciente.
@@ -184,4 +230,5 @@ public class GameSessionResultService {
 		results.sort(comparator);
 		return results;
 	}
+
 }
