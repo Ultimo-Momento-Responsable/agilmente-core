@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
+import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
@@ -43,13 +44,28 @@ public class GameSessionResultController {
 	 * @return El resultado buscado.
 	 */
 	@GetMapping(value = "/encuentra-al-repetido/{id}")
-	public HayUnoRepetidoResultDetailView getOne(@PathVariable(name = "id")Long id) {
+	public HayUnoRepetidoResultDetailView getOneHUR(@PathVariable(name = "id")Long id) {
 		if (this.service.getOneHayUnoRepetido(id) == null) {
 			throw new ResponseStatusException(
 			  HttpStatus.NOT_FOUND, "Result not found"
 			);
 		}
 		return this.service.getOneHayUnoRepetido(id);
+	}
+	
+	/**
+	 * Obtiene un resultado de Memorilla a partir del id.
+	 * @param id Id del resultado.
+	 * @return El resultado buscado.
+	 */
+	@GetMapping(value = "/memorilla/{id}")
+	public MemorillaResultDetailView getOneM(@PathVariable(name = "id")Long id) {
+		if (this.service.getOneMemorilla(id) == null) {
+			throw new ResponseStatusException(
+			  HttpStatus.NOT_FOUND, "Result not found"
+			);
+		}
+		return this.service.getOneMemorilla(id);
 	}
 	
 	/**
@@ -68,6 +84,15 @@ public class GameSessionResultController {
 	@PostMapping(path = "/encuentra-al-repetido")
 	public void save(@RequestBody HayUnoRepetidoResultDetailView result) {
 		service.saveHayUnoRepetido(result);
+	}
+	
+	/**
+	 * Recibe un resultado de Memorilla y lo guarda.
+	 * @param result Un resultado con los datos de MemorillaResultDetailView.
+	 */
+	@PostMapping(path = "/memorilla")
+	public void save(@RequestBody MemorillaResultDetailView result) {
+		service.saveMemorilla(result);
 	}
 
 	/**

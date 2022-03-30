@@ -31,10 +31,14 @@ public class MemorillaResult implements IResult {
 	private Date completeDatetime;
 	@Column(name = "canceled")
 	private boolean canceled;
-	@Column(name = "mistakes")
-	private int mistakes;
-	@Column(name = "successes")
-	private int successes;
+	@Column(name = "mistakesPerLevel")
+	private int[] mistakesPerLevel;
+	@Column(name = "successesPerLevel")
+	private int[] successesPerLevel;
+	@Column(name = "streak")
+	private int streak;
+	@Column(name = "timePerLevel")
+	private float[] timePerLevel;
 	@Column(name = "total_time")
 	private float totalTime;
 	@Column (name = "score")
