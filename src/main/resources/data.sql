@@ -28,8 +28,8 @@ INSERT INTO game_param (param_id) VALUES (4);
 INSERT INTO game_param (param_id) VALUES (5);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (8, 3, 20);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
-INSERT INTO game_param (param_id, min_value, max_value) VALUES (6, 3, 6);
-INSERT INTO game_param (param_id, min_value, max_value) VALUES (7, 3, 8);
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (6, 3, 8);
+INSERT INTO game_param (param_id, min_value, max_value) VALUES (7, 3, 6);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (8, 3, 15);
 
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 1);
