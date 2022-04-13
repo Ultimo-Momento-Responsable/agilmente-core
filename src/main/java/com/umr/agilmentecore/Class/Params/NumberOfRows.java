@@ -22,7 +22,7 @@ public class NumberOfRows implements IParam{
 	private long id;
 	@Column(name = "number_of_rows")
 	private int numberOfRows;
-	private static int MAX_VALUE = 6;
+	private static int MAX_VALUE = 8;
 	private static int MIN_VALUE = 3;
 	
 	@Override
