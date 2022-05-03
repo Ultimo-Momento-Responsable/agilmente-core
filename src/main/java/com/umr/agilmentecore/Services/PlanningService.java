@@ -188,7 +188,7 @@ public class PlanningService {
 	public void checkIfCompleted(Planning p) {
 		boolean completed = true;
 		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()!=0) {
+			if (pDetail.getNumberOfSessions()>0) {
 				completed = false;
 			}
 		}
@@ -289,7 +289,8 @@ public class PlanningService {
 	 */
 	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		updateAllPlannings();
-		List<Planning> plannings = this.repository.findByPatient_idAndState_name(patientId,"Vigente");
+		Date today = new Date();
+		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfter(patientId,today,today);
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 		for (Planning plan : plannings) {
 			String game = null;
