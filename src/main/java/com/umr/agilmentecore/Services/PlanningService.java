@@ -60,13 +60,18 @@ public class PlanningService {
 			if (isActiveOrPending(planning)) {
 				planning.setState(stateRepository.getOne((long) 3));
 			}
-			checkIfCompleted(planning);
+			if (isCompleted(planning)) {
+				planning.setState(stateRepository.getOne((long) 5));
+			}
+			if (isCompletedAndExpired(planning)) {
+				planning.setState(stateRepository.getOne((long) 6));
+			}
 			this.repository.save(planning);
 		}
 		
 	}
-	
-	
+
+
 	/**
 	 * Cambia el estado de una planning a Cancelada
 	 * @param planning la planning a cancelar
@@ -180,27 +185,7 @@ public class PlanningService {
 		
 		return this.repository.save(planning);
 	}
-	
-	/**
-	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
-	 * @param p Planificación a chequear
-	 */
-	public void checkIfCompleted(Planning p) {
-		boolean completed = true;
-		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()>0) {
-				completed = false;
-			}
-		}
-		if (completed) {
-			PlanningState ps = stateRepository.getOne((long) 5);
-			p.setState(ps);
-			repository.save(p);
-		}
-	}
-	
-	
-	
+		
 	/**
 	 * Obtiene la clase concreta de builder adecuada en 
 	 * base al id del juego y crea una instancia de la misma.
@@ -336,6 +321,31 @@ public class PlanningService {
 		Date today = new Date();
 		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
 				&& planning.getDueDate().before(today);
+	}
+	
+	/**
+	 * Chequea si la planificación ha sido completada.
+	 * @param p Planificación a chequear
+	 * @return verdadero o falso según si ha sido completada o no.
+	 */
+	public boolean isCompleted(Planning p) {
+		boolean completed = true;
+		for (PlanningDetail pDetail : p.getDetail()) {
+			if (pDetail.getNumberOfSessions()>0) {
+				completed = false;
+			}
+		}
+		return completed;
+	}
+	
+	/**
+	 * Chequea si la planificación fue completada y a su vez esta expiró.
+	 * @param planning Planificación a chequear
+	 * @return verdadero o falso
+	 */
+	private boolean isCompletedAndExpired(Planning planning) {
+		Date today = new Date();
+		return (planning.getState().getName().equals("Completada") && planning.getDueDate().before(today));
 	}
 	
 	/**
