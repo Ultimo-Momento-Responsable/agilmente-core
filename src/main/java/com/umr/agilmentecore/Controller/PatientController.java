@@ -67,16 +67,6 @@ public class PatientController {
 	}
 	
 	/**
-	 * Obtiene la lista de Planning activas de un paciente.
-	 * @param Long el id del paciente específico.
-	 * @return List<Planning> un paciente o nada.
-	 */
-	@GetMapping(value = "/{id}/current-plannings")
-	public List<Planning> getCurrentActivePlannings(@PathVariable(name = "id") Long id) throws Exception {
-		return this.service.getCurrentPlanningsFromPatientId(id);
-	}
-	
-	/**
 	 * Obtiene un Paciente por su loginCode.
 	 * @param value El Login Code del paciente específico.
 	 * @return Optional un paciente o nada.

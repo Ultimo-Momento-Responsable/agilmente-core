@@ -245,14 +245,13 @@ public class PlanningService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente
-	 * vigentes del paciente a partir de su id.
+	 * Obtiene todas las planificaciones del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
+	public Page<Planning> getCurrentPlanningsFromPatient(Long patientId, Pageable page) {
 		updateAllPlannings();
-		return this.repository.findByPatient_idAndState_name(patientId,"Vigente");
+		return this.repository.findByPatient_id(patientId,page);
 	}
 	
 	/**
