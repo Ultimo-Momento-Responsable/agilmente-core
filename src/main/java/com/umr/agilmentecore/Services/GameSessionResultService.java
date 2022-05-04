@@ -125,7 +125,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.checkIfCompleted(p);
+		planningService.isCompleted(p);
 		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 
@@ -150,7 +150,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.checkIfCompleted(p);
+		planningService.isCompleted(p);
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
 	
@@ -176,7 +176,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.checkIfCompleted(p);
+		planningService.isCompleted(p);
 		memorillaSessionRepository.save(mS);
 		
 	}
