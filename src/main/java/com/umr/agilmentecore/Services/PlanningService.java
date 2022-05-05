@@ -54,19 +54,22 @@ public class PlanningService {
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
 		for (Planning planning : plannings) {
-			if (isPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 2));
+			boolean isNotCanceled = planning.getState().getId()!=4;
+			if (isNotCanceled) {
+				if (isPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 2));
+				}
+				if (isActiveOrPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 3));
+				}
+				if (isCompleted(planning)) {
+					planning.setState(stateRepository.getOne((long) 5));
+				}
+				if (isCompletedAndExpired(planning)) {
+					planning.setState(stateRepository.getOne((long) 6));
+				}
+				this.repository.save(planning);
 			}
-			if (isActiveOrPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 3));
-			}
-			if (isCompleted(planning)) {
-				planning.setState(stateRepository.getOne((long) 5));
-			}
-			if (isCompletedAndExpired(planning)) {
-				planning.setState(stateRepository.getOne((long) 6));
-			}
-			this.repository.save(planning);
 		}
 		
 	}
@@ -113,7 +116,12 @@ public class PlanningService {
 	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
 		updateAllPlannings();
 		String search = pFS.getSearch().toLowerCase();
-		List<Planning> plannings = this.repository.findFiltered(search);
+		List<Planning> plannings = new ArrayList<Planning>();
+		if (pFS.getPatientId() != null) {
+			plannings = this.repository.findFiltered(search,pFS.getPatientId());
+		} else {
+			plannings = this.repository.findFiltered(search);
+		}
 		List<Planning> effectivePlannings = new ArrayList<Planning>();
 		for (Planning p : plannings) {
 			PlanningState pS = p.getState();
@@ -394,7 +402,8 @@ public class PlanningService {
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
 		if (specificPlanning.getState().getName().equals("Pendiente") || 
-				specificPlanning.getState().getName().equals("Vigente")) {
+			specificPlanning.getState().getName().equals("Vigente") || 
+			specificPlanning.getState().getName().equals("Completada")){
 			cancelPlanning(specificPlanning);
 			return true;
 		}

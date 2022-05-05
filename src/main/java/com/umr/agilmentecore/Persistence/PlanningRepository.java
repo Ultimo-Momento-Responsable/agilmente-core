@@ -37,6 +37,13 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 			+ "p.patient.lastName),'áéíóú', 'aeiou') LIKE %?1%)")
 	List<Planning> findFiltered(String planningName);
 	
+	@Query("select p from Planning p WHERE "
+			+ "p.patient.id = ?2 AND "
+			+ "(TRANSLATE(LOWER(name),'áéíóú', 'aeiou') LIKE %?1% OR "
+			+ "TRANSLATE(LOWER(p.patient.firstName || ' ' || "
+			+ "p.patient.lastName),'áéíóú', 'aeiou') LIKE %?1%)")
+	List<Planning> findFiltered(String planningName, Long patientId);
+	
 	@Query(value = "Select p FROM Planning p JOIN p.detail pd WHERE ?1 IN pd")
 	Optional<Planning> findByPlanningDetail(PlanningDetail pd);
 	
