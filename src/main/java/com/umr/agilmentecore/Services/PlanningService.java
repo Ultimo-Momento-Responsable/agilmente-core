@@ -74,7 +74,6 @@ public class PlanningService {
 		
 	}
 
-
 	/**
 	 * Cambia el estado de una planning a Cancelada
 	 * @param planning la planning a cancelar
@@ -311,7 +310,6 @@ public class PlanningService {
 	 * @param planning page de planificacion para evaluar.
 	 * @return booleano confirmando la comparacion.
 	 */
-	
 	private boolean isPending(Planning planning) {
 		Date today = new Date();
 		return planning.getState().getName().equals("Pendiente")

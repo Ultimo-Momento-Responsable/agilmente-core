@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
-import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Services.PatientService;
 
