@@ -85,8 +85,8 @@ public class PlanningController {
 	 * @return Optional una planificación o nada.
 	 */
 	@GetMapping(value = "/patient_{id}")
-	public List<Planning> getCurrentPlanningsFromPatient(@PathVariable(name = "id") Long id) {
-		return service.getCurrentPlanningsFromPatient(id);
+	public Page<Planning> getCurrentPlanningsFromPatient(@PathVariable(name = "id") Long id, Pageable page) {
+		return service.getCurrentPlanningsFromPatient(id, page);
 	}
 	
 	/**

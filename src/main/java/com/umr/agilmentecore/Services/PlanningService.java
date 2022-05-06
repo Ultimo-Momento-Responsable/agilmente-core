@@ -54,23 +54,25 @@ public class PlanningService {
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
 		for (Planning planning : plannings) {
-			if (isPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 2));
+			boolean isNotCanceled = planning.getState().getId()!=4;
+			if (isNotCanceled) {
+				if (isPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 2));
+				}
+				if (isActiveOrPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 3));
+				}
+				if (isCompleted(planning)) {
+					planning.setState(stateRepository.getOne((long) 5));
+				}
+				if (isCompletedAndExpired(planning)) {
+					planning.setState(stateRepository.getOne((long) 6));
+				}
+				this.repository.save(planning);
 			}
-			if (isActiveOrPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 3));
-			}
-			if (isCompleted(planning)) {
-				planning.setState(stateRepository.getOne((long) 5));
-			}
-			if (isCompletedAndExpired(planning)) {
-				planning.setState(stateRepository.getOne((long) 6));
-			}
-			this.repository.save(planning);
 		}
 		
 	}
-
 
 	/**
 	 * Cambia el estado de una planning a Cancelada
@@ -113,7 +115,12 @@ public class PlanningService {
 	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
 		updateAllPlannings();
 		String search = pFS.getSearch().toLowerCase();
-		List<Planning> plannings = this.repository.findFiltered(search);
+		List<Planning> plannings = new ArrayList<Planning>();
+		if (pFS.getPatientId() != null) {
+			plannings = this.repository.findFiltered(search,pFS.getPatientId());
+		} else {
+			plannings = this.repository.findFiltered(search);
+		}
 		List<Planning> effectivePlannings = new ArrayList<Planning>();
 		for (Planning p : plannings) {
 			PlanningState pS = p.getState();
@@ -245,14 +252,13 @@ public class PlanningService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente
-	 * vigentes del paciente a partir de su id.
+	 * Obtiene todas las planificaciones del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
+	public Page<Planning> getCurrentPlanningsFromPatient(Long patientId, Pageable page) {
 		updateAllPlannings();
-		return this.repository.findByPatient_idAndState_name(patientId,"Vigente");
+		return this.repository.findByPatient_id(patientId,page);
 	}
 	
 	/**
@@ -304,7 +310,6 @@ public class PlanningService {
 	 * @param planning page de planificacion para evaluar.
 	 * @return booleano confirmando la comparacion.
 	 */
-	
 	private boolean isPending(Planning planning) {
 		Date today = new Date();
 		return planning.getState().getName().equals("Pendiente")
@@ -395,7 +400,8 @@ public class PlanningService {
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
 		if (specificPlanning.getState().getName().equals("Pendiente") || 
-				specificPlanning.getState().getName().equals("Vigente")) {
+			specificPlanning.getState().getName().equals("Vigente") || 
+			specificPlanning.getState().getName().equals("Completada")){
 			cancelPlanning(specificPlanning);
 			return true;
 		}
