@@ -1,5 +1,6 @@
 package com.umr.agilmentecore.Class.IntermediateClasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,4 +34,12 @@ public class GameParam {
 	private Integer minValue;
 	@OneToMany
 	private List<ParamType2Content> paramType2Content;
+	
+	public List<String> getParamType2Content() {
+		List<String> paramList = new ArrayList<String>();
+		for (ParamType2Content gp : paramType2Content) {
+			paramList.add(gp.getName());
+		}
+		return paramList;
+	}
 }
