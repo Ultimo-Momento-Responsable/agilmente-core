@@ -281,7 +281,7 @@ public class PlanningService {
 	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		updateAllPlannings();
 		Date today = new Date();
-		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfter(patientId,today,today);
+		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfterAndState_IdNot(patientId,today,today,Long.valueOf(4));
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 		for (Planning plan : plannings) {
 			String game = null;
