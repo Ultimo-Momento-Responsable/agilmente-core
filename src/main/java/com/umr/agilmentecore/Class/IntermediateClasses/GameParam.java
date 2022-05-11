@@ -35,10 +35,10 @@ public class GameParam {
 	@OneToMany
 	private List<ParamType2Content> paramType2Content;
 	
-	public List<String> getParamType2Content() {
-		List<String> paramList = new ArrayList<String>();
+	public List<ParamType2Content> getParamType2Content() {
+		List<ParamType2Content> paramList = new ArrayList<ParamType2Content>();
 		for (ParamType2Content gp : paramType2Content) {
-			paramList.add(gp.getName());
+			paramList.add(gp);
 		}
 		return paramList;
 	}
