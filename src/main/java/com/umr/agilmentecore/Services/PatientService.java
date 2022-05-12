@@ -21,7 +21,6 @@ import com.umr.agilmentecore.Persistence.PlanningRepository;
 import com.umr.agilmentecore.Persistence.PlanningStateRepository;
 import com.umr.agilmentecore.Persistence.ProfessionalRepository;
 
-
 @Service
 public class PatientService {
 	@Autowired
@@ -36,82 +35,94 @@ public class PatientService {
 	private ProfessionalRepository professionalRepository;
 	@Autowired
 	private CommentRepository commentRepository;
-	
-	
+
 	/**
 	 * Obtiene todos los resultados de Pacientes, usado en filtros de busqueda.
+	 * 
 	 * @return Una lista con todos los pacientes.
 	 */
 	public List<Patient> getAllList() {
 		return repository.findAll();
 	}
-	
+
 	/**
-	 * Obtiene todos los resultados de Pacientes habilitados, usado en filtros de busqueda
+	 * Obtiene todos los resultados de Pacientes habilitados, usado en filtros de
+	 * busqueda
+	 * 
 	 * @return Una lista con todos los pacientes habilitados.
 	 */
 	public List<Patient> getAllActiveList() {
 		return repository.findAllByIsEnabledTrue();
 	}
-	
+
 	/**
-	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda, que se encuentren habilitados.
+	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista,
+	 * usando nombre o apellido en la busqueda, que se encuentren habilitados.
+	 * 
 	 * @param fullName nombre y apellido de paciente.
-	 * @param page Contiene las opciones de paginación.
+	 * @param page     Contiene las opciones de paginación.
 	 * @return Una pagina de resultados.
 	 */
 	public Page<Patient> findAllActivePatientsByFirstOrLastName(String fullName, boolean all, Pageable page) {
 		fullName = fullName.toLowerCase();
 		if (!all) {
 			return repository.findByFullNameContainingIgnoreCaseActive(fullName, page);
-		} 
+		}
 		return repository.findAllByFullNameContainingIgnoreCaseActive(fullName, page);
-		
+
 	}
-	
+
 	/**
-	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda.
+	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista,
+	 * usando nombre o apellido en la busqueda.
+	 * 
 	 * @param fullName nombre y apellido de paciente.
-	 * @param page Contiene las opciones de paginación.
+	 * @param page     Contiene las opciones de paginación.
 	 * @return Una pagina de resultados.
 	 */
 	public Page<Patient> findAllPatientsByFirstOrLastName(String fullName, Pageable page) {
 		fullName = fullName.toLowerCase();
 		return repository.findByFullNameContainingIgnoreCase(fullName, page);
 	}
-	
+
 	/**
 	 * Guarda un paciente.
+	 * 
 	 * @param p Un paciente.
 	 * @return el paciente guardado.
 	 */
 	public Patient save(Patient p) {
 		return repository.save(p);
 	}
-	
+
 	/**
 	 * Obtiene un paciente.
+	 * 
 	 * @param Long el id del paciente específico.
 	 * @return Optional Un paciente o nada.
 	 */
 	public Optional<Patient> getOne(Long id) {
 		return repository.findById(id);
 	}
-	
+
 	/**
 	 * Obtiene un paciente por el loginCode.
+	 * 
 	 * @param String el código de Logueo del paciente específico.
 	 * @return Optional un paciente o nada.
 	 */
 	public Optional<Patient> getOneByLoginCode(String loginCode) {
 		return repository.findByLoginCode(loginCode);
 	}
-	
+
 	/**
-	 * Elimina un paciente, cambiando su estado a "Deshabilitado", y cancelando todas sus planificaciones pendientes o vigentes
+	 * Elimina un paciente, cambiando su estado a "Deshabilitado", y cancelando
+	 * todas sus planificaciones pendientes o vigentes
+	 * 
 	 * @param id Id del paciente
 	 * @return El paciente guardado
-	 * @throws Exception Control de errores en caso de que no exista el paciente o ya se encuentre deshabilitado
+	 * @throws Exception Control de errores en caso de que no exista el paciente o
+	 *                   ya se encuentre deshabilitado
 	 */
 	public Patient delete(Long id) throws Exception {
 		Patient p = repository.getOne(id);
@@ -124,20 +135,19 @@ public class PatientService {
 			p.setLogged(false);
 			p.setLoginCode(null);
 			List<Planning> patientPlannings = this.planningService.getCurrentAndPendingPlanningsFromPatient(p.getId());
-			patientPlannings.forEach(
-					(planning) -> {
-						planning.setState(cancel);
-						planningRepository.save(planning);
-						}
-					);	
+			patientPlannings.forEach((planning) -> {
+				planning.setState(cancel);
+				planningRepository.save(planning);
+			});
 		} else {
 			throw new RuntimeException("Patient is already deleted.");
-		}		
+		}
 		return repository.save(p);
 	}
-	
+
 	/**
 	 * Actualiza un paciente.
+	 * 
 	 * @param p El paciente que se actualizará.
 	 * @return El paciente guardado.
 	 */
@@ -159,29 +169,15 @@ public class PatientService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente
-	 * vigentes del paciente a partir de su id.
-	 * @param id Id del paciente.
-	 * @return Lista de planificaciones.
-	 */
-	public List<Planning> getCurrentPlanningsFromPatientId(Long id) throws Exception {
-		Optional<Patient> patient = this.getOne(id);
-		
-		if(patient.isEmpty()) {
-			throw new Exception("Patient not found.");
-		}
-		
-		return this.planningService.getCurrentPlanningsFromPatient(patient.get().getId());
-	}
-
-	/**
 	 * Agrega un comentario al comment box del paciente.
-	 * @param pc instancia de objeto PatientComment con 
-	 * los Datos del comentario, del paciente y del profesional
+	 * 
+	 * @param pc instancia de objeto PatientComment con los Datos del comentario,
+	 *           del paciente y del profesional
 	 * @return true si todo sale bien
 	 */
 	public boolean addComment(PatientComment pc) {
-		Professional professional = professionalRepository.findByFirstNameAndLastName(pc.getProfessionalFirstName(), pc.getProfessionalLastName());
+		Professional professional = professionalRepository.findByFirstNameAndLastName(pc.getProfessionalFirstName(),
+				pc.getProfessionalLastName());
 		Patient patient = repository.getOne(pc.getPatientId());
 		List<Comment> comments = patient.getComments();
 		Comment comment = new Comment();
@@ -196,8 +192,9 @@ public class PatientService {
 
 	/**
 	 * Elimina un comentario del comment box del paciente.
-	 * @param pc instancia de objeto PatientComment con 
-	 * el id del comentario y del paciente
+	 * 
+	 * @param pc instancia de objeto PatientComment con el id del comentario y del
+	 *           paciente
 	 * @return true si todo sale bien
 	 */
 	public boolean deleteComment(PatientComment pc) {
@@ -212,8 +209,9 @@ public class PatientService {
 
 	/**
 	 * Edita un comentario del comment box del paciente.
-	 * @param pc instancia de objeto PatientComment con 
-	 * los Datos del comentario y del paciente
+	 * 
+	 * @param pc instancia de objeto PatientComment con los Datos del comentario y
+	 *           del paciente
 	 * @return true si todo sale bien
 	 */
 	public boolean editComment(PatientComment pc) {
@@ -229,6 +227,4 @@ public class PatientService {
 		return true;
 	}
 
-	
 }
-      

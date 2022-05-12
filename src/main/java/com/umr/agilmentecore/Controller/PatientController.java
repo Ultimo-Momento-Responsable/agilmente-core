@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
-import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Services.PatientService;
 
@@ -64,16 +63,6 @@ public class PatientController {
 	@GetMapping(params = {"fullName","all"})
 	public Page<Patient> getAll(String fullName, boolean all, Pageable patientPage) {
 		return service.findAllActivePatientsByFirstOrLastName(fullName, all, patientPage);
-	}
-	
-	/**
-	 * Obtiene la lista de Planning activas de un paciente.
-	 * @param Long el id del paciente específico.
-	 * @return List<Planning> un paciente o nada.
-	 */
-	@GetMapping(value = "/{id}/current-plannings")
-	public List<Planning> getCurrentActivePlannings(@PathVariable(name = "id") Long id) throws Exception {
-		return this.service.getCurrentPlanningsFromPatientId(id);
 	}
 	
 	/**

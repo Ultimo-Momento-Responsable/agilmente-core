@@ -54,19 +54,26 @@ public class PlanningService {
 	private void updateAllPlannings() {
 		List<Planning> plannings = this.repository.findAll();
 		for (Planning planning : plannings) {
-			if (isPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 2));
+			boolean isNotCanceled = planning.getState().getId()!=4;
+			if (isNotCanceled) {
+				if (isPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 2));
+				}
+				if (isActiveOrPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 3));
+				}
+				if (isCompleted(planning)) {
+					planning.setState(stateRepository.getOne((long) 5));
+				}
+				if (isCompletedAndExpired(planning)) {
+					planning.setState(stateRepository.getOne((long) 6));
+				}
+				this.repository.save(planning);
 			}
-			if (isActiveOrPending(planning)) {
-				planning.setState(stateRepository.getOne((long) 3));
-			}
-			checkIfCompleted(planning);
-			this.repository.save(planning);
 		}
 		
 	}
-	
-	
+
 	/**
 	 * Cambia el estado de una planning a Cancelada
 	 * @param planning la planning a cancelar
@@ -108,7 +115,12 @@ public class PlanningService {
 	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
 		updateAllPlannings();
 		String search = pFS.getSearch().toLowerCase();
-		List<Planning> plannings = this.repository.findFiltered(search);
+		List<Planning> plannings = new ArrayList<Planning>();
+		if (pFS.getPatientId() != null) {
+			plannings = this.repository.findFiltered(search,pFS.getPatientId());
+		} else {
+			plannings = this.repository.findFiltered(search);
+		}
 		List<Planning> effectivePlannings = new ArrayList<Planning>();
 		for (Planning p : plannings) {
 			PlanningState pS = p.getState();
@@ -180,27 +192,7 @@ public class PlanningService {
 		
 		return this.repository.save(planning);
 	}
-	
-	/**
-	 * Chequea si la planificación ha sido completada y si es así cambia el estado de la misma.
-	 * @param p Planificación a chequear
-	 */
-	public void checkIfCompleted(Planning p) {
-		boolean completed = true;
-		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()!=0) {
-				completed = false;
-			}
-		}
-		if (completed) {
-			PlanningState ps = stateRepository.getOne((long) 5);
-			p.setState(ps);
-			repository.save(p);
-		}
-	}
-	
-	
-	
+		
 	/**
 	 * Obtiene la clase concreta de builder adecuada en 
 	 * base al id del juego y crea una instancia de la misma.
@@ -260,14 +252,13 @@ public class PlanningService {
 	}
 
 	/**
-	 * Obtiene todas las planificaciones actualmente
-	 * vigentes del paciente a partir de su id.
+	 * Obtiene todas las planificaciones del paciente a partir de su id.
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
+	public Page<Planning> getCurrentPlanningsFromPatient(Long patientId, Pageable page) {
 		updateAllPlannings();
-		return this.repository.findByPatient_idAndState_name(patientId,"Vigente");
+		return this.repository.findByPatient_id(patientId,page);
 	}
 	
 	/**
@@ -289,7 +280,8 @@ public class PlanningService {
 	 */
 	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		updateAllPlannings();
-		List<Planning> plannings = this.repository.findByPatient_idAndState_name(patientId,"Vigente");
+		Date today = new Date();
+		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfterAndState_IdNot(patientId,today,today,Long.valueOf(4));
 		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 		for (Planning plan : plannings) {
 			String game = null;
@@ -318,7 +310,6 @@ public class PlanningService {
 	 * @param planning page de planificacion para evaluar.
 	 * @return booleano confirmando la comparacion.
 	 */
-	
 	private boolean isPending(Planning planning) {
 		Date today = new Date();
 		return planning.getState().getName().equals("Pendiente")
@@ -335,6 +326,31 @@ public class PlanningService {
 		Date today = new Date();
 		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
 				&& planning.getDueDate().before(today);
+	}
+	
+	/**
+	 * Chequea si la planificación ha sido completada.
+	 * @param p Planificación a chequear
+	 * @return verdadero o falso según si ha sido completada o no.
+	 */
+	public boolean isCompleted(Planning p) {
+		boolean completed = true;
+		for (PlanningDetail pDetail : p.getDetail()) {
+			if (pDetail.getNumberOfSessions()>0) {
+				completed = false;
+			}
+		}
+		return completed;
+	}
+	
+	/**
+	 * Chequea si la planificación fue completada y a su vez esta expiró.
+	 * @param planning Planificación a chequear
+	 * @return verdadero o falso
+	 */
+	private boolean isCompletedAndExpired(Planning planning) {
+		Date today = new Date();
+		return (planning.getState().getName().equals("Completada") && planning.getDueDate().before(today));
 	}
 	
 	/**
@@ -384,7 +400,8 @@ public class PlanningService {
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
 		if (specificPlanning.getState().getName().equals("Pendiente") || 
-				specificPlanning.getState().getName().equals("Vigente")) {
+			specificPlanning.getState().getName().equals("Vigente") || 
+			specificPlanning.getState().getName().equals("Completada")){
 			cancelPlanning(specificPlanning);
 			return true;
 		}
