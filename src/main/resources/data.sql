@@ -20,9 +20,7 @@ INSERT INTO cognitive_domain (name) VALUES ('Visoespacial');
 INSERT INTO cognitive_domain (name) VALUES ('Lenguaje');
 
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 20);
-INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 120);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (1, 3, 17);
-INSERT INTO game_param (param_id, min_value, max_value) VALUES (2, 15, 60);
 INSERT INTO game_param (param_id) VALUES (3);
 INSERT INTO game_param (param_id) VALUES (4);
 INSERT INTO game_param (param_id) VALUES (5);
@@ -33,27 +31,25 @@ INSERT INTO game_param (param_id, min_value, max_value) VALUES (7, 3, 6);
 INSERT INTO game_param (param_id, min_value, max_value) VALUES (8, 3, 15);
 
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 1);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 2);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 3);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 4);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 5);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 6);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 7);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (1, 8);
 
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 2);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 3);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 4);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 7);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (2, 5);
 
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 7);
+INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 8);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 9);
 INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 10);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 11);
-INSERT INTO game_game_param (game_id, game_param_id) VALUES (3, 12);
 
 INSERT INTO param_type2content(name) VALUES ('Flores');
 INSERT INTO param_type2content(name) VALUES ('Frutas');
 
-INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (1, 7);
-INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (2, 7);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (1, 5);
+INSERT INTO game_param_param_type2content(param_type2content_id, game_param_id) VALUES (2, 5);
 
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (1, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (2, 1);
