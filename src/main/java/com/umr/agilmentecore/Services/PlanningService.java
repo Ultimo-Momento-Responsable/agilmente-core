@@ -288,17 +288,16 @@ public class PlanningService {
 			int numberOfSession = -1;
 			for (PlanningDetail pd : plan.getDetail()) {
 				List<IParam> parameters = new ArrayList<IParam>();
-				if (pd.getNumberOfSessions() != 0) {
-					for (IParam param : pd.getGameSession().getSettedParams()) {
-						if (param!=null) {
-							parameters.add(param);
-						}
+				for (IParam param : pd.getGameSession().getSettedParams()) {
+					if (param!=null) {
+						parameters.add(param);
 					}
-					Long gameSessionId = pd.getGameSession().getId();
-					game = (pd.getGameSession().getName());
-					numberOfSession =(pd.getNumberOfSessions());
-					planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
 				}
+				Long gameSessionId = pd.getGameSession().getId();
+				game = (pd.getGameSession().getName());
+				numberOfSession =(pd.getNumberOfSessions());
+				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
+				
 			}
 		}
 		PlanningList pl = new PlanningList(planningList);
