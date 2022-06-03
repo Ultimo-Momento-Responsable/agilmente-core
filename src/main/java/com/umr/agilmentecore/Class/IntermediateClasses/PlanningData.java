@@ -9,6 +9,8 @@ public class PlanningData {
 	private String planningName;
 	private String patientFirstName;
 	private String patientLastName;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private Date patientBornDate;
 	private Long professionalId;
 	private String professionalFirstName;
 	private String professionalLastName;
@@ -76,6 +78,14 @@ public class PlanningData {
 	public void setPatientLastName(String patientLastName) {
 		this.patientLastName = patientLastName;
 	}
+	
+	public Date getPatientBornDate() {
+		return patientBornDate;
+	}
+
+	public void setPatientBornDate(Date patBornDate) {
+		this.patientBornDate = patBornDate;
+	}
 
 	public String getProfessionalFirstName() {
 		return professionalFirstName;
@@ -117,11 +127,12 @@ public class PlanningData {
 		this.stateId = stateId;
 	}
 
-	public PlanningData(Long patientId, String planningName, String patFirstName, String patLastName,
+	public PlanningData(Long patientId, String planningName, String patFirstName, String patLastName, Date patBornDate,
 			Long professionalId, String profFirstName, String profLastName,
 			String state, Date startDate, Date dueDate, List<PlanningMobileData> pl)
 	{
 			super();
+			this.patientBornDate = patBornDate;
 			this.patientId = patientId;
 			this.patientFirstName = patFirstName;
 			this.patientLastName = patLastName;

@@ -383,7 +383,7 @@ public class PlanningService {
 		
 		// Enviamos todo a la vista	
 		PlanningData planningData = new PlanningData(
-				specificPatient.getId(), specificPlanning.getName(),specificPatient.getFirstName(), specificPatient.getLastName(),
+				specificPatient.getId(), specificPlanning.getName(),specificPatient.getFirstName(), specificPatient.getLastName(), specificPatient.getBornDate(),
 				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
 				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
