@@ -244,7 +244,7 @@ public class PlanningService {
 				throw new Exception("There are no params on game session");
 			}
 			IGameSession gameSession = this.buildGameSession(game, params);
-			PlanningDetail planningDetail = new PlanningDetail(gameSession, gameData.getMaxNumberOfSessions());			
+			PlanningDetail planningDetail = new PlanningDetail(gameSession, gameData.getMaxNumberOfSessions(), gameData.getDifficulty());			
 			planningDetailList.add(planningDetail);
 		}
 		
