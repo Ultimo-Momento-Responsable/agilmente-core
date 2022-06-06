@@ -32,9 +32,12 @@ public class PlanningDetail {
 	private int maxNumberOfSessions;
 	@Column(name = "number_of_sessions")
 	private int numberOfSessions;
+	@Column (name = "difficulty")
+	private String difficulty;
 	
-	public PlanningDetail(IGameSession gameSession, Integer maxNumberOfSessions) {
+	public PlanningDetail(IGameSession gameSession, Integer maxNumberOfSessions, String difficulty) {
 		this.setMaxNumberOfSessions(maxNumberOfSessions);
+		this.setDifficulty(difficulty);
 		this.setGameSession(gameSession);
 		this.numberOfSessions = maxNumberOfSessions;
 	}
