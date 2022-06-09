@@ -12,30 +12,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 @Repository
 public interface HayUnoRepetidoResultRepository extends org.springframework.data.repository.Repository<HayUnoRepetidoResult, Long> {
 	// TODO: Pasar esto a un repositorio genérico de resultados.
-	/**
-	 * Obtiene todos los resultados de todos los juegos
-	 * paginados.
-	 * @param page Opciones de paginación.
-	 * @return Una página de resultados genéricos.
-	 */
-	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
-			+ "r.id, "
-			+ "r.completeDatetime, "
-			+ "r.canceled, "
-			+ "r.mistakes, "
-			+ "r.successes, "
-			+ "r.timeBetweenSuccesses,"
-			+ "r.totalTime, "
-			+ "r.score, "
-			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
-			+ "hurs.game.name) "
-			+ "FROM Planning p "
-			+ "JOIN p.detail pd "
-			+ "JOIN pd.hayUnoRepetidoSession hurs "
-			+ "JOIN hurs.results r "
-			+ "ORDER BY r.completeDatetime")
-	List<ResultsListView> findAllResultsListView();
-	
+		
 	/**
 	 * Busca un resultado de HayUnoRepetidoResult a partir del id.
 	 * @param id Id del resultado.
@@ -74,4 +51,52 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN hurs.results r "
 			+ "WHERE p.patient.id = ?1")
 	List<HayUnoRepetidoResult> findHayUnoRepetidoResultByPatient_id(Long id);
+	
+	/**
+	 * Obtiene todos los resultados de hay uno repetido
+	 * listado.
+	 * @return Una lista de resultados genéricos.
+	 */
+	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
+			+ "r.id, "
+			+ "r.completeDatetime, "
+			+ "r.canceled, "
+			+ "r.mistakes, "
+			+ "r.successes, "
+			+ "r.timeBetweenSuccesses,"
+			+ "r.totalTime, "
+			+ "r.score, "
+			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
+			+ "hurs.game.name) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.hayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "ORDER BY r.completeDatetime")
+	List<ResultsListView> findAllResultsListView();
+	
+	/**
+	 * Obtiene todos los resultados de una planning de hay uno repetido
+	 * listados.
+	 * @param planningId id de la planning
+	 * @return Una lista de resultados genéricos.
+	 */
+	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
+			+ "r.id, "
+			+ "r.completeDatetime, "
+			+ "r.canceled, "
+			+ "r.mistakes, "
+			+ "r.successes, "
+			+ "r.timeBetweenSuccesses,"
+			+ "r.totalTime, "
+			+ "r.score, "
+			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
+			+ "hurs.game.name) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.hayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "WHERE p.id = ?1 "
+			+ "ORDER BY r.completeDatetime")
+	List<ResultsListView> findAllResultsListFromPlanningView(Long planningId);
 }

@@ -357,7 +357,7 @@ public class PlanningService {
 	 * @param Long el id de la planificación específica.
 	 * @return Optional Un planning data o nada.
 	 */
-	public PlanningData getOne(Long id) {
+	public PlanningData getOnePlanningData(Long id) {
 		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
@@ -388,6 +388,16 @@ public class PlanningService {
 				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
 		return planningData;
+	}
+	
+	/**
+	 * Obtiene una planificación.
+	 * @param Long el id de la planificación específica.
+	 * @return Optional Un planning data o nada.
+	 */
+	public Planning getOne(Long id) {
+		updateAllPlannings();
+		return repository.getOne(id);
 	}
 	
 	/**

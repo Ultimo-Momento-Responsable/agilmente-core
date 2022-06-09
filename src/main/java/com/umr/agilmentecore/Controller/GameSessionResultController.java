@@ -39,6 +39,15 @@ public class GameSessionResultController {
 	}
 	
 	/**
+	 * Obtiene la lista de resultados de una planning completa.
+	 * Devuelve una lista de ResultsData
+	 */
+	@GetMapping(value = "/planning/{id}")
+	public Page<ResultsListView> getAllPlanningResultsOrdered(@PathVariable(name = "id")Long planningId) {
+		return this.service.getAllPlanningResultsOrdered(planningId);
+	}
+	
+	/**
 	 * Obtiene un resultado de HayUnoRepetido a partir del id.
 	 * @param id Id del resultado.
 	 * @return El resultado buscado.

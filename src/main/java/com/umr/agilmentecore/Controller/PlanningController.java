@@ -67,7 +67,7 @@ public class PlanningController {
 	 */
 	@GetMapping(value = "/{id}")
 	public PlanningData getOne(@PathVariable(name = "id") Long id) {
-		return service.getOne(id);
+		return service.getOnePlanningData(id);
 	}
 	
 	/**

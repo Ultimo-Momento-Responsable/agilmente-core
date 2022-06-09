@@ -76,4 +76,25 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "JOIN mS.results r "
 			+ "WHERE p.patient.id = ?1")
 	List<MemorillaResult> findMemorillaResultByPatient_id(Long id);
+
+	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
+			+ "r.id, "
+			+ "r.completeDatetime, "
+			+ "r.canceled, "
+			+ "r.mistakesPerLevel, "
+			+ "r.successesPerLevel, "
+			+ "r.streak, "
+			+ "r.timePerLevel,"
+			+ "r.totalTime, "
+			+ "r.score, "
+			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
+			+ "mS.game.name) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.memorillaSession mS "
+			+ "JOIN mS.results r "
+			+ "WHERE p.id = ?1 "
+			+ "ORDER BY r.completeDatetime")
+	List<ResultsListView> findAllResultsListFromPlanningView(Long planningId);
+	
 }
