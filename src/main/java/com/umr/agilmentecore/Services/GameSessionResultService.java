@@ -23,7 +23,6 @@ import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDet
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
@@ -232,6 +231,11 @@ public class GameSessionResultService {
 		return results;
 	}
 
+	/**
+	 * Busca los resultados de todos los juegos pertenecientes a una planning
+	 * @param planningId id de la planning a buscar
+	 * @return Page de resultados de la planning.
+	 */
 	public Page<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListFromPlanningView(planningId);
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListFromPlanningView(planningId);

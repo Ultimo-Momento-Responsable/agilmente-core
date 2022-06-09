@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;

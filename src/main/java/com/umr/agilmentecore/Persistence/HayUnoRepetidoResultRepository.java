@@ -53,10 +53,9 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 	List<HayUnoRepetidoResult> findHayUnoRepetidoResultByPatient_id(Long id);
 	
 	/**
-	 * Obtiene todos los resultados de todos los juegos
-	 * paginados.
-	 * @param page Opciones de paginación.
-	 * @return Una página de resultados genéricos.
+	 * Obtiene todos los resultados de hay uno repetido
+	 * listado.
+	 * @return Una lista de resultados genéricos.
 	 */
 	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
 			+ "r.id, "
@@ -76,6 +75,12 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "ORDER BY r.completeDatetime")
 	List<ResultsListView> findAllResultsListView();
 	
+	/**
+	 * Obtiene todos los resultados de una planning de hay uno repetido
+	 * listados.
+	 * @param planningId id de la planning
+	 * @return Una lista de resultados genéricos.
+	 */
 	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
 			+ "r.id, "
 			+ "r.completeDatetime, "
