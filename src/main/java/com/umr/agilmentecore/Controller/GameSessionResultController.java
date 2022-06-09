@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
@@ -36,6 +37,15 @@ public class GameSessionResultController {
 	@GetMapping
 	public Page<ResultsListView> getAllResultsOrdered() {
 		return this.service.getAllResultsOrdered();
+	}
+	
+	/**
+	 * Obtiene la lista de resultados de una planning completa.
+	 * Devuelve una lista de ResultsData
+	 */
+	@GetMapping(value = "/planning/{id}")
+	public Page<ResultsListView> getAllPlanningResultsOrdered(@PathVariable(name = "id")Long planningId) {
+		return this.service.getAllPlanningResultsOrdered(planningId);
 	}
 	
 	/**

@@ -74,4 +74,28 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "JOIN eans.results r "
 			+ "WHERE p.patient.id = ?1")
 	List<EncuentraAlNuevoResult> findEncuentraAlNuevoResultByPatient_id(Long id);
+	
+	/**
+	 * Busca todos los resultados de una planning
+	 * @param planningId id de planning
+	 * @return Lista de resultados.
+	 */
+	@Query(value = "SELECT new com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView( "
+			+ "r.id, "
+			+ "r.completeDatetime, "
+			+ "r.canceled, "
+			+ "r.mistakes, "
+			+ "r.successes, "
+			+ "r.timeBetweenSuccesses,"
+			+ "r.totalTime, "
+			+ "r.score, "
+			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
+			+ "eans.game.name) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
+			+ "WHERE p.id = ?1 "
+			+ "ORDER BY r.completeDatetime")
+	List<ResultsListView> findAllResultsListFromPlanningView(Long planningId);
 }

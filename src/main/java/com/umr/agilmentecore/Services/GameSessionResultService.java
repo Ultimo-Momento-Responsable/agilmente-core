@@ -23,6 +23,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDet
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientResultsView;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultListHistory;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
 import com.umr.agilmentecore.Persistence.EncuentraAlNuevoResultRepository;
@@ -229,6 +230,22 @@ public class GameSessionResultService {
 		};
 		results.sort(comparator);
 		return results;
+	}
+
+	public Page<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
+		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListFromPlanningView(planningId);
+		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListFromPlanningView(planningId);
+		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListFromPlanningView(planningId);
+		
+		List<ResultsListView> results = Stream.concat(hURResults.stream(), eANResults.stream())
+                .collect(Collectors.toList());
+		results = Stream.concat(results.stream(), mResults.stream())
+                .collect(Collectors.toList());
+		Comparator<ResultsListView> comparator = (c1, c2) -> {
+			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
+		};
+		results.sort(comparator);
+		return new PageImpl<>(results);
 	}
 
 }
