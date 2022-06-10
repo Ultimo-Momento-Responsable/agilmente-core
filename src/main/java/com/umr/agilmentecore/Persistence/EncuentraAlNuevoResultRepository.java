@@ -98,4 +98,19 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "WHERE p.id = ?1 "
 			+ "ORDER BY r.completeDatetime")
 	List<ResultsListView> findAllResultsListFromPlanningView(Long planningId);
+
+	/**
+	 * Busca todos los resultados de EncuentraAlNuevoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@Query(value = "SELECT "
+			+ "r "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
+			+ "WHERE eans.id = ?1")
+	List<EncuentraAlNuevoResult> findEncuentraAlNuevoResultByEncuentraAlNuevoSession_id(Long id);
 }
