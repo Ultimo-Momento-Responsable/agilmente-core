@@ -160,7 +160,7 @@ public class GameSessionResultController {
 	 * @param id ID de la sesión..
 	 * @return Lista de resultados.
 	 */
-	@GetMapping(value = "/by-gane-session/encuentra-al-repetido/{id}")
+	@GetMapping(value = "/by-game-session/encuentra-al-repetido/{id}")
 	public List<HayUnoRepetidoResult> getAllHayUnoRepetidoResultsBySessionId(@PathVariable(name = "id")Long id) {
 		return this.service.getAllHayUnoRepetidoResultsBySessionId(id);
 	}
@@ -171,7 +171,7 @@ public class GameSessionResultController {
 	 * @param id ID de la sesión..
 	 * @return Lista de resultados.
 	 */
-	@GetMapping(value = "/by-gane-session/encuentra-al-nuevo/{id}")
+	@GetMapping(value = "/by-game-session/encuentra-al-nuevo/{id}")
 	public List<EncuentraAlNuevoResult> getAllEncuentraAlNuevoResultsBySessionId(@PathVariable(name = "id")Long id) {
 		return this.service.getAllEncuentraAlNuevoResultsBySessionId(id);
 	}
@@ -182,7 +182,7 @@ public class GameSessionResultController {
 	 * @param id ID de la sesión..
 	 * @return Lista de resultados.
 	 */
-	@GetMapping(value = "/by-gane-session/memorilla/{id}")
+	@GetMapping(value = "/by-game-session/memorilla/{id}")
 	public List<MemorillaResult> getAllMemorillaResultsBySessionId(@PathVariable(name = "id")Long id) {
 		return this.service.getAllMemorillaResultsBySessionId(id);
 	}

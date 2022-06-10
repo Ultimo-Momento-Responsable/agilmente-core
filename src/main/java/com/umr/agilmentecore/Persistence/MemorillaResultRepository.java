@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.MemorillaResult;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.ResultsListView;
