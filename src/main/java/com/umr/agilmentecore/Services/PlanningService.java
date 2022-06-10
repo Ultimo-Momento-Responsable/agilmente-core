@@ -377,8 +377,8 @@ public class PlanningService {
 				}
 			}
 			String game = (pd.getGameSession().getName());
-			int numberOfSession =(pd.getNumberOfSessions());
-			planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+			int numberOfSession = (pd.getNumberOfSessions());
+			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), game, numberOfSession, parameters));
 		}
 		
 		// Enviamos todo a la vista	

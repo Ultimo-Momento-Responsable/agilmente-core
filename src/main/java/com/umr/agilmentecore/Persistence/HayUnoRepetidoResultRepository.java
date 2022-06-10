@@ -99,4 +99,19 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "WHERE p.id = ?1 "
 			+ "ORDER BY r.completeDatetime")
 	List<ResultsListView> findAllResultsListFromPlanningView(Long planningId);
+
+	/**
+	 * Busca todos los resultados de HayUnoRepetidoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@Query(value = "SELECT "
+			+ "r "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.hayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "WHERE hurs.id = ?1")
+	List<HayUnoRepetidoResult> findHayUnoRepetidoResultByHayUnoRepetidoSession_id(Long id);
 }

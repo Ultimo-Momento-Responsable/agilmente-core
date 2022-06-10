@@ -230,6 +230,26 @@ public class GameSessionResultService {
 		results.sort(comparator);
 		return results;
 	}
+	
+	/**
+	 * Busca todos los resultados de HayUnoRepetidoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	public List<HayUnoRepetidoResult> getAllHayUnoRepetidoResultsBySessionId(Long id) {
+		return this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByHayUnoRepetidoSession_id(id);
+	}
+	
+	/**
+	 * Busca todos los resultados de EncuentraAlNuevoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	public List<EncuentraAlNuevoResult> getAllEncuentraAlNuevoResultsBySessionId(Long id) {
+		return this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByEncuentraAlNuevoSession_id(id);
+	}
 
 	/**
 	 * Busca los resultados de todos los juegos pertenecientes a una planning
@@ -252,4 +272,14 @@ public class GameSessionResultService {
 		return new PageImpl<>(results);
 	}
 
+
+	/**
+	 * Busca todos los resultados de MemorillaResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	public List<MemorillaResult> getAllMemorillaResultsBySessionId(Long id) {
+		return this.memorillaResultRepository.findMemorillaResultByMemorillaSession_id(id);
+	}
 }
