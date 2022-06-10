@@ -114,10 +114,6 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "JOIN p.detail pd "
 			+ "JOIN pd.memorillaSession mS "
 			+ "JOIN mS.results r "
-			+ "FROM Planning p "
-			+ "JOIN p.detail pd "
-			+ "JOIN pd.memorillaSession mS "
-			+ "JOIN mS.results r "
 			+ "WHERE mS.id = ?1")
 	List<MemorillaResult> findMemorillaResultByMemorillaSession_id(Long id);
 }
