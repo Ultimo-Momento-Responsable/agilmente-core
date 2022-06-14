@@ -41,4 +41,6 @@ public class HayUnoRepetidoResult implements IResult {
 	private float totalTime;
 	@Column (name = "score")
 	private int score;
+	@Column (name = "mgp")
+	private int mgp;
 }

@@ -186,4 +186,15 @@ public class GameSessionResultController {
 	public List<MemorillaResult> getAllMemorillaResultsBySessionId(@PathVariable(name = "id")Long id) {
 		return this.service.getAllMemorillaResultsBySessionId(id);
 	}
+	
+	/**
+	 * Busca todos los resultados de MemorillaResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@GetMapping(value = "/test/{score}")
+	public Integer get(@PathVariable(name = "score") int score) {
+		return this.service.get(score);
+	}	
 }
