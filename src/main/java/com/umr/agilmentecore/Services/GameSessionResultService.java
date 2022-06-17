@@ -297,9 +297,8 @@ public class GameSessionResultService {
 	 * @return Valor del MGP.
 	 */
 	private int calculateMGPForEAR(String difficulty, int currentScore) {
-		int maxScore = this.hayUnoRepetidoResultRepository.findMaxScoreByDifficulty(difficulty);
-		int minScore = this.hayUnoRepetidoResultRepository.findMinScoreByDifficulty(difficulty);
-		System.out.println(this.calculateMGP(minScore, maxScore, currentScore));
+		Integer maxScore = this.hayUnoRepetidoResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.hayUnoRepetidoResultRepository.findMinScoreByDifficulty(difficulty);
 		
 		return this.calculateMGP(minScore, maxScore, currentScore);
 	}
@@ -312,9 +311,9 @@ public class GameSessionResultService {
 	 * @return Valor del MGP.
 	 */
 	private int calculateMGPForEAN(String difficulty, int currentScore) {
-		int maxScore = this.encuentraAlNuevoResultRepository.findMaxScoreByDifficulty(difficulty);
-		int minScore = this.encuentraAlNuevoResultRepository.findMinScoreByDifficulty(difficulty);
-		System.out.println(this.calculateMGP(minScore, maxScore, currentScore));
+		Integer maxScore = this.encuentraAlNuevoResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.encuentraAlNuevoResultRepository.findMinScoreByDifficulty(difficulty);
+		
 		return this.calculateMGP(minScore, maxScore, currentScore);
 	}
 	
@@ -326,8 +325,8 @@ public class GameSessionResultService {
 	 * @return Valor del MGP.
 	 */
 	private int calculateMGPForM(String difficulty, int currentScore) {
-		int maxScore = this.memorillaResultRepository.findMaxScoreByDifficulty(difficulty);
-		int minScore = this.memorillaResultRepository.findMinScoreByDifficulty(difficulty);
+		Integer maxScore = this.memorillaResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.memorillaResultRepository.findMinScoreByDifficulty(difficulty);
 		
 		return this.calculateMGP(minScore, maxScore, currentScore);
 	}
@@ -342,7 +341,7 @@ public class GameSessionResultService {
 	 * calculando el MGP.
 	 * @return El valor del MGP.
 	 */
-	private int calculateMGP(int minScore, int maxScore, int currentScore) {
+	private int calculateMGP(Integer minScore, Integer maxScore, int currentScore) {
 		if (minScore == maxScore) {
 			return (int) Math.round(this.MAX_VALUE_MGP * 0.5);
 		}
