@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
