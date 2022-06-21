@@ -57,6 +57,8 @@ public class GameSessionResultService {
 	private PlanningService planningService;
 	@Autowired
 	private PatientRepository patientRepository;
+	private static int MAX_VALUE_MGP = 2500;
+	
 	/**
 	 * Obtiene una página de resultados de todos los juegos.
 	 * @param page Opciones de paginación.
@@ -120,6 +122,7 @@ public class GameSessionResultService {
 		eANR.setScore(result.getScore());
 		eANS.addResult(eANR);
 		PlanningDetail pd = planningDetailRepository.findByEncuentraAlNuevoSession_id(result.getEncuentraAlNuevoSessionId());
+		eANR.setMgp(this.calculateMGPForEAN(pd.getDifficulty(), result.getScore()));
 		Planning p = planningRepository.findByPlanningDetail(pd).get();
 		if (pd.getMaxNumberOfSessions() != -1 && !eANR.isCanceled()) {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
@@ -145,6 +148,7 @@ public class GameSessionResultService {
 		hURR.setScore(result.getScore());
 		hURS.addResult(hURR);
 		PlanningDetail pd = planningDetailRepository.findByHayUnoRepetidoSession_id(result.getHayUnoRepetidoSessionId());
+		hURR.setMgp(this.calculateMGPForEAR(pd.getDifficulty(), result.getScore()));
 		Planning p = planningRepository.findByPlanningDetail(pd).get();
 		if (pd.getMaxNumberOfSessions() != -1 && !hURR.isCanceled()) {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
@@ -171,6 +175,7 @@ public class GameSessionResultService {
 		mR.setScore(result.getScore());
 		mS.addResult(mR);
 		PlanningDetail pd = planningDetailRepository.findByMemorillaSession_id(result.getMemorillaSessionId());
+		mR.setMgp(this.calculateMGPForM(pd.getDifficulty(), result.getScore()));
 		Planning p = planningRepository.findByPlanningDetail(pd).get();
 		if (pd.getMaxNumberOfSessions() != -1 && !mR.isCanceled()) {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
@@ -276,10 +281,80 @@ public class GameSessionResultService {
 	/**
 	 * Busca todos los resultados de MemorillaResult a partir
 	 * del id de la sesión.
-	 * @param id ID de la sesión..
+	 * @param id ID de la sesión.
 	 * @return Lista de resultados.
 	 */
 	public List<MemorillaResult> getAllMemorillaResultsBySessionId(Long id) {
 		return this.memorillaResultRepository.findMemorillaResultByMemorillaSession_id(id);
+	}
+	
+	/**
+	 * Calcula el MGP para el Encuentra al Repetido.
+	 * @param difficulty Dificultad de la sesión.
+	 * @param currentScore Puntaje para el cual se quiere 
+	 * calcular el MGP.
+	 * @return Valor del MGP.
+	 */
+	private int calculateMGPForEAR(String difficulty, int currentScore) {
+		Integer maxScore = this.hayUnoRepetidoResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.hayUnoRepetidoResultRepository.findMinScoreByDifficulty(difficulty);
+		
+		return this.calculateMGP(minScore, maxScore, currentScore);
+	}
+	
+	/**
+	 * Calcula el MGP para el Encuentra al Nuevo.
+	 * @param difficulty Dificultad de la sesión.
+	 * @param currentScore Puntaje para el cual se quiere 
+	 * calcular el MGP.
+	 * @return Valor del MGP.
+	 */
+	private int calculateMGPForEAN(String difficulty, int currentScore) {
+		Integer maxScore = this.encuentraAlNuevoResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.encuentraAlNuevoResultRepository.findMinScoreByDifficulty(difficulty);
+		
+		return this.calculateMGP(minScore, maxScore, currentScore);
+	}
+	
+	/**
+	 * Calcula el MGP para el Memorilla.
+	 * @param difficulty Dificultad de la sesión.
+	 * @param currentScore Puntaje para el cual se quiere 
+	 * calcular el MGP.
+	 * @return Valor del MGP.
+	 */
+	private int calculateMGPForM(String difficulty, int currentScore) {
+		Integer maxScore = this.memorillaResultRepository.findMaxScoreByDifficulty(difficulty);
+		Integer minScore = this.memorillaResultRepository.findMinScoreByDifficulty(difficulty);
+		
+		return this.calculateMGP(minScore, maxScore, currentScore);
+	}
+	
+	/**
+	 * Realiza el cálculo del MGP.
+	 * @param minScore El puntaje más bajo que hay en la dificultad
+	 * determinada en un juego.
+	 * @param maxScor eEl puntaje más alto que hay en la dificultad
+	 * determinada en un juego.
+	 * @param currentScore El puntaje para el cual se está 
+	 * calculando el MGP.
+	 * @return El valor del MGP.
+	 */
+	private int calculateMGP(Integer minScore, Integer maxScore, int currentScore) {
+		if (minScore == maxScore) {
+			return (int) Math.round(this.MAX_VALUE_MGP * 0.5);
+		}
+		
+		int mgp = (int) Math.round(this.MAX_VALUE_MGP * ((float) (currentScore - minScore) / (maxScore - minScore)));
+		
+		if (mgp > this.MAX_VALUE_MGP) {
+			return this.MAX_VALUE_MGP;
+		}
+		
+		return mgp;
+	}
+	
+	public Integer get(int score) {
+		return this.calculateMGPForEAR("Facil", score);
 	}
 }

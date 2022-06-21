@@ -116,4 +116,30 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "JOIN mS.results r "
 			+ "WHERE mS.id = ?1")
 	List<MemorillaResult> findMemorillaResultByMemorillaSession_id(Long id);
+
+	/**
+	 * Busca el puntaje máximo de Encuentra al Nuevo en una dificultad.
+	 * @return Puntaje máximo.
+	 */
+	@Query(value = "SELECT "
+			+ "MAX(r.score) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.memorillaSession mS "
+			+ "JOIN mS.results r "
+			+ "WHERE pd.difficulty = ?1")
+	Integer findMaxScoreByDifficulty(String difficulty);
+	
+	/**
+	 * Busca el puntaje mínimo de Encuentra al Nuevo en una dificultad.
+	 * @return Puntaje mínimo.
+	 */
+	@Query(value = "SELECT "
+			+ "MIN(r.score) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.memorillaSession mS "
+			+ "JOIN mS.results r "
+			+ "WHERE pd.difficulty = ?1")
+	Integer findMinScoreByDifficulty(String difficulty);
 }
