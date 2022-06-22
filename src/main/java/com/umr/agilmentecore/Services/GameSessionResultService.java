@@ -340,8 +340,8 @@ public class GameSessionResultService {
 	 * calculando el MGP.
 	 * @return El valor del MGP.
 	 */
-	private int calculateMGP(Integer minScore, Integer maxScore, int currentScore) {
-		if (minScore == maxScore) {
+	private int calculateMGP(Integer minScore, Integer maxScore, int currentScore) {		
+		if (minScore == null || minScore - maxScore == 0) {
 			return (int) Math.round(this.MAX_VALUE_MGP * 0.5);
 		}
 		
@@ -349,6 +349,10 @@ public class GameSessionResultService {
 		
 		if (mgp > this.MAX_VALUE_MGP) {
 			return this.MAX_VALUE_MGP;
+		}
+		
+		if (mgp < 0) {
+			return 0;
 		}
 		
 		return mgp;
