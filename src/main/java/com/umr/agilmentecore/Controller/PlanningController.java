@@ -20,8 +20,8 @@ import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningFilterStates;
 import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessionsList;
 import com.umr.agilmentecore.Services.PlanningService;
 
 @CrossOrigin(origins = "*")
@@ -67,7 +67,7 @@ public class PlanningController {
 	 */
 	@GetMapping(value = "/{id}")
 	public PlanningData getOne(@PathVariable(name = "id") Long id) {
-		return service.getOne(id);
+		return service.getOnePlanningData(id);
 	}
 	
 	/**
@@ -90,12 +90,12 @@ public class PlanningController {
 	}
 	
 	/**
-	 * Obtiene una Planificación.
+	 * Obtiene todas las Planificaciones cargadas al paciente.
 	 * @param Long el id del paciente específico.
-	 * @return Optional una planificación o nada.
+	 * @return Todas las planificaciones del paciente.
 	 */
 	@GetMapping(value = "/mobile_patient_{id}")
-	public PlanningList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
+	public PlanningWithSessionsList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
 	}
 	

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
+import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
+import com.umr.agilmentecore.Class.MemorillaResult;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.HayUnoRepetidoResultDetailView;
 import com.umr.agilmentecore.Class.IntermediateClasses.MemorillaResultDetailView;
@@ -36,6 +39,15 @@ public class GameSessionResultController {
 	@GetMapping
 	public Page<ResultsListView> getAllResultsOrdered() {
 		return this.service.getAllResultsOrdered();
+	}
+	
+	/**
+	 * Obtiene la lista de resultados de una planning completa.
+	 * Devuelve una lista de ResultsData
+	 */
+	@GetMapping(value = "/planning/{id}")
+	public Page<ResultsListView> getAllPlanningResultsOrdered(@PathVariable(name = "id")Long planningId) {
+		return this.service.getAllPlanningResultsOrdered(planningId);
 	}
 	
 	/**
@@ -141,4 +153,48 @@ public class GameSessionResultController {
 		}
 		return this.service.getOneEncuentraAlNuevo(id);
 	}
+	
+	/**
+	 * Busca todos los resultados de HayUnoRepetidoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@GetMapping(value = "/by-game-session/encuentra-al-repetido/{id}")
+	public List<HayUnoRepetidoResult> getAllHayUnoRepetidoResultsBySessionId(@PathVariable(name = "id")Long id) {
+		return this.service.getAllHayUnoRepetidoResultsBySessionId(id);
+	}
+	
+	/**
+	 * Busca todos los resultados de EncuentraAlNuevoResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@GetMapping(value = "/by-game-session/encuentra-al-nuevo/{id}")
+	public List<EncuentraAlNuevoResult> getAllEncuentraAlNuevoResultsBySessionId(@PathVariable(name = "id")Long id) {
+		return this.service.getAllEncuentraAlNuevoResultsBySessionId(id);
+	}
+	
+	/**
+	 * Busca todos los resultados de MemorillaResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@GetMapping(value = "/by-game-session/memorilla/{id}")
+	public List<MemorillaResult> getAllMemorillaResultsBySessionId(@PathVariable(name = "id")Long id) {
+		return this.service.getAllMemorillaResultsBySessionId(id);
+	}
+	
+	/**
+	 * Busca todos los resultados de MemorillaResult a partir
+	 * del id de la sesión.
+	 * @param id ID de la sesión..
+	 * @return Lista de resultados.
+	 */
+	@GetMapping(value = "/test/{score}")
+	public Integer get(@PathVariable(name = "score") int score) {
+		return this.service.get(score);
+	}	
 }

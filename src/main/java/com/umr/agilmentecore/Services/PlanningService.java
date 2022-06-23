@@ -26,9 +26,10 @@ import com.umr.agilmentecore.Class.GameSessionBuilder.IGameSessionBuilder;
 import com.umr.agilmentecore.Class.GameSessionBuilder.MemorillaSessionBuilder;
 import com.umr.agilmentecore.Class.IntermediateClasses.GameData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningList;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessions;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessionsList;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
@@ -244,7 +245,7 @@ public class PlanningService {
 				throw new Exception("There are no params on game session");
 			}
 			IGameSession gameSession = this.buildGameSession(game, params);
-			PlanningDetail planningDetail = new PlanningDetail(gameSession, gameData.getMaxNumberOfSessions());			
+			PlanningDetail planningDetail = new PlanningDetail(gameSession, gameData.getMaxNumberOfSessions(), gameData.getDifficulty());			
 			planningDetailList.add(planningDetail);
 		}
 		
@@ -278,31 +279,37 @@ public class PlanningService {
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public PlanningList getCurrentPlanningsFromPatientForMobile(Long patientId) {
+	public PlanningWithSessionsList getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		updateAllPlannings();
 		Date today = new Date();
 		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfterAndState_IdNot(patientId,today,today,Long.valueOf(4));
-		List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
+		List<PlanningWithSessions> pWS = new ArrayList<PlanningWithSessions>();
 		for (Planning plan : plannings) {
+			List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
 			String game = null;
 			int numberOfSession = -1;
+			int totalGames = 0;
+			int gamesPlayed = 0;
 			for (PlanningDetail pd : plan.getDetail()) {
-				List<IParam> parameters = new ArrayList<IParam>();
-				if (pd.getNumberOfSessions() != 0) {
-					for (IParam param : pd.getGameSession().getSettedParams()) {
-						if (param!=null) {
-							parameters.add(param);
-						}
-					}
-					Long gameSessionId = pd.getGameSession().getId();
-					game = (pd.getGameSession().getName());
-					numberOfSession =(pd.getNumberOfSessions());
-					planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
+				if (pd.getMaxNumberOfSessions()>0) {
+					totalGames += pd.getMaxNumberOfSessions();
+					gamesPlayed += pd.getNumberOfSessions();
 				}
+				List<IParam> parameters = new ArrayList<IParam>();
+				for (IParam param : pd.getGameSession().getSettedParams()) {
+					if (param!=null) {
+						parameters.add(param);
+					}
+				}
+				Long gameSessionId = pd.getGameSession().getId();
+				game = (pd.getGameSession().getName());
+				numberOfSession =(pd.getNumberOfSessions());
+				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
 			}
+			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), planningList));
 		}
-		PlanningList pl = new PlanningList(planningList);
-		return pl;
+		PlanningWithSessionsList planningList = new PlanningWithSessionsList(pWS);
+		return planningList;
 	}
 	
 	/**
@@ -358,7 +365,7 @@ public class PlanningService {
 	 * @param Long el id de la planificación específica.
 	 * @return Optional Un planning data o nada.
 	 */
-	public PlanningData getOne(Long id) {
+	public PlanningData getOnePlanningData(Long id) {
 		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
@@ -378,17 +385,27 @@ public class PlanningService {
 				}
 			}
 			String game = (pd.getGameSession().getName());
-			int numberOfSession =(pd.getNumberOfSessions());
-			planningList.add(new PlanningMobileData(game,numberOfSession, parameters));
+			int numberOfSession = (pd.getNumberOfSessions());
+			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), game, numberOfSession, parameters));
 		}
 		
 		// Enviamos todo a la vista	
 		PlanningData planningData = new PlanningData(
-				specificPatient.getId(), specificPlanning.getName(),specificPatient.getFirstName(), specificPatient.getLastName(),
+				specificPatient.getId(), specificPlanning.getName(),specificPatient.getFirstName(), specificPatient.getLastName(), specificPatient.getBornDate(),
 				specificProfessional.getId(), specificProfessional.getFirstName(), specificProfessional.getLastName(),
 				specificPlanning.getState().getName(), specificPlanning.getStartDate(), specificPlanning.getDueDate(), planningList);
 		
 		return planningData;
+	}
+	
+	/**
+	 * Obtiene una planificación.
+	 * @param Long el id de la planificación específica.
+	 * @return Optional Un planning data o nada.
+	 */
+	public Planning getOne(Long id) {
+		updateAllPlannings();
+		return repository.getOne(id);
 	}
 	
 	/**

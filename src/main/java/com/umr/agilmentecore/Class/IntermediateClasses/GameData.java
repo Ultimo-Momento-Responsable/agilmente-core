@@ -6,6 +6,7 @@ public class GameData {
 	private Integer gameId;
 	private Integer maxNumberOfSessions;
 	private Map<String, String> params;
+	private String difficulty;
 	
 	public Integer getGameId() {
 		return this.gameId;
@@ -17,5 +18,9 @@ public class GameData {
 	
 	public Map<String, String> getParams() {
 		return this.params;
+	}
+	
+	public String getDifficulty() {
+		return this.difficulty;
 	}
 }
