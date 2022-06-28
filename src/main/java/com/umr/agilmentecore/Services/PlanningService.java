@@ -195,6 +195,20 @@ public class PlanningService {
 	}
 		
 	/**
+	 * Edita una planning vigente
+	 * @param planning. planificacion con nuevos datos
+	 * @param id. id de la planificación a editar
+	 * @return Planificación editada.
+	 */
+	public Planning edit(PlanningData planning, Long id) {
+		Planning planningToUpdate = this.repository.getOne(id);
+		planningToUpdate.setName(planning.getPlanningName());
+		planningToUpdate.setStartDate(planning.getStartDate());
+		planningToUpdate.setDueDate(planning.getDueDate());
+		return this.repository.save(planningToUpdate);	
+	}
+	
+	/**
 	 * Obtiene la clase concreta de builder adecuada en 
 	 * base al id del juego y crea una instancia de la misma.
 	 * @param game Juego.
@@ -425,7 +439,10 @@ public class PlanningService {
 		return false;
 	}
 
-
+	/**
+	 * Lista todos los estados de las planificaciones.
+	 * @return Lista con los estados.
+	 */
 	public List<PlanningState> getPlanningStates() {
 		return stateRepository.findAll();
 	}
