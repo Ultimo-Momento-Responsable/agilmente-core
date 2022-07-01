@@ -196,9 +196,11 @@ public class GameSessionResultService {
 		if (!this.patientRepository.findById(id).isEmpty()) {
 			List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
 			List<EncuentraAlNuevoResult> encuentraAlNuevoResults = this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByPatient_id(id);
+			List<MemorillaResult> memorillaResults = this.memorillaResultRepository.findMemorillaResultByPatient_id(id);
 			return new PatientResultsView(
 					hayUnoRepetidoResults,
-					encuentraAlNuevoResults
+					encuentraAlNuevoResults,
+					memorillaResults
 					);
 		} else {
 			return null;

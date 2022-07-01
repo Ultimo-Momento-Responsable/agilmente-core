@@ -6,6 +6,8 @@ import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 
 public class PatientResultsHayUnoRepetidoView {
 	private List<HayUnoRepetidoResult> results;
+	private String gameName = "Encuentra al Repetido";
+
 	
 	public PatientResultsHayUnoRepetidoView(List<HayUnoRepetidoResult> results) {
 		super();
@@ -18,5 +20,13 @@ public class PatientResultsHayUnoRepetidoView {
 	
 	public void setResults(List<HayUnoRepetidoResult> results) {
 		this.results = results;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
 	}
 }
