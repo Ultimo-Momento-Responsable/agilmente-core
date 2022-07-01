@@ -3,7 +3,6 @@ package com.umr.agilmentecore.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +36,7 @@ public class GameSessionResultController {
 	 * Devuelve una lista de ResultsData
 	 */
 	@GetMapping
-	public Page<ResultsListView> getAllResultsOrdered() {
+	public List<ResultsListView> getAllResultsOrdered() {
 		return this.service.getAllResultsOrdered();
 	}
 	
@@ -46,7 +45,7 @@ public class GameSessionResultController {
 	 * Devuelve una lista de ResultsData
 	 */
 	@GetMapping(value = "/planning/{id}")
-	public Page<ResultsListView> getAllPlanningResultsOrdered(@PathVariable(name = "id")Long planningId) {
+	public List<ResultsListView> getAllPlanningResultsOrdered(@PathVariable(name = "id")Long planningId) {
 		return this.service.getAllPlanningResultsOrdered(planningId);
 	}
 	

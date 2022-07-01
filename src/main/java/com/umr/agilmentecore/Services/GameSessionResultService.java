@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
@@ -64,7 +62,7 @@ public class GameSessionResultService {
 	 * @param page Opciones de paginación.
 	 * @return Página de resultados.
 	 */
-	public Page<ResultsListView> getAllResultsOrdered() {
+	public List<ResultsListView> getAllResultsOrdered() {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListView();
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListView();
 		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListView();
@@ -76,7 +74,7 @@ public class GameSessionResultService {
 			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
 		};
 		results.sort(comparator);
-		return new PageImpl<>(results);
+		return results;
 	}	
 	
 	/**
@@ -263,7 +261,7 @@ public class GameSessionResultService {
 	 * @param planningId id de la planning a buscar
 	 * @return Page de resultados de la planning.
 	 */
-	public Page<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
+	public List<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListFromPlanningView(planningId);
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListFromPlanningView(planningId);
 		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListFromPlanningView(planningId);
@@ -276,7 +274,7 @@ public class GameSessionResultService {
 			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
 		};
 		results.sort(comparator);
-		return new PageImpl<>(results);
+		return results;
 	}
 
 

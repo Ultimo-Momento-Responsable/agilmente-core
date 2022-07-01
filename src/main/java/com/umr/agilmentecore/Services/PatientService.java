@@ -41,7 +41,7 @@ public class PatientService {
 	 * 
 	 * @return Una lista con todos los pacientes.
 	 */
-	public List<Patient> getAllList() {
+	public List<Patient> getAll() {
 		return repository.findAll();
 	}
 
@@ -51,7 +51,7 @@ public class PatientService {
 	 * 
 	 * @return Una lista con todos los pacientes habilitados.
 	 */
-	public List<Patient> getAllActiveList() {
+	public List<Patient> getAllActive() {
 		return repository.findAllByIsEnabledTrue();
 	}
 
@@ -60,15 +60,14 @@ public class PatientService {
 	 * usando nombre o apellido en la busqueda, que se encuentren habilitados.
 	 * 
 	 * @param fullName nombre y apellido de paciente.
-	 * @param page     Contiene las opciones de paginación.
-	 * @return Una pagina de resultados.
+	 * @return Una lista de resultados.
 	 */
-	public Page<Patient> findAllActivePatientsByFirstOrLastName(String fullName, boolean all, Pageable page) {
+	public List<Patient> findAllActivePatientsByFirstOrLastName(String fullName, boolean all) {
 		fullName = fullName.toLowerCase();
 		if (!all) {
-			return repository.findByFullNameContainingIgnoreCaseActive(fullName, page);
+			return repository.findByFullNameContainingIgnoreCaseActive(fullName);
 		}
-		return repository.findAllByFullNameContainingIgnoreCaseActive(fullName, page);
+		return repository.findAllByFullNameContainingIgnoreCaseActive(fullName);
 
 	}
 
@@ -77,12 +76,11 @@ public class PatientService {
 	 * usando nombre o apellido en la busqueda.
 	 * 
 	 * @param fullName nombre y apellido de paciente.
-	 * @param page     Contiene las opciones de paginación.
-	 * @return Una pagina de resultados.
+	 * @return Una lista de resultados.
 	 */
-	public Page<Patient> findAllPatientsByFirstOrLastName(String fullName, Pageable page) {
+	public List<Patient> findAllPatientsByFirstOrLastName(String fullName) {
 		fullName = fullName.toLowerCase();
-		return repository.findByFullNameContainingIgnoreCase(fullName, page);
+		return repository.findByFullNameContainingIgnoreCase(fullName);
 	}
 
 	/**

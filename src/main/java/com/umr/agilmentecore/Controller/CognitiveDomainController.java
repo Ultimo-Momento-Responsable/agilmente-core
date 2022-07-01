@@ -1,8 +1,8 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,18 +15,16 @@ import com.umr.agilmentecore.Services.CognitiveDomainService;
 @RestController
 @RequestMapping("/cognitive-domain")
 public class CognitiveDomainController {
-
 	@Autowired
 	private CognitiveDomainService service;
 	
 	/**
-	 *  Obtiene todos los resultados de los Dominios Cognitivos
-	 * @param page Contiene las opciones de paginación
-	 * @return Una página de resultados
+	 * Obtiene todos los resultados de los Dominios Cognitivos.
+	 * @return Una lista de resultados.
 	 */
 	@GetMapping
-	public Page<CognitiveDomain> getAll(Pageable page) {
-		return service.getAll(page);
+	public List<CognitiveDomain> getAll() {
+		return service.getAll();
 	}
 	
 }
