@@ -1,5 +1,7 @@
 package com.umr.agilmentecore.Controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +38,12 @@ public class GameController {
 	 * @param cognitiveDomains Dominios Cognitivos seleccionados.
 	 * @return Lista de juegos.
 	 */
-	@PostMapping(value = "/cognitiveDomains")
-	public List<Game> getGamesByCognitiveDomains(@RequestBody List<String> cognitiveDomains) {
-		return service.getGamesByCognitiveDomains(cognitiveDomains);
+	@GetMapping(params = {"cognitiveDomains"})
+	public List<Game> getGamesByCognitiveDomains(String[] cognitiveDomains) {
+		ArrayList<String> cognitiveDomainsValue = new ArrayList<String>();
+		Collections.addAll(cognitiveDomainsValue, cognitiveDomains);
+		
+		return service.getGamesByCognitiveDomains(cognitiveDomainsValue);
 	}
 	
 	/**

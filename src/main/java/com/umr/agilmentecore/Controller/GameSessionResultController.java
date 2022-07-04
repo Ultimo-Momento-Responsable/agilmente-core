@@ -26,7 +26,7 @@ import com.umr.agilmentecore.Services.GameSessionResultService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/results")
+@RequestMapping("/result")
 public class GameSessionResultController {
 	@Autowired
 	private GameSessionResultService service;
