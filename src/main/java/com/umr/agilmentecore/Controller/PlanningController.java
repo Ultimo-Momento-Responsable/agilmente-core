@@ -119,7 +119,7 @@ public class PlanningController {
 	 * @param Long el id del paciente específico.
 	 * @return Todas las planificaciones del paciente.
 	 */
-	@GetMapping(value = "/mobile_patient_{id}")
+	@GetMapping(value = "/mobile_patient/{id}")
 	public PlanningWithSessionsList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
 	}
