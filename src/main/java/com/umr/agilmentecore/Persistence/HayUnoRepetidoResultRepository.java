@@ -140,4 +140,10 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "JOIN hurs.results r "
 			+ "WHERE pd.difficulty = ?1")
 	Integer findMinScoreByDifficulty(String difficulty);
+	
+	@Query(value = "SELECT r.score FROM HayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "WHERE hurs.id = ?1 "
+			+ "ORDER BY r.score DESC")
+	List<Integer> findScoresBySessionId(Long id);
 }

@@ -361,4 +361,26 @@ public class GameSessionResultService {
 	public Integer get(int score) {
 		return this.calculateMGPForEAR("Facil", score);
 	}
+	
+	/**
+	 * Busca los scores de los resultados de una sesión.
+	 * @param game nombre del juego.
+	 * @param id de la sesión de juego.
+	 * @return lista de scores
+	 */
+	public List<Integer> getScoresFromSession(String game, Long id) {
+		List<Integer> results = new ArrayList<Integer>();
+		switch (game) {
+			case "Encuentra al Nuevo": 
+				results = encuentraAlNuevoResultRepository.findScoresBySessionId(id);
+				break;
+			case "Encuentra al Repetido":
+				results = hayUnoRepetidoResultRepository.findScoresBySessionId(id);
+				break;
+			case "Memorilla":
+				results = memorillaResultRepository.findScoresBySessionId(id);
+				break;
+		}
+		return results;
+	}
 }
