@@ -142,4 +142,10 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "JOIN mS.results r "
 			+ "WHERE pd.difficulty = ?1")
 	Integer findMinScoreByDifficulty(String difficulty);
+	
+	@Query(value = "SELECT r.score FROM MemorillaSession ms "
+			+ "JOIN ms.results r "
+			+ "WHERE ms.id = ?1 "
+			+ "ORDER BY r.score DESC")
+	List<Integer> findScoresBySessionId(Long id);
 }

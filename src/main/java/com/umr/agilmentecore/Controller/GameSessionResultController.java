@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -197,4 +198,15 @@ public class GameSessionResultController {
 	public Integer get(@PathVariable(name = "score") int score) {
 		return this.service.get(score);
 	}	
+	
+	/**
+	 * Busca los scores de los resultados de una sesión.
+	 * @param game nombre del juego.
+	 * @param id de la sesión de juego.
+	 * @return lista de scores
+	 */
+	@GetMapping(value = "/ranking")
+	public List<Integer> getScoresFromSession(@RequestParam(name = "game") String game, @RequestParam(name = "id") Long id) {
+		return this.service.getScoresFromSession(game, id);
+	}
 }
