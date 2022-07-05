@@ -23,7 +23,7 @@ import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessionsList;
+import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessions;
 import com.umr.agilmentecore.Services.PlanningService;
 
 @CrossOrigin(origins = "*")
@@ -120,7 +120,7 @@ public class PlanningController {
 	 * @return Todas las planificaciones del paciente.
 	 */
 	@GetMapping(value = "/mobile_patient/{id}")
-	public PlanningWithSessionsList getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
+	public List<PlanningWithSessions> getCurrentPlanningsFromPatientForMobile(@PathVariable(name = "id") Long id) {
 		return service.getCurrentPlanningsFromPatientForMobile(id);
 	}
 

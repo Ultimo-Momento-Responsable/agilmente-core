@@ -25,7 +25,6 @@ import com.umr.agilmentecore.Class.IntermediateClasses.PlanningData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningMobileData;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningOverview;
 import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessions;
-import com.umr.agilmentecore.Class.IntermediateClasses.PlanningWithSessionsList;
 import com.umr.agilmentecore.Interfaces.IGameSession;
 import com.umr.agilmentecore.Interfaces.IParam;
 import com.umr.agilmentecore.Persistence.PlanningRepository;
@@ -284,7 +283,7 @@ public class PlanningService {
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public PlanningWithSessionsList getCurrentPlanningsFromPatientForMobile(Long patientId) {
+	public List<PlanningWithSessions> getCurrentPlanningsFromPatientForMobile(Long patientId) {
 		updateAllPlannings();
 		Date today = new Date();
 		List<Planning> plannings = this.repository.findByPatient_IdAndStartDateBeforeAndDueDateAfterAndState_IdNot(patientId,today,today,Long.valueOf(4));
@@ -313,8 +312,8 @@ public class PlanningService {
 			}
 			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), planningList));
 		}
-		PlanningWithSessionsList planningList = new PlanningWithSessionsList(pWS);
-		return planningList;
+		
+		return pWS;
 	}
 	
 	/**
