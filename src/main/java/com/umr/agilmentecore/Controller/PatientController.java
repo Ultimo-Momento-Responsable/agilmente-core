@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,18 +28,18 @@ public class PatientController {
 	 * Obtiene todos los resultados de Pacientes.
 	 * @return Una lista con todos los pacientes.
 	 */
-	@GetMapping(value = "/listed")
-	public List<Patient> getAllActiveList(Pageable page) {
-		return service.getAllActiveList();
+	@GetMapping(value = "/active")
+	public List<Patient> getAllActive() {
+		return service.getAllActive();
 	}
 	
 	/**
 	 * Obtiene todos los resultados de Pacientes.
 	 * @return Una lista con todos los pacientes.
 	 */
-	@GetMapping(value = "/listedAll")
-	public List<Patient> getAllList(Pageable page) {
-		return service.getAllList();
+	@GetMapping
+	public List<Patient> getAll() {
+		return service.getAll();
 	}
 	
 	/**
@@ -57,12 +55,11 @@ public class PatientController {
 	/**
 	 * Obtiene todos los pacientes que concuerden con la cadena de texto provista, usando nombre o apellido en la busqueda.
 	 * @param fullName nombre y apellido de paciente.
-	 * @param Contiene las opciones de paginación.
 	 * @return patientPage Una página de resultados.
 	 */
 	@GetMapping(params = {"fullName","all"})
-	public Page<Patient> getAll(String fullName, boolean all, Pageable patientPage) {
-		return service.findAllActivePatientsByFirstOrLastName(fullName, all, patientPage);
+	public List<Patient> getAll(String fullName, boolean all) {
+		return service.findAllActivePatientsByFirstOrLastName(fullName, all);
 	}
 	
 	/**
@@ -70,8 +67,8 @@ public class PatientController {
 	 * @param value El Login Code del paciente específico.
 	 * @return Optional un paciente o nada.
 	 */
-	@GetMapping(value = "/lc{loginCode}")
-	public Optional<Patient> getOne(@PathVariable(name = "loginCode") String loginCode) {
+	@GetMapping(params = {"loginCode"})
+	public Optional<Patient> getOne(String loginCode) {
 		return service.getOneByLoginCode(loginCode);
 	}
 	
