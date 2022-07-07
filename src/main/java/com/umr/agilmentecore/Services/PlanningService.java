@@ -7,16 +7,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Game;
 import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
-import com.umr.agilmentecore.Class.PlanningFilterStates;
 import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.Professional;
 import com.umr.agilmentecore.Class.GameSessionBuilder.DirectorGameSessionBuilder;
@@ -85,27 +81,16 @@ public class PlanningService {
 	}
 	
 	/**
-	 * Obtiene todas las planificaciones paginadas.
-	 * @param page Opciones de paginación.
-	 * @return Página de planificaciones.
-	 */
-	public Page<Planning> getAll(Pageable page) {
-		updateAllPlannings();
-		return this.repository.findAll(page);
-	}
-	
-	/**
 	 * Obtiene todas las planificaciones vigentes y pendientes de vista general (sin juegos)
 	 * @return Página de planificaciones vigentes o pendientes, sin juegos.
 	 */
-	public Page<PlanningOverview> getPlanningOverview() {
+	public List<PlanningOverview> getPlanningOverview() {
 		updateAllPlannings();
 		List<Planning> plannings = this.repository.findByState_nameOrState_name("Vigente", "Pendiente");
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
 		listOverview = planningToPlanningOverview(plannings, listOverview);
-		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
 		
-		return pageOverview;
+		return listOverview;
 	}
 	
 	/**
@@ -113,26 +98,33 @@ public class PlanningService {
 	 * @param search búsqueda realizada
 	 * @return Lista con todas las plannings filtradas
 	 */
-	public Page<PlanningOverview> getPlanningsFiltered(PlanningFilterStates pFS) {
+	public List<PlanningOverview> getAllFiltered(String search, List<String> states, Long patientId) {
 		updateAllPlannings();
-		String search = pFS.getSearch().toLowerCase();
+		String searchLower = search.toLowerCase();
 		List<Planning> plannings = new ArrayList<Planning>();
-		if (pFS.getPatientId() != null) {
-			plannings = this.repository.findFiltered(search,pFS.getPatientId());
+		if (patientId != null) {
+			plannings = this.repository.findFiltered(searchLower, patientId);
 		} else {
-			plannings = this.repository.findFiltered(search);
+			plannings = this.repository.findFiltered(searchLower);
 		}
-		List<Planning> effectivePlannings = new ArrayList<Planning>();
-		for (Planning p : plannings) {
-			PlanningState pS = p.getState();
-			if (pFS.getStates().contains(pS.getName())) {
-				effectivePlannings.add(p);
+		
+		List<Planning> effectivePlannings;
+		
+		if (states.isEmpty()) {
+			effectivePlannings = plannings;
+		} else {
+			effectivePlannings = new ArrayList<Planning>();
+			for (Planning p : plannings) {
+				PlanningState pS = p.getState();
+				if (states.contains(pS.getName())) {
+					effectivePlannings.add(p);
+				}
 			}
 		}
+				
 		List<PlanningOverview> listOverview = new ArrayList<PlanningOverview>();
 		listOverview = planningToPlanningOverview(effectivePlannings, listOverview);
-		Page<PlanningOverview> pageOverview = new PageImpl<>(listOverview);
-		return pageOverview;
+		return listOverview;
 	}	
 	
 	/**
@@ -159,7 +151,6 @@ public class PlanningService {
 	
 	/**
 	 * Obtiene todas las planificaciones sin paginar.
-	 * @param page Opciones de paginación.
 	 * @return Página de planificaciones.
 	 */
 	public List<Planning> getAll() {
@@ -194,6 +185,20 @@ public class PlanningService {
 		return this.repository.save(planning);
 	}
 		
+	/**
+	 * Edita una planning vigente
+	 * @param planning. planificacion con nuevos datos
+	 * @param id. id de la planificación a editar
+	 * @return Planificación editada.
+	 */
+	public Planning edit(PlanningData planning, Long id) {
+		Planning planningToUpdate = this.repository.getOne(id);
+		planningToUpdate.setName(planning.getPlanningName());
+		planningToUpdate.setStartDate(planning.getStartDate());
+		planningToUpdate.setDueDate(planning.getDueDate());
+		return this.repository.save(planningToUpdate);	
+	}
+	
 	/**
 	 * Obtiene la clase concreta de builder adecuada en 
 	 * base al id del juego y crea una instancia de la misma.
@@ -257,9 +262,9 @@ public class PlanningService {
 	 * @param id Id del paciente.
 	 * @return Lista de planificaciones.
 	 */
-	public Page<Planning> getCurrentPlanningsFromPatient(Long patientId, Pageable page) {
+	public List<Planning> getCurrentPlanningsFromPatient(Long patientId) {
 		updateAllPlannings();
-		return this.repository.findByPatient_id(patientId,page);
+		return this.repository.findByPatient_id(patientId);
 	}
 	
 	/**
@@ -425,7 +430,10 @@ public class PlanningService {
 		return false;
 	}
 
-
+	/**
+	 * Lista todos los estados de las planificaciones.
+	 * @return Lista con los estados.
+	 */
 	public List<PlanningState> getPlanningStates() {
 		return stateRepository.findAll();
 	}

@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.EncuentraAlNuevoResult;
@@ -64,7 +62,7 @@ public class GameSessionResultService {
 	 * @param page Opciones de paginación.
 	 * @return Página de resultados.
 	 */
-	public Page<ResultsListView> getAllResultsOrdered() {
+	public List<ResultsListView> getAllResultsOrdered() {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListView();
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListView();
 		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListView();
@@ -76,7 +74,7 @@ public class GameSessionResultService {
 			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
 		};
 		results.sort(comparator);
-		return new PageImpl<>(results);
+		return results;
 	}	
 	
 	/**
@@ -196,9 +194,11 @@ public class GameSessionResultService {
 		if (!this.patientRepository.findById(id).isEmpty()) {
 			List<HayUnoRepetidoResult> hayUnoRepetidoResults = this.hayUnoRepetidoResultRepository.findHayUnoRepetidoResultByPatient_id(id);
 			List<EncuentraAlNuevoResult> encuentraAlNuevoResults = this.encuentraAlNuevoResultRepository.findEncuentraAlNuevoResultByPatient_id(id);
+			List<MemorillaResult> memorillaResults = this.memorillaResultRepository.findMemorillaResultByPatient_id(id);
 			return new PatientResultsView(
 					hayUnoRepetidoResults,
-					encuentraAlNuevoResults
+					encuentraAlNuevoResults,
+					memorillaResults
 					);
 		} else {
 			return null;
@@ -261,7 +261,7 @@ public class GameSessionResultService {
 	 * @param planningId id de la planning a buscar
 	 * @return Page de resultados de la planning.
 	 */
-	public Page<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
+	public List<ResultsListView> getAllPlanningResultsOrdered(Long planningId) {
 		List<ResultsListView> hURResults = this.hayUnoRepetidoResultRepository.findAllResultsListFromPlanningView(planningId);
 		List<ResultsListView> eANResults = this.encuentraAlNuevoResultRepository.findAllResultsListFromPlanningView(planningId);
 		List<ResultsListView> mResults = this.memorillaResultRepository.findAllResultsListFromPlanningView(planningId);
@@ -274,7 +274,7 @@ public class GameSessionResultService {
 			return Long.valueOf(c1.getCompleteDatetime().getTime()).compareTo(c2.getCompleteDatetime().getTime()) * -1;
 		};
 		results.sort(comparator);
-		return new PageImpl<>(results);
+		return results;
 	}
 
 
@@ -360,5 +360,27 @@ public class GameSessionResultService {
 	
 	public Integer get(int score) {
 		return this.calculateMGPForEAR("Facil", score);
+	}
+	
+	/**
+	 * Busca los scores de los resultados de una sesión.
+	 * @param game nombre del juego.
+	 * @param id de la sesión de juego.
+	 * @return lista de scores
+	 */
+	public List<Integer> getScoresFromSession(String game, Long id) {
+		List<Integer> results = new ArrayList<Integer>();
+		switch (game) {
+			case "Encuentra al Nuevo": 
+				results = encuentraAlNuevoResultRepository.findScoresBySessionId(id);
+				break;
+			case "Encuentra al Repetido":
+				results = hayUnoRepetidoResultRepository.findScoresBySessionId(id);
+				break;
+			case "Memorilla":
+				results = memorillaResultRepository.findScoresBySessionId(id);
+				break;
+		}
+		return results;
 	}
 }

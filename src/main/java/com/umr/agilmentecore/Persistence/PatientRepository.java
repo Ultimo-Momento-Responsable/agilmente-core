@@ -1,10 +1,9 @@
 package com.umr.agilmentecore.Persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,20 +14,17 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long>{
-	
-	Page<Patient> findAll(Pageable page);
 	Optional<Patient> findById(Long id);
 	Optional<Patient> findByLoginCode(String loginCode);
-	ArrayList<Patient> findAll();
 	ArrayList<Patient> findAllByIsEnabledTrue();
 	
 	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1% AND p.isEnabled = TRUE")
-	Page<Patient> findByFullNameContainingIgnoreCaseActive(String fullName, Pageable page);
+	List<Patient> findByFullNameContainingIgnoreCaseActive(String fullName);
 	
 	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1%")
-	Page<Patient> findAllByFullNameContainingIgnoreCaseActive(String fullName, Pageable page);
+	List<Patient> findAllByFullNameContainingIgnoreCaseActive(String fullName);
 	
 	@Query("select p from Patient p where TRANSLATE(LOWER(p.firstName || ' ' || p.lastName),'áéíóú', 'aeiou') like %?1%")
-	Page<Patient> findByFullNameContainingIgnoreCase(String fullName, Pageable page);
+	List<Patient> findByFullNameContainingIgnoreCase(String fullName);
 	
 }

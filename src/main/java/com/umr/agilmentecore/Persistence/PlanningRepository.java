@@ -3,9 +3,6 @@ package com.umr.agilmentecore.Persistence;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +12,7 @@ import com.umr.agilmentecore.Class.PlanningDetail;
 
 @Repository
 public interface PlanningRepository extends JpaRepository<Planning, Long> {
-	Page<Planning> findByPatient_id(Long patientId, Pageable Page);
+	List<Planning> findByPatient_id(Long patientId);
 	
 	@Query(value = "SELECT * FROM planning p "
 			+ "JOIN planning_state ps ON (p.state_id = ps.id) "
