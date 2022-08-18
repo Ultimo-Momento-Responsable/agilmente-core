@@ -59,10 +59,10 @@ public class PlanningService {
 				if (isActiveOrPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 3));
 				}
-				if (isCompleted(planning)) {
+				if (isActiveWithUnlimitedGames(planning)) {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
-				if (isCompletedAndExpired(planning)) {
+				if (isCompleted(planning)) {
 					planning.setState(stateRepository.getOne((long) 6));
 				}
 				this.repository.save(planning);
@@ -295,10 +295,15 @@ public class PlanningService {
 			int numberOfSession = -1;
 			int totalGames = 0;
 			int gamesPlayed = 0;
+			boolean unlimited = false;
 			for (PlanningDetail pd : plan.getDetail()) {
 				if (pd.getMaxNumberOfSessions()>0) {
 					totalGames += pd.getMaxNumberOfSessions();
 					gamesPlayed += pd.getNumberOfSessions();
+				}else{
+					if (pd.getMaxNumberOfSessions()==-1) {
+						unlimited = true;
+					}
 				}
 				List<IParam> parameters = new ArrayList<IParam>();
 				for (IParam param : pd.getGameSession().getSettedParams()) {
@@ -311,7 +316,7 @@ public class PlanningService {
 				numberOfSession =(pd.getNumberOfSessions());
 				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
 			}
-			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), planningList));
+			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), unlimited, planningList));
 		}
 		PlanningWithSessionsList planningList = new PlanningWithSessionsList(pWS);
 		return planningList;
@@ -336,33 +341,44 @@ public class PlanningService {
 	 */
 	private boolean isActiveOrPending(Planning planning) {
 		Date today = new Date();
-		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
+		return (planning.getState().getId() == 1 || planning.getState().getId() == 2 || planning.getState().getId() == 5) 
 				&& planning.getDueDate().before(today);
 	}
 	
 	/**
-	 * Chequea si la planificación ha sido completada.
+	 * Chequea si la planificación está vigente y con juegos ilimitados.
 	 * @param p Planificación a chequear
-	 * @return verdadero o falso según si ha sido completada o no.
+	 * @return verdadero o falso según si posee ese estado o no.
 	 */
-	public boolean isCompleted(Planning p) {
-		boolean completed = true;
+	private boolean isActiveWithUnlimitedGames(Planning p) {
 		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()>0) {
-				completed = false;
+			if (pDetail.getNumberOfSessions()==-1) {
+				return true;
 			}
 		}
-		return completed;
+		return false;
 	}
 	
 	/**
-	 * Chequea si la planificación fue completada y a su vez esta expiró.
+	 * Chequea si la planificación fue completada.
 	 * @param planning Planificación a chequear
 	 * @return verdadero o falso
 	 */
-	private boolean isCompletedAndExpired(Planning planning) {
+	public boolean isCompleted(Planning planning) {
+		for (PlanningDetail pDetail : planning.getDetail()) {
+			if (pDetail.getNumberOfSessions()>0) {
+				return false;
+			}
+		}
 		Date today = new Date();
-		return (planning.getState().getName().equals("Completada") && planning.getDueDate().before(today));
+		if (planning.getState().getId()==5) {
+			if (planning.getDueDate().before(today)) {			
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
