@@ -19,8 +19,9 @@ public class ResultsListView {
 	private String patient;
 	private String game;
 	private int score;
+	private int mgp;
 	
-	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime, int score, String patient, String game) {
+	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int mistakes, int successes, float[] timeBetweenSuccesses, float totalTime, int score, int mgp, String patient, String game) {
 		this.setId(id);
 		this.completeDatetime = completeDatetime;
 		this.setCanceled(canceled);
@@ -31,9 +32,10 @@ public class ResultsListView {
 		this.patient = patient;
 		this.game = game;
 		this.setScore(score);
+		this.setMgp(mgp);
 	}
 
-	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int[] mistakesPerLevel, int[] successesPerLevel, int streak, float[] timePerLevel, float totalTime, int score, String patient, String game) {
+	public ResultsListView(Long id, Date completeDatetime, boolean canceled, int[] mistakesPerLevel, int[] successesPerLevel, int streak, float[] timePerLevel, float totalTime, int score, int mgp, String patient, String game) {
 		this.setId(id);
 		this.completeDatetime = completeDatetime;
 		this.setCanceled(canceled);
@@ -45,6 +47,7 @@ public class ResultsListView {
 		this.patient = patient;
 		this.game = game;
 		this.setScore(score);
+		this.setMgp(mgp);
 	}
 	
 	public Date getCompleteDatetime() {
@@ -157,6 +160,14 @@ public class ResultsListView {
 
 	public void setCompleteDatetime(Date completeDatetime) {
 		this.completeDatetime = completeDatetime;
+	}
+
+	public int getMgp() {
+		return mgp;
+	}
+
+	public void setMgp(int mgp) {
+		this.mgp = mgp;
 	}
 
 }
