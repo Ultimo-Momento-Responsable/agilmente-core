@@ -13,13 +13,15 @@ public class PlanningWithSessions {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date dueDate;
 	private List<PlanningMobileData> planningList = new ArrayList<PlanningMobileData>();
+	private boolean unlimited;
 	
-	public PlanningWithSessions(Long planningId, int totalGames, int gamesPlayed, Date dueDate, List<PlanningMobileData> planningList) {
+	public PlanningWithSessions(Long planningId, int totalGames, int gamesPlayed, Date dueDate, boolean unlimited, List<PlanningMobileData> planningList) {
 		this.planningId = planningId;
 		this.totalGames = totalGames;
 		this.dueDate = dueDate;
 		this.gamesPlayed = gamesPlayed;
 		this.planningList = planningList;
+		this.unlimited = unlimited;
 	}
 
 	public Long getPlanningId() {
@@ -61,5 +63,13 @@ public class PlanningWithSessions {
 
 	public void setPlanningList(List<PlanningMobileData> planningList) {
 		this.planningList = planningList;
+	}
+
+	public boolean isUnlimited() {
+		return unlimited;
+	}
+
+	public void setUnlimited(boolean unlimited) {
+		this.unlimited = unlimited;
 	}
 }
