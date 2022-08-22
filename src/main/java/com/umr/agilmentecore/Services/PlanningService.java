@@ -341,7 +341,7 @@ public class PlanningService {
 	 */
 	private boolean isActiveOrPending(Planning planning) {
 		Date today = new Date();
-		return (planning.getState().getId() == 1 || planning.getState().getId() == 2 || planning.getState().getId() == 5) 
+		return (planning.getState().getId() == 1 || planning.getState().getId() == 2) 
 				&& planning.getDueDate().before(today);
 	}
 	
@@ -351,9 +351,11 @@ public class PlanningService {
 	 * @return verdadero o falso según si posee ese estado o no.
 	 */
 	private boolean isActiveWithUnlimitedGames(Planning p) {
-		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()==-1) {
-				return true;
+		if (p.getState().getId()==2) {
+			for (PlanningDetail pDetail : p.getDetail()) {
+				if (pDetail.getNumberOfSessions()==-1) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -365,20 +367,24 @@ public class PlanningService {
 	 * @return verdadero o falso
 	 */
 	public boolean isCompleted(Planning planning) {
-		for (PlanningDetail pDetail : planning.getDetail()) {
-			if (pDetail.getNumberOfSessions()>0) {
-				return false;
+		if (planning.getState().getId()==2 || planning.getState().getId()==5) {
+			for (PlanningDetail pDetail : planning.getDetail()) {
+				if (pDetail.getNumberOfSessions()>0) {
+					return false;
+				}
 			}
-		}
-		Date today = new Date();
-		if (planning.getState().getId()==5) {
-			if (planning.getDueDate().before(today)) {			
-				return true;
-			} else {
-				return false;
+			Date today = new Date();
+			if (planning.getState().getId()==5) {
+				if (planning.getDueDate().before(today)) {			
+					return true;
+				} else {
+					return false;
+				}
 			}
+			return true;
+		}else {
+			return false;
 		}
-		return true;
 	}
 	
 	/**
