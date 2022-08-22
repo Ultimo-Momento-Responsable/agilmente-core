@@ -439,7 +439,7 @@ public class PlanningService {
 		Planning specificPlanning = optSpecificPlanning.get();
 		if (specificPlanning.getState().getName().equals("Pendiente") || 
 			specificPlanning.getState().getName().equals("Vigente") || 
-			specificPlanning.getState().getName().equals("Completada")){
+			specificPlanning.getState().getName().equals("Vigente con juegos libres")){
 			cancelPlanning(specificPlanning);
 			return true;
 		}
