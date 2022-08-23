@@ -9,6 +9,7 @@ public class PlanningMobileData {
 	private Long gameSessionId;
 	private String game;
 	private Integer numberOfSession;
+	private Integer maxNumberOfSession;
 	private List<IParam> parameters;
 	
 	public PlanningMobileData(String game, int numberOfSession, List<IParam> parameters) {
@@ -17,10 +18,11 @@ public class PlanningMobileData {
 		this.parameters = parameters;
 	}
 	
-	public PlanningMobileData(Long gameSessionId, String game, int numberOfSession, List<IParam> parameters) {
+	public PlanningMobileData(Long gameSessionId, String game, int numberOfSession,int maxNumberOfSession, List<IParam> parameters) {
 		this.setGameSessionId(gameSessionId);
 		this.setGame(game);
 		this.setNumberOfSession(numberOfSession);
+		this.setMaxNumberOfSession(maxNumberOfSession);
 		this.parameters = parameters;
 	}
 
@@ -54,6 +56,14 @@ public class PlanningMobileData {
 
 	public void setGameSessionId(Long gameSessionId) {
 		this.gameSessionId = gameSessionId;
+	}
+
+	public Integer getMaxNumberOfSession() {
+		return maxNumberOfSession;
+	}
+
+	public void setMaxNumberOfSession(Integer maxNumberOfSession) {
+		this.maxNumberOfSession = maxNumberOfSession;
 	}
 
 }
