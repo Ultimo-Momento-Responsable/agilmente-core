@@ -314,7 +314,7 @@ public class PlanningService {
 				Long gameSessionId = pd.getGameSession().getId();
 				game = (pd.getGameSession().getName());
 				numberOfSession =(pd.getNumberOfSessions());
-				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
+				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, pd.getMaxNumberOfSessions(), parameters));
 			}
 			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), unlimited, planningList));
 		}
@@ -411,9 +411,7 @@ public class PlanningService {
 					parameters.add(param);
 				}
 			}
-			String game = (pd.getGameSession().getName());
-			int numberOfSession = (pd.getNumberOfSessions());
-			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), game, numberOfSession, parameters));
+			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), pd.getGameSession().getName(), pd.getNumberOfSessions(), pd.getMaxNumberOfSessions(), parameters));
 		}
 		
 		// Enviamos todo a la vista	
