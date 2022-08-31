@@ -142,9 +142,27 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 			+ "WHERE pd.difficulty = ?1")
 	Integer findMinScoreByDifficulty(String difficulty);
 	
+	/**
+	 * Obtiene los scores de una sesion de Encuentra al nuevo
+	 * @param id de la sesión
+	 * @return Lista de Scores.
+	 */
 	@Query(value = "SELECT r.score FROM EncuentraAlNuevoSession eans "
 			+ "JOIN eans.results r "
 			+ "WHERE eans.id = ?1 "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
+	
+	/**
+	 * Calcula el promedio de MGP de una planificación de Encuentra al nuevo
+	 * @param planningId id de la planning
+	 * @return MGP promedio.
+	 */
+	@Query(value = "SELECT AVG(r.mgp) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.encuentraAlNuevoSession eans "
+			+ "JOIN eans.results r "
+			+ "WHERE p.id = ?1 ")
+	Integer getMGPAverageByPlanning(Long planningId);
 }

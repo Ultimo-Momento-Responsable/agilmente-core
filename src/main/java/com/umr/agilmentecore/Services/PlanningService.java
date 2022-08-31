@@ -37,7 +37,8 @@ public class PlanningService {
 	private PlanningRepository repository;
 	@Autowired
 	private PlanningStateRepository stateRepository;
-
+	@Autowired
+	private GameSessionResultService gameSessionResultService;
 	@Autowired
 	private ProfessionalService professionalService;
 	@Autowired
@@ -58,17 +59,18 @@ public class PlanningService {
 				}
 				if (isActiveOrPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 3));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
 				}
 				if (isActiveWithUnlimitedGames(planning)) {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
 				if (isCompleted(planning)) {
 					planning.setState(stateRepository.getOne((long) 6));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));					
 				}
 				this.repository.save(planning);
 			}
 		}
-		
 	}
 
 	/**
@@ -177,6 +179,7 @@ public class PlanningService {
 		planning.setStartDate(planningData.getStartDate());
 		planning.setDueDate(planningData.getDueDate());
 		planning.setCreationDatetime(new Date());
+		planning.setMgp(null);
 		
 		List<PlanningDetail> detail = this.createPlanningDetailList(planningData.getGames());
 		
@@ -341,7 +344,7 @@ public class PlanningService {
 	 */
 	private boolean isActiveOrPending(Planning planning) {
 		Date today = new Date();
-		return (planning.getState().getId() == 1 || planning.getState().getId() == 2) 
+		return (planning.getState().getId() == 1 || planning.getState().getId() == 2 || planning.getState().getId() == 5) 
 				&& planning.getDueDate().before(today);
 	}
 	

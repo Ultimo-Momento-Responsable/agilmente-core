@@ -43,6 +43,8 @@ public class Planning {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "due_date")
 	private Date dueDate;
+	@Column(name = "mgp")
+	private Integer mgp;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "planning_id")
 	private List<PlanningDetail> detail;
