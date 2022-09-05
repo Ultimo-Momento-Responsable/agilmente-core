@@ -156,6 +156,7 @@ CREATE TABLE planning (
 	patient_id BIGINT,
 	professional_id BIGINT,
 	planning_state_id BIGINT,
+	mgp INT DEFAULT NULL,
 	FOREIGN KEY (patient_id) REFERENCES patient(id),
 	FOREIGN KEY (professional_id) REFERENCES professional(id)	
 );

@@ -143,9 +143,27 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 			+ "WHERE pd.difficulty = ?1")
 	Integer findMinScoreByDifficulty(String difficulty);
 	
+	/**
+	 * Obtiene los scores de una sesion de Hay uno Repetido
+	 * @param id de la sesión
+	 * @return Lista de Scores.
+	 */
 	@Query(value = "SELECT r.score FROM HayUnoRepetidoSession hurs "
 			+ "JOIN hurs.results r "
 			+ "WHERE hurs.id = ?1 "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
+	
+	/**
+	 * Calcula el promedio de MGP de una planificación de hay uno repetido
+	 * @param planningId id de la planning
+	 * @return MGP promedio.
+	 */
+	@Query(value = "SELECT AVG(r.mgp) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.hayUnoRepetidoSession hurs "
+			+ "JOIN hurs.results r "
+			+ "WHERE p.id = ?1 ")
+	Integer getMGPAverageByPlanning(Long planningId);
 }
