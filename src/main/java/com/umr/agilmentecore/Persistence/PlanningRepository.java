@@ -44,7 +44,7 @@ public interface PlanningRepository extends JpaRepository<Planning, Long> {
 	@Query(value = "Select p FROM Planning p JOIN p.detail pd WHERE ?1 IN pd")
 	Optional<Planning> findByPlanningDetail(PlanningDetail pd);
 
-	@Query(value="SELECT p.mgp from Planning p WHERE p.patient.id=?1")
+	@Query(value="SELECT p.mgp from Planning p WHERE p.patient.id=?1 AND p.mgp IS NOT NULL")
 	List<Integer> getPlanningsMGPs(Long patientId);
 	
 }
