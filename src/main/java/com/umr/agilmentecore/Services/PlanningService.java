@@ -460,4 +460,13 @@ public class PlanningService {
 	public List<PlanningState> getPlanningStates() {
 		return stateRepository.findAll();
 	}
+	
+	/**
+	 * Obtiene una lista de MGPs de las plannings pertenecientes a un paciente
+	 * @param patientId Id del paciente
+	 * @return Lista de MGPs
+	 */
+	public List<Integer> getPlanningsMGPs(Long patientId) {
+		return repository.getPlanningsMGPs(patientId);
+	}
 }

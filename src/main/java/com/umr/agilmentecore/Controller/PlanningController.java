@@ -133,6 +133,16 @@ public class PlanningController {
 	public List<PlanningState> getPlanningStates() {
 		return service.getPlanningStates();
 	}
+	
+	/**
+	 * Obtiene una lista de MGPs de las plannings pertenecientes a un paciente
+	 * @param patientId Id del paciente
+	 * @return Lista de MGPs
+	 */
+	@GetMapping(value = "/mgps/{patientId}")
+	public List<Integer> getPlanningsMGPs(@PathVariable(name = "patientId") Long patientId) {
+		return service.getPlanningsMGPs(patientId);
+	}
 
 	/**
 	 * Cancela una planificación
