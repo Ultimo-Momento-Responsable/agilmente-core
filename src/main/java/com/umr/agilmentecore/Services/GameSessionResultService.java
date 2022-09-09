@@ -405,6 +405,6 @@ public class GameSessionResultService {
 		if (count>0) {			
 			return sum/count;
 		}
-		return 0;
+		return null;
 	}
 }
