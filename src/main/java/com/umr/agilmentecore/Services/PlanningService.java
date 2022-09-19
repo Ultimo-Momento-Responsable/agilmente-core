@@ -37,7 +37,8 @@ public class PlanningService {
 	private PlanningRepository repository;
 	@Autowired
 	private PlanningStateRepository stateRepository;
-
+	@Autowired
+	private GameSessionResultService gameSessionResultService;
 	@Autowired
 	private ProfessionalService professionalService;
 	@Autowired
@@ -58,17 +59,18 @@ public class PlanningService {
 				}
 				if (isActiveOrPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 3));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
 				}
-				if (isCompleted(planning)) {
+				if (isActiveWithUnlimitedGames(planning)) {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
-				if (isCompletedAndExpired(planning)) {
+				if (isCompleted(planning)) {
 					planning.setState(stateRepository.getOne((long) 6));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));					
 				}
 				this.repository.save(planning);
 			}
 		}
-		
 	}
 
 	/**
@@ -177,6 +179,7 @@ public class PlanningService {
 		planning.setStartDate(planningData.getStartDate());
 		planning.setDueDate(planningData.getDueDate());
 		planning.setCreationDatetime(new Date());
+		planning.setMgp(null);
 		
 		List<PlanningDetail> detail = this.createPlanningDetailList(planningData.getGames());
 		
@@ -295,10 +298,15 @@ public class PlanningService {
 			int numberOfSession = -1;
 			int totalGames = 0;
 			int gamesPlayed = 0;
+			boolean unlimited = false;
 			for (PlanningDetail pd : plan.getDetail()) {
 				if (pd.getMaxNumberOfSessions()>0) {
 					totalGames += pd.getMaxNumberOfSessions();
 					gamesPlayed += pd.getNumberOfSessions();
+				}else{
+					if (pd.getMaxNumberOfSessions()==-1) {
+						unlimited = true;
+					}
 				}
 				List<IParam> parameters = new ArrayList<IParam>();
 				for (IParam param : pd.getGameSession().getSettedParams()) {
@@ -309,9 +317,9 @@ public class PlanningService {
 				Long gameSessionId = pd.getGameSession().getId();
 				game = (pd.getGameSession().getName());
 				numberOfSession =(pd.getNumberOfSessions());
-				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, parameters));
+				planningList.add(new PlanningMobileData(gameSessionId, game, numberOfSession, pd.getMaxNumberOfSessions(), parameters));
 			}
-			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), planningList));
+			pWS.add(new PlanningWithSessions(plan.getId(), totalGames, totalGames - gamesPlayed, plan.getDueDate(), unlimited, planningList));
 		}
 		PlanningWithSessionsList planningList = new PlanningWithSessionsList(pWS);
 		return planningList;
@@ -336,33 +344,50 @@ public class PlanningService {
 	 */
 	private boolean isActiveOrPending(Planning planning) {
 		Date today = new Date();
-		return (planning.getState().getName().equals("Vigente") || planning.getState().getName().equals("Pendiente")) 
+		return (planning.getState().getId() == 1 || planning.getState().getId() == 2 || planning.getState().getId() == 5) 
 				&& planning.getDueDate().before(today);
 	}
 	
 	/**
-	 * Chequea si la planificación ha sido completada.
+	 * Chequea si la planificación está vigente y con juegos ilimitados.
 	 * @param p Planificación a chequear
-	 * @return verdadero o falso según si ha sido completada o no.
+	 * @return verdadero o falso según si posee ese estado o no.
 	 */
-	public boolean isCompleted(Planning p) {
-		boolean completed = true;
-		for (PlanningDetail pDetail : p.getDetail()) {
-			if (pDetail.getNumberOfSessions()>0) {
-				completed = false;
+	private boolean isActiveWithUnlimitedGames(Planning p) {
+		if (p.getState().getId()==2) {
+			for (PlanningDetail pDetail : p.getDetail()) {
+				if (pDetail.getNumberOfSessions()==-1) {
+					return true;
+				}
 			}
 		}
-		return completed;
+		return false;
 	}
 	
 	/**
-	 * Chequea si la planificación fue completada y a su vez esta expiró.
+	 * Chequea si la planificación fue completada.
 	 * @param planning Planificación a chequear
 	 * @return verdadero o falso
 	 */
-	private boolean isCompletedAndExpired(Planning planning) {
-		Date today = new Date();
-		return (planning.getState().getName().equals("Completada") && planning.getDueDate().before(today));
+	public boolean isCompleted(Planning planning) {
+		if (planning.getState().getId()==2 || planning.getState().getId()==5) {
+			for (PlanningDetail pDetail : planning.getDetail()) {
+				if (pDetail.getNumberOfSessions()>0) {
+					return false;
+				}
+			}
+			Date today = new Date();
+			if (planning.getState().getId()==5) {
+				if (planning.getDueDate().before(today)) {			
+					return true;
+				} else {
+					return false;
+				}
+			}
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	/**
@@ -389,9 +414,7 @@ public class PlanningService {
 					parameters.add(param);
 				}
 			}
-			String game = (pd.getGameSession().getName());
-			int numberOfSession = (pd.getNumberOfSessions());
-			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), game, numberOfSession, parameters));
+			planningList.add(new PlanningMobileData(pd.getGameSession().getId(), pd.getGameSession().getName(), pd.getNumberOfSessions(), pd.getMaxNumberOfSessions(), parameters));
 		}
 		
 		// Enviamos todo a la vista	
@@ -423,7 +446,7 @@ public class PlanningService {
 		Planning specificPlanning = optSpecificPlanning.get();
 		if (specificPlanning.getState().getName().equals("Pendiente") || 
 			specificPlanning.getState().getName().equals("Vigente") || 
-			specificPlanning.getState().getName().equals("Completada")){
+			specificPlanning.getState().getName().equals("Vigente con juegos libres")){
 			cancelPlanning(specificPlanning);
 			return true;
 		}
@@ -436,5 +459,14 @@ public class PlanningService {
 	 */
 	public List<PlanningState> getPlanningStates() {
 		return stateRepository.findAll();
+	}
+	
+	/**
+	 * Obtiene una lista de MGPs de las plannings pertenecientes a un paciente
+	 * @param patientId Id del paciente
+	 * @return Lista de MGPs
+	 */
+	public List<Integer> getPlanningsMGPs(Long patientId) {
+		return repository.getPlanningsMGPs(patientId);
 	}
 }

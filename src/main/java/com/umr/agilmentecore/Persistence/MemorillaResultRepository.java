@@ -28,6 +28,7 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "r.timePerLevel,"
 			+ "r.totalTime, "
 			+ "r.score, "
+			+ "r.mgp, "
 			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
 			+ "mS.game.name) "
 			+ "FROM Planning p "
@@ -92,6 +93,7 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "r.timePerLevel,"
 			+ "r.totalTime, "
 			+ "r.score, "
+			+ "r.mgp, "
 			+ "CONCAT(p.patient.firstName, ' ', p.patient.lastName), "
 			+ "mS.game.name) "
 			+ "FROM Planning p "
@@ -143,9 +145,27 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 			+ "WHERE pd.difficulty = ?1")
 	Integer findMinScoreByDifficulty(String difficulty);
 	
+	/**
+	 * Obtiene los scores de una sesion de Memorilla
+	 * @param id de la sesión
+	 * @return Lista de Scores.
+	 */
 	@Query(value = "SELECT r.score FROM MemorillaSession ms "
 			+ "JOIN ms.results r "
 			+ "WHERE ms.id = ?1 "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
+	
+	/**
+	 * Calcula el promedio de MGP de una planificación de Memorilla
+	 * @param planningId id de la planning
+	 * @return MGP promedio.
+	 */
+	@Query(value = "SELECT AVG(r.mgp) "
+			+ "FROM Planning p "
+			+ "JOIN p.detail pd "
+			+ "JOIN pd.memorillaSession ms "
+			+ "JOIN ms.results r "
+			+ "WHERE p.id = ?1 ")
+	Integer getMGPAverageByPlanning(Long planningId);
 }

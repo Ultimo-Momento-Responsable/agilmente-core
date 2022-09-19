@@ -383,4 +383,28 @@ public class GameSessionResultService {
 		}
 		return results;
 	}
+	
+	/**
+	 * Obtiene el promedio de los MGPs de una planificación.
+	 * @param id de la planificación
+	 * @return promedio de MGP
+	 */
+	public Integer getAverageMGPFromPlanning(Long id) {
+		List<Integer> mgps = new ArrayList<Integer>();
+		mgps.add(memorillaResultRepository.getMGPAverageByPlanning(id));
+		mgps.add(encuentraAlNuevoResultRepository.getMGPAverageByPlanning(id));
+		mgps.add(hayUnoRepetidoResultRepository.getMGPAverageByPlanning(id));
+		int count = 0;
+		int sum = 0;
+		for (Integer mgp : mgps) {
+			if (mgp!=null) {
+				count++;
+				sum+=mgp;
+			}
+		}
+		if (count>0) {			
+			return sum/count;
+		}
+		return null;
+	}
 }
