@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Professional;
@@ -37,16 +38,20 @@ public class LoginService {
 	 * @throws InvalidKeyException 
 	 */
 	public ProfessionalData login(LoginData user) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
-		Professional professional = repository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+		Professional professional = repository.findByUserName(user.getUserName());
+		
 		if (Objects.nonNull(professional)) {
-			String token = getJWTToken(professional.getUserName());
-			professional.setToken(token);
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, 3);
-			professional.setTokenExpiration(cal.getTime());
-			repository.save(professional);
-			ProfessionalData pd = new ProfessionalData(professional.getId(), professional.getFirstName(),professional.getLastName(),professional.getToken());
-			return pd;
+			if (passwordEncoder.matches(user.getPassword(), professional.getPassword())) {
+				String token = getJWTToken(professional.getUserName());
+				professional.setToken(token);
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DAY_OF_MONTH, 3);
+				professional.setTokenExpiration(cal.getTime());
+				repository.save(professional);
+				ProfessionalData pd = new ProfessionalData(professional.getId(), professional.getFirstName(),professional.getLastName(),professional.getToken());
+				return pd;
+			}
 		}
 		return null;
 	}
