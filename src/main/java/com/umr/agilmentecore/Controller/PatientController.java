@@ -47,8 +47,18 @@ public class PatientController {
 	 * @param Long el id del paciente específico.
 	 * @return Optional un paciente o nada.
 	 */
+	@GetMapping(value = "/frontend/{id}")
+	public Optional<Patient> getOneFront(@PathVariable(name = "id") Long id) {
+		return service.getOne(id);
+	}
+	
+	/**
+	 * Obtiene un Paciente.
+	 * @param Long el id del paciente específico.
+	 * @return Optional un paciente o nada.
+	 */
 	@GetMapping(value = "/{id}")
-	public Optional<Patient> getOne(@PathVariable(name = "id") Long id) {
+	public Optional<Patient> getOneUnity(@PathVariable(name = "id") Long id) {
 		return service.getOne(id);
 	}
 	
@@ -67,8 +77,8 @@ public class PatientController {
 	 * @param value El Login Code del paciente específico.
 	 * @return Optional un paciente o nada.
 	 */
-	@GetMapping(params = {"loginCode"})
-	public Optional<Patient> getOne(String loginCode) {
+	@GetMapping(value = "/loginCode/{loginCode}")
+	public Optional<Patient> getOne(@PathVariable(name = "loginCode") String loginCode) {
 		return service.getOneByLoginCode(loginCode);
 	}
 	
@@ -89,6 +99,16 @@ public class PatientController {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Patient update(@RequestBody Patient p, @PathVariable(name = "id") Long id) {
+		return service.update(p);		
+	}
+	
+	/**
+	 * Actualiza un paciente.
+	 * @param p El paciente que se actualizará.
+	 * @return El paciente guardado.
+	 */
+	@RequestMapping(value = "/frontend/{id}", method = RequestMethod.PUT)
+	public Patient updateFrontend(@RequestBody Patient p, @PathVariable(name = "id") Long id) {
 		return service.update(p);		
 	}
 
