@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Professional;
+import com.umr.agilmentecore.Class.IntermediateClasses.ChangePassword;
 import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
 import com.umr.agilmentecore.Persistence.ProfessionalRepository;
@@ -106,10 +107,30 @@ public class LoginService {
 						.map(GrantedAuthority::getAuthority)
 						.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 				.signWith(SignatureAlgorithm.HS256,
 						secretKey.getBytes()).compact();
 		return "Bearer " + token;
+	}
+
+	/**
+	 * Chequea si la contraseña antigua coincide y la cambia por la nueva.
+	 * @param user contiene una contraseña vieja, una nueva y el id del profesional.
+	 * @return true o false si se puede cambiar o no.
+	 */
+	public Boolean changePassword(ChangePassword user) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+		Professional professional = repository.getOne(user.getProfessionalId());
+		
+		if (Objects.nonNull(professional)) {
+			if (passwordEncoder.matches(user.getOldPassword(), professional.getPassword())) {
+				String newPassword = passwordEncoder.encode(user.getNewPassword());
+				professional.setPassword(newPassword);
+				repository.save(professional);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

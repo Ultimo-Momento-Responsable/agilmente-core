@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.umr.agilmentecore.Class.IntermediateClasses.ChangePassword;
 import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
 import com.umr.agilmentecore.Services.LoginService;
@@ -39,6 +40,16 @@ public class LoginController {
     public ProfessionalData login(@RequestBody LoginData user) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
         return service.login(user);
     }
+	
+	/**
+	 * Endpoint que se encarga de cambiar la contraseña del profesional
+	 * @param user contiene una contraseña vieja, una nueva y el id del profesional
+	 * @return true o false si se puede cambiar o no.
+	 */
+	@PostMapping(value = "/changePassword")
+	public Boolean changePassword(@RequestBody ChangePassword user) {
+		return service.changePassword(user);
+	}
 	
 	/**
 	 * Chequea si el token es válido y si no se ha expirado
