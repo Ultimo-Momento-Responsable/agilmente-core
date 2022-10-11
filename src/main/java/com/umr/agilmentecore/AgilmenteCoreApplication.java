@@ -36,6 +36,7 @@ public class AgilmenteCoreApplication {
 				.antMatchers(HttpMethod.POST, "/result/encuentra-al-nuevo").permitAll()
 				.antMatchers(HttpMethod.POST, "/result/encuentra-al-repetido").permitAll()
 				.antMatchers(HttpMethod.POST, "/result/memorilla").permitAll()
+				.antMatchers(HttpMethod.POST, "/login/loginCaptcha").permitAll()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.anyRequest().authenticated();
 		}
