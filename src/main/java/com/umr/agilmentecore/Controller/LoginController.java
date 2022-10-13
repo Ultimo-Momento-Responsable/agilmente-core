@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.umr.agilmentecore.Class.IntermediateClasses.ChangePassword;
 import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
+import com.umr.agilmentecore.Services.CaptchaService;
 import com.umr.agilmentecore.Services.LoginService;
 
 import io.jsonwebtoken.security.InvalidKeyException;
@@ -27,6 +28,9 @@ public class LoginController {
 	
 	@Autowired
 	private LoginService service;
+	
+	@Autowired
+	private CaptchaService captchaService;
 	
 	/**
 	 * Función que se encarga de chequear el login y setear el tiempo de expiración del mismo.
@@ -60,4 +64,14 @@ public class LoginController {
     public Boolean checkIfLogged(@PathVariable(name = "token") String token) {
         return service.checkIfLogged(token);
     }
+	
+	/**
+	 * Verifica con el servicio de Google si el usuario es un potencial bot. 
+	 * @param token el token que viene del front
+	 * @return devuelve true o false si es válido o no el token
+	 */
+	@PostMapping("/loginCaptcha")
+	public Boolean captchaLoginAccount(@RequestBody String token) {
+		return captchaService.processResponse(token, CaptchaService.REGISTER_ACTION);
+	}
 }
