@@ -150,7 +150,7 @@ public interface HayUnoRepetidoResultRepository extends org.springframework.data
 	 */
 	@Query(value = "SELECT r.score FROM HayUnoRepetidoSession hurs "
 			+ "JOIN hurs.results r "
-			+ "WHERE hurs.id = ?1 "
+			+ "WHERE hurs.id = ?1 AND r.canceled=false "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
 	
