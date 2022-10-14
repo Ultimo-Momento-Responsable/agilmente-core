@@ -149,7 +149,7 @@ public interface EncuentraAlNuevoResultRepository extends org.springframework.da
 	 */
 	@Query(value = "SELECT r.score FROM EncuentraAlNuevoSession eans "
 			+ "JOIN eans.results r "
-			+ "WHERE eans.id = ?1 "
+			+ "WHERE eans.id = ?1 AND r.canceled=false "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
 	

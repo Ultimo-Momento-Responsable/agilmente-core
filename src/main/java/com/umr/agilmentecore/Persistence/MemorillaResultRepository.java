@@ -152,7 +152,7 @@ public interface MemorillaResultRepository extends org.springframework.data.repo
 	 */
 	@Query(value = "SELECT r.score FROM MemorillaSession ms "
 			+ "JOIN ms.results r "
-			+ "WHERE ms.id = ?1 "
+			+ "WHERE ms.id = ?1 AND r.canceled=false "
 			+ "ORDER BY r.score DESC")
 	List<Integer> findScoresBySessionId(Long id);
 	
