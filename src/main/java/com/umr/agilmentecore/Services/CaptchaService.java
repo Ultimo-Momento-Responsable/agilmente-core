@@ -39,7 +39,6 @@ public class CaptchaService {
 	public boolean processResponse(String response, String action) {
 		final URI verifyUri = URI.create(String.format(RECAPTCHA_URL_TEMPLATE, secret, response));
 		GoogleResponse googleResponse = restTemplate.getForObject(verifyUri, GoogleResponse.class);
-		System.out.println(googleResponse.getScore());
 		if (googleResponse.getScore() < threshold) {
 			return false;
 		}
