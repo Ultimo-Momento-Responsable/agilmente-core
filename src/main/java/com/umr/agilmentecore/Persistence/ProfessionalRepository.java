@@ -12,4 +12,5 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
 	Professional findByToken(String token);
 	Professional findByFirstNameAndLastName(String firstName, String lastName);
 	Professional findByUserName(String userName);
+	Professional findByEmail(String email);
 }

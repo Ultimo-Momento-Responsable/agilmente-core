@@ -138,6 +138,7 @@ CREATE TABLE professional (
 	last_name VARCHAR(255),
 	user_name VARCHAR(255),
 	password VARCHAR(255),
+	email VARCHAR(255),
 	token VARCHAR(255),
 	token_expiration TIMESTAMP
 );

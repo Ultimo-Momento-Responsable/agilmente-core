@@ -17,6 +17,7 @@ import com.umr.agilmentecore.Class.IntermediateClasses.LoginData;
 import com.umr.agilmentecore.Class.IntermediateClasses.ProfessionalData;
 import com.umr.agilmentecore.Services.CaptchaService;
 import com.umr.agilmentecore.Services.LoginService;
+import com.umr.agilmentecore.Services.ProfessionalService;
 
 import io.jsonwebtoken.security.InvalidKeyException;
 
@@ -31,6 +32,9 @@ public class LoginController {
 	
 	@Autowired
 	private CaptchaService captchaService;
+	
+	@Autowired
+	private ProfessionalService professionalService;
 	
 	/**
 	 * Función que se encarga de chequear el login y setear el tiempo de expiración del mismo.
@@ -73,5 +77,15 @@ public class LoginController {
 	@PostMapping("/loginCaptcha")
 	public Boolean captchaLoginAccount(@RequestBody String token) {
 		return captchaService.processResponse(token, CaptchaService.REGISTER_ACTION);
+	}
+	
+	/**
+	 * Método para reiniciar la contraseña del profesional.
+	 * @param email Correo del profesional.
+	 * @return true o false si se pudo hacer o no.
+	 */
+	@GetMapping("/resetPassword/{email}")
+	public Boolean resetPassword(@PathVariable(name = "email") String email) {
+		return professionalService.resetPassword(email);
 	}
 }
