@@ -444,10 +444,13 @@ public class PlanningService {
 		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
-		if (specificPlanning.getState().getName().equals("Pendiente") || 
-			specificPlanning.getState().getName().equals("Vigente") || 
+		if (specificPlanning.getState().getName().equals("Vigente") || 
 			specificPlanning.getState().getName().equals("Vigente con juegos libres")){
 			cancelPlanning(specificPlanning);
+			return true;
+		}
+		if (specificPlanning.getState().getName().equals("Pendiente")) {
+			this.repository.delete(specificPlanning);
 			return true;
 		}
 		return false;
