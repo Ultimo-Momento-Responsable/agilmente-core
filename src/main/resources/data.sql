@@ -63,8 +63,7 @@ INSERT INTO patient (born_date, city, description, first_name, last_name, is_log
     ('1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez',false,true);
 
 INSERT INTO professional (first_name, last_name, user_name, password, email) VALUES 
-	('Jorgelina', 'Cordero', 'JCordero', '$2a$10$bpxx9CYUVRZonSyBCwpmnujTyQgbsDaT/QRgEM5tXhVWkwPFgfU16', ''), 
-    ('Guillermo', 'Gribaudo', 'GGribaudo', '$2a$10$bpxx9CYUVRZonSyBCwpmnujTyQgbsDaT/QRgEM5tXhVWkwPFgfU16', 'guillermo.gribaudo95@gmail.com');
+	('Jorgelina', 'Cordero', 'JCordero', '$2a$10$bpxx9CYUVRZonSyBCwpmnujTyQgbsDaT/QRgEM5tXhVWkwPFgfU16', '');
 
 INSERT INTO planning (name, creation_datetime, due_date, start_date, patient_id, professional_id, state_id, mgp) 
     VALUES ('Planificación de Julián Marquez', '2022-09-18 18:14:30.762', '2022-09-19 00:00:00', '2022-09-18 00:00:00', 1, 1, 6, 1250);
