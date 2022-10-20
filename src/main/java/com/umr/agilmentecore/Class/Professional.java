@@ -30,6 +30,8 @@ public class Professional {
 	private String userName;
 	@Column(name = "password")
 	private String password;
+	@Column(name = "email")
+	private String email;
 	@Column(name = "token")
 	private String token;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
