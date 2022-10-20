@@ -440,7 +440,7 @@ public class PlanningService {
 	 * Cancela una planificación
 	 * @param Long el id de la planificación específica.
 	 */
-	public boolean cancel(Long id) {
+	public boolean cancel(Long id, boolean edited) {
 		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
@@ -450,7 +450,11 @@ public class PlanningService {
 			return true;
 		}
 		if (specificPlanning.getState().getName().equals("Pendiente")) {
-			this.repository.delete(specificPlanning);
+			if (edited) {				
+				this.repository.delete(specificPlanning);
+			} else {
+				cancelPlanning(specificPlanning);
+			}
 			return true;
 		}
 		return false;
