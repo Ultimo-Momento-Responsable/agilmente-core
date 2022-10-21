@@ -150,8 +150,8 @@ public class PlanningController {
 	 * @param Long el id de la planificación.
 	 */
 	@RequestMapping(value = "/cancel_planning/{id}", method = RequestMethod.PUT)
-	public void cancelPlanning(@PathVariable(name = "id") Long id) {
-		boolean isCancellable = service.cancel(id);
+	public void cancelPlanning(@PathVariable(name = "id") Long id, @RequestBody boolean edited) {
+		boolean isCancellable = service.cancel(id, edited);
 		if (isCancellable) {
 			throw new ResponseStatusException(HttpStatus.ACCEPTED, "Planning canceled");
 		} else {
