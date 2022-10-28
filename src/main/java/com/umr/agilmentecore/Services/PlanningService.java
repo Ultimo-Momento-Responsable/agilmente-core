@@ -61,8 +61,11 @@ public class PlanningService {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
 				if (isCompleted(planning)) {
+					if (planning.getState().getName().equals("Vigente con juegos libres")) {
+						planning.getPatient().setTrophies(planning.getPatient().getTrophies() + 1);
+					}
 					planning.setState(stateRepository.getOne((long) 6));
-					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));					
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));
 				}
 				if (isActiveOrPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 3));
@@ -450,7 +453,7 @@ public class PlanningService {
 			return true;
 		}
 		if (specificPlanning.getState().getName().equals("Pendiente")) {
-			if (edited) {				
+			if (edited) {
 				this.repository.delete(specificPlanning);
 			} else {
 				cancelPlanning(specificPlanning);
