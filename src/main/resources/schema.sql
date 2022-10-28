@@ -128,7 +128,9 @@ CREATE TABLE patient (
 	is_logged BOOLEAN,
 	is_enabled BOOLEAN,
 	login_code VARCHAR(255),
-	join_date TIMESTAMP
+	join_date TIMESTAMP,
+	medals NUMERIC DEFAULT 0,
+	trophies NUMERIC DEFAULT 0
 );
 
 DROP TABLE IF EXISTS professional CASCADE;

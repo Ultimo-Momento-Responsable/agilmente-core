@@ -58,9 +58,9 @@ INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (3, 1);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (3, 2);
 INSERT INTO game_cognitive_domain (game_id, cognitive_domain_id) VALUES (3, 4);
 
-INSERT INTO patient (born_date, city, description, first_name, last_name, is_logged, is_enabled) 
-    VALUES ('1996-11-24 00:00:00', 'Villa María', null, 'Fake', 'Patient',false,false),
-    ('1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez',false,true);
+INSERT INTO patient (born_date, city, description, first_name, last_name, is_logged, is_enabled, medals, trophies) 
+    VALUES ('1996-11-24 00:00:00', 'Villa María', null, 'Fake', 'Patient', false, false, 0, 0),
+    ('1996-11-24 00:00:00', 'Villa María', null, 'Julián', 'Marquez', false, true, 0, 0);
 
 INSERT INTO professional (first_name, last_name, user_name, password, email) VALUES 
 	('Jorgelina', 'Cordero', 'JCordero', '$2a$10$bpxx9CYUVRZonSyBCwpmnujTyQgbsDaT/QRgEM5tXhVWkwPFgfU16', '');

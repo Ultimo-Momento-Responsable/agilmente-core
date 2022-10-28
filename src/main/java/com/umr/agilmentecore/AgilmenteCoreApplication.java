@@ -30,6 +30,7 @@ public class AgilmenteCoreApplication {
 				.antMatchers("/login").permitAll()
 				.antMatchers(HttpMethod.GET, "/patient/{id:\\d+}").permitAll()
 				.antMatchers(HttpMethod.GET, "/patient/loginCode/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/patient/medalsAndTrophies/**").permitAll()
 				.antMatchers(HttpMethod.PUT, "/patient/{id:\\d+}").permitAll()
 				.antMatchers(HttpMethod.GET, "/planning/mobile_patient/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/result/ranking**").permitAll()

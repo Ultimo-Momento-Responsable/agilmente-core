@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.umr.agilmentecore.Class.Patient;
+import com.umr.agilmentecore.Class.IntermediateClasses.MedalsAndTrophies;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Services.PatientService;
 
@@ -80,6 +81,16 @@ public class PatientController {
 	@GetMapping(value = "/loginCode/{loginCode}")
 	public Optional<Patient> getOne(@PathVariable(name = "loginCode") String loginCode) {
 		return service.getOneByLoginCode(loginCode);
+	}
+	
+	/**
+	 * Obtiene las medallas y los trofeos de un paciente.
+	 * @param value El Login Code del paciente específico.
+	 * @return Optional un paciente o nada.
+	 */
+	@GetMapping(value = "/medalsAndTrophies/{patientId}")
+	public MedalsAndTrophies getMedalsAndTrophies(@PathVariable(name = "patientId") Long patientId) {
+		return service.getMedalsAndTrophies(patientId);
 	}
 	
 	/**
