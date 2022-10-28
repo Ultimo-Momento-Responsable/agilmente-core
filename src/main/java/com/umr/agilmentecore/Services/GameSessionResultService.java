@@ -409,6 +409,11 @@ public class GameSessionResultService {
 		return null;
 	}
 	
+	/**
+	 * Actualiza la cantidad de medallas y de trofeos del paciente
+	 * @param p Planing actual.
+	 * @param pd Detalle de la planning actual.
+	 */
 	public void updateMedalsAndTrophies(Planning p, PlanningDetail pd) {
 		Patient patient = p.getPatient();
 		if (pd.getNumberOfSessions() == 0) {

@@ -224,6 +224,11 @@ public class PatientService {
 		return true;
 	}
 
+	/**
+	 * Obtiene los trofeos y medallas del paciente
+	 * @param patientId Id del paciente
+	 * @return Medallas y Trofeos.
+	 */
 	public MedalsAndTrophies getMedalsAndTrophies(Long patientId) {
 		Patient patient = repository.getOne(patientId);
 		MedalsAndTrophies medalsAndTrophies = new MedalsAndTrophies();
