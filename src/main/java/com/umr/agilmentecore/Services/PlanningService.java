@@ -57,16 +57,16 @@ public class PlanningService {
 				if (isPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 2));
 				}
-				if (isActiveOrPending(planning)) {
-					planning.setState(stateRepository.getOne((long) 3));
-					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
-				}
 				if (isActiveWithUnlimitedGames(planning)) {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
 				if (isCompleted(planning)) {
 					planning.setState(stateRepository.getOne((long) 6));
 					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));					
+				}
+				if (isActiveOrPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 3));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
 				}
 				this.repository.save(planning);
 			}
