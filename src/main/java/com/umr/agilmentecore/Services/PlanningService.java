@@ -62,7 +62,9 @@ public class PlanningService {
 				}
 				if (isCompleted(planning)) {
 					if (planning.getState().getName().equals("Vigente con juegos libres")) {
-						planning.getPatient().setTrophies(planning.getPatient().getTrophies() + 1);
+						if (!isOnlyFreeGames(planning)) {
+							planning.getPatient().setTrophies(planning.getPatient().getTrophies() + 1);
+						}
 					}
 					planning.setState(stateRepository.getOne((long) 6));
 					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));
@@ -74,6 +76,20 @@ public class PlanningService {
 				this.repository.save(planning);
 			}
 		}
+	}
+	
+	/**
+	 * chequea si la planning es solo de juegos libres
+	 * @param p Planning
+	 * @return true si tiene solo juegos libres, false de lo contrario.
+	 */
+	private boolean isOnlyFreeGames(Planning p) {
+		for (PlanningDetail pd : p.getDetail()) {
+			if (pd.getMaxNumberOfSessions()>0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
