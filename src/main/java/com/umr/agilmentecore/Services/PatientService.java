@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.umr.agilmentecore.Class.Comment;
@@ -14,6 +12,7 @@ import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningState;
 import com.umr.agilmentecore.Class.Professional;
+import com.umr.agilmentecore.Class.IntermediateClasses.MedalsAndTrophies;
 import com.umr.agilmentecore.Class.IntermediateClasses.PatientComment;
 import com.umr.agilmentecore.Persistence.CommentRepository;
 import com.umr.agilmentecore.Persistence.PatientRepository;
@@ -223,6 +222,14 @@ public class PatientService {
 		patient.setComments(comments);
 		repository.save(patient);
 		return true;
+	}
+
+	public MedalsAndTrophies getMedalsAndTrophies(Long patientId) {
+		Patient patient = repository.getOne(patientId);
+		MedalsAndTrophies medalsAndTrophies = new MedalsAndTrophies();
+		medalsAndTrophies.setMedals(patient.getMedals());
+		medalsAndTrophies.setTrophies(patient.getTrophies());
+		return medalsAndTrophies;
 	}
 
 }

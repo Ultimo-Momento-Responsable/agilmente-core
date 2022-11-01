@@ -15,6 +15,7 @@ import com.umr.agilmentecore.Class.HayUnoRepetidoResult;
 import com.umr.agilmentecore.Class.HayUnoRepetidoSession;
 import com.umr.agilmentecore.Class.MemorillaResult;
 import com.umr.agilmentecore.Class.MemorillaSession;
+import com.umr.agilmentecore.Class.Patient;
 import com.umr.agilmentecore.Class.Planning;
 import com.umr.agilmentecore.Class.PlanningDetail;
 import com.umr.agilmentecore.Class.IntermediateClasses.EncuentraAlNuevoResultDetailView;
@@ -126,7 +127,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.isCompleted(p);
+		updateMedalsAndTrophies(p,pd);
 		encuentraAlNuevoSessionRepository.save(eANS);
 	}
 
@@ -152,7 +153,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.isCompleted(p);
+		updateMedalsAndTrophies(p,pd);
 		hayUnoRepetidoSessionRepository.save(hURS);
 	}
 	
@@ -179,7 +180,7 @@ public class GameSessionResultService {
 			pd.setNumberOfSessions(pd.getNumberOfSessions() - 1);
 			planningDetailRepository.save(pd);
 		}
-		planningService.isCompleted(p);
+		updateMedalsAndTrophies(p,pd);
 		memorillaSessionRepository.save(mS);
 		
 	}
@@ -406,5 +407,17 @@ public class GameSessionResultService {
 			return sum/count;
 		}
 		return null;
+	}
+	
+	public void updateMedalsAndTrophies(Planning p, PlanningDetail pd) {
+		Patient patient = p.getPatient();
+		if (pd.getNumberOfSessions() == 0) {
+			patient.setMedals(patient.getMedals() + 1);
+			patientRepository.save(patient);
+		}
+		if (planningService.isCompleted(p)) {
+			patient.setTrophies(patient.getTrophies() + 1);
+			patientRepository.save(patient);
+		}
 	}
 }

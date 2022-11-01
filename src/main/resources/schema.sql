@@ -13,6 +13,12 @@ CREATE TABLE cognitive_domain (
 	name VARCHAR(128) NOT NULL
 );
 
+DROP TABLE IF EXISTS distractors CASCADE;
+CREATE TABLE distractors (
+    id SERIAL NOT NULL PRIMARY KEY,
+    distractors boolean
+);
+
 DROP TABLE IF EXISTS planning_state CASCADE;
 CREATE TABLE planning_state (
 	id SERIAL NOT NULL PRIMARY KEY,
@@ -43,6 +49,18 @@ CREATE TABLE variable_size (
 	variable_size BOOLEAN NOT NULL
 );
 
+DROP TABLE IF EXISTS number_of_rows CASCADE;
+CREATE TABLE number_of_rows (
+	id SERIAL NOT NULL PRIMARY KEY,
+	number_of_rows INTEGER NOT NULL
+);
+
+DROP TABLE IF EXISTS number_of_columns CASCADE;
+CREATE TABLE number_of_columns (
+	id SERIAL NOT NULL PRIMARY KEY,
+	number_of_columns INTEGER NOT NULL
+);
+
 DROP TABLE IF EXISTS game CASCADE;
 CREATE TABLE game (
 	id SERIAL NOT NULL PRIMARY KEY,
@@ -56,10 +74,39 @@ CREATE TABLE hay_uno_repetido_result (
 	id SERIAL NOT NULL PRIMARY KEY,
 	mistakes INTEGER,
 	successes INTEGER,
+    score INTEGER,
+	mgp INTEGER,
 	total_time NUMERIC,
 	time_between_successes BYTEA,
 	complete_datetime TIMESTAMP,
 	canceled BOOLEAN
+);
+
+DROP TABLE IF EXISTS encuentra_al_nuevo_result CASCADE;
+CREATE TABLE encuentra_al_nuevo_result (
+    id SERIAL NOT NULL PRIMARY KEY,
+    canceled BOOLEAN,
+    complete_datetime TIMESTAMP,
+    mgp INTEGER,
+    mistakes INTEGER,
+    score INTEGER,
+    successes INTEGER,
+    time_between_successes BYTEA,
+    total_time NUMERIC
+);
+
+DROP TABLE IF EXISTS memorilla_result CASCADE;
+CREATE TABLE memorilla_result (
+    id SERIAL NOT NULL PRIMARY KEY,
+    canceled BOOLEAN,
+    complete_datetime TIMESTAMP,
+    mgp INTEGER,
+    mistakes_per_level BYTEA,
+    score INTEGER,
+    streak INTEGER,
+    successes_per_level BYTEA,
+    time_per_level BYTEA,
+    total_time NUMERIC
 );
 
 DROP TABLE IF EXISTS maximum_time CASCADE;
@@ -81,7 +128,9 @@ CREATE TABLE patient (
 	is_logged BOOLEAN,
 	is_enabled BOOLEAN,
 	login_code VARCHAR(255),
-	join_date TIMESTAMP
+	join_date TIMESTAMP,
+	medals NUMERIC DEFAULT 0,
+	trophies NUMERIC DEFAULT 0
 );
 
 DROP TABLE IF EXISTS professional CASCADE;
@@ -91,6 +140,7 @@ CREATE TABLE professional (
 	last_name VARCHAR(255),
 	user_name VARCHAR(255),
 	password VARCHAR(255),
+	email VARCHAR(255),
 	token VARCHAR(255),
 	token_expiration TIMESTAMP
 );
@@ -132,12 +182,44 @@ CREATE TABLE hay_uno_repetido_session (
 	sprite_set_id INTEGER,
 	variable_size_id INTEGER,
 	figure_quantity_id INTEGER,
+	distractors_id BIGINT,
 	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (max_level_id) REFERENCES max_level(id),
 	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id),
 	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id),
 	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id),
-	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id)
+	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id),
+	FOREIGN KEY (distractors_id) REFERENCES distractors(id)
+);
+
+DROP TABLE IF EXISTS encuentra_al_nuevo_session CASCADE; 
+CREATE TABLE encuentra_al_nuevo_session (
+	id SERIAL NOT NULL PRIMARY KEY,
+	max_level_id INTEGER,
+	game_id INTEGER NOT NULL,
+	maximum_time_id INTEGER,
+	sprite_set_id INTEGER,
+	variable_size_id INTEGER,
+	FOREIGN KEY (game_id) REFERENCES game(id),
+	FOREIGN KEY (max_level_id) REFERENCES max_level(id),
+	FOREIGN KEY (maximum_time_id) REFERENCES maximum_time(id),
+	FOREIGN KEY (variable_size_id) REFERENCES variable_size(id),
+	FOREIGN KEY (sprite_set_id) REFERENCES sprite_set(id)
+);
+
+DROP TABLE IF EXISTS memorilla_session CASCADE; 
+CREATE TABLE memorilla_session (
+	id SERIAL NOT NULL PRIMARY KEY,
+	figure_quantity_id BIGINT,
+	game_id INTEGER NOT NULL,
+	max_level_id BIGINT,
+	number_of_columns_id BIGINT,
+	number_of_rows_id BIGINT,
+	FOREIGN KEY (figure_quantity_id) REFERENCES figure_quantity(id),
+	FOREIGN KEY (game_id) REFERENCES game(id),
+	FOREIGN KEY (max_level_id) REFERENCES max_level(id),
+	FOREIGN KEY (number_of_columns_id) REFERENCES number_of_columns(id),
+	FOREIGN KEY (number_of_rows_id) REFERENCES number_of_rows(id)
 );
 
 DROP TABLE IF EXISTS hay_uno_repetido_session_results CASCADE;
@@ -146,6 +228,22 @@ CREATE TABLE hay_uno_repetido_session_results (
 	results_id BIGINT NOT NULL,
 	FOREIGN KEY (hay_uno_repetido_session_id) REFERENCES hay_uno_repetido_session(id),
 	FOREIGN KEY (results_id) REFERENCES hay_uno_repetido_result(id)
+);
+
+DROP TABLE IF EXISTS encuentra_al_nuevo_session_results CASCADE;
+CREATE TABLE encuentra_al_nuevo_session_results (
+	encuentra_al_nuevo_session_id BIGINT NOT NULL,
+	results_id BIGINT NOT NULL,
+	FOREIGN KEY (encuentra_al_nuevo_session_id) REFERENCES encuentra_al_nuevo_session(id),
+	FOREIGN KEY (results_id) REFERENCES encuentra_al_nuevo_result(id)
+);
+
+DROP TABLE IF EXISTS memorilla_session_results CASCADE;
+CREATE TABLE memorilla_session_results (
+	memorilla_session_id BIGINT NOT NULL,
+	results_id BIGINT NOT NULL,
+	FOREIGN KEY (memorilla_session_id) REFERENCES memorilla_session(id),
+	FOREIGN KEY (results_id) REFERENCES memorilla_result(id)
 );
 
 DROP TABLE IF EXISTS planning CASCADE;
@@ -157,9 +255,11 @@ CREATE TABLE planning (
 	start_date TIMESTAMP,
 	patient_id BIGINT,
 	professional_id BIGINT,
-	planning_state_id BIGINT,
+	state_id BIGINT,
+    mgp INTEGER,
 	FOREIGN KEY (patient_id) REFERENCES patient(id),
-	FOREIGN KEY (professional_id) REFERENCES professional(id)	
+	FOREIGN KEY (professional_id) REFERENCES professional(id),	
+	FOREIGN KEY (state_id) REFERENCES planning_state(id)	
 );
 
 DROP TABLE IF EXISTS planning_detail CASCADE;
@@ -168,8 +268,13 @@ CREATE TABLE planning_detail (
 	max_number_of_sessions INTEGER,
 	number_of_sessions INTEGER,
 	hay_uno_repetido_session_id BIGINT,
+    encuentra_al_nuevo_session_id BIGINT,
+    memorilla_session_id BIGINT,
 	planning_id BIGINT,
+    difficulty VARCHAR(255),
 	FOREIGN KEY (hay_uno_repetido_session_id) REFERENCES hay_uno_repetido_session(id),
+	FOREIGN KEY (encuentra_al_nuevo_session_id) REFERENCES encuentra_al_nuevo_session(id),
+	FOREIGN KEY (memorilla_session_id) REFERENCES memorilla_session(id),
 	FOREIGN KEY (planning_id) REFERENCES planning(id)	
 );
 
@@ -202,4 +307,14 @@ CREATE TABLE game_game_param (
 	game_param_id BIGINT,
 	FOREIGN KEY (game_id) REFERENCES game(id),
 	FOREIGN KEY (game_param_id) REFERENCES game_param(id)
+);
+
+
+
+DROP TABLE IF EXISTS patient_comments CASCADE;
+CREATE TABLE patient_comments (
+	patient_id BIGINT,
+	comments_id INTEGER,
+	FOREIGN KEY (patient_id) REFERENCES patient(id),
+	FOREIGN KEY (comments_id) REFERENCES comment(id)
 );

@@ -57,20 +57,39 @@ public class PlanningService {
 				if (isPending(planning)) {
 					planning.setState(stateRepository.getOne((long) 2));
 				}
-				if (isActiveOrPending(planning)) {
-					planning.setState(stateRepository.getOne((long) 3));
-					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
-				}
 				if (isActiveWithUnlimitedGames(planning)) {
 					planning.setState(stateRepository.getOne((long) 5));
 				}
 				if (isCompleted(planning)) {
+					if (planning.getState().getName().equals("Vigente con juegos libres")) {
+						if (!isOnlyFreeGames(planning)) {
+							planning.getPatient().setTrophies(planning.getPatient().getTrophies() + 1);
+						}
+					}
 					planning.setState(stateRepository.getOne((long) 6));
-					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));					
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));
+				}
+				if (isActiveOrPending(planning)) {
+					planning.setState(stateRepository.getOne((long) 3));
+					planning.setMgp(gameSessionResultService.getAverageMGPFromPlanning(planning.getId()));			
 				}
 				this.repository.save(planning);
 			}
 		}
+	}
+	
+	/**
+	 * chequea si la planning es solo de juegos libres
+	 * @param p Planning
+	 * @return true si tiene solo juegos libres, false de lo contrario.
+	 */
+	private boolean isOnlyFreeGames(Planning p) {
+		for (PlanningDetail pd : p.getDetail()) {
+			if (pd.getMaxNumberOfSessions()>0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -440,14 +459,21 @@ public class PlanningService {
 	 * Cancela una planificación
 	 * @param Long el id de la planificación específica.
 	 */
-	public boolean cancel(Long id) {
+	public boolean cancel(Long id, boolean edited) {
 		updateAllPlannings();
 		Optional<Planning> optSpecificPlanning = this.repository.findById(id);
 		Planning specificPlanning = optSpecificPlanning.get();
-		if (specificPlanning.getState().getName().equals("Pendiente") || 
-			specificPlanning.getState().getName().equals("Vigente") || 
+		if (specificPlanning.getState().getName().equals("Vigente") || 
 			specificPlanning.getState().getName().equals("Vigente con juegos libres")){
 			cancelPlanning(specificPlanning);
+			return true;
+		}
+		if (specificPlanning.getState().getName().equals("Pendiente")) {
+			if (edited) {
+				this.repository.delete(specificPlanning);
+			} else {
+				cancelPlanning(specificPlanning);
+			}
 			return true;
 		}
 		return false;

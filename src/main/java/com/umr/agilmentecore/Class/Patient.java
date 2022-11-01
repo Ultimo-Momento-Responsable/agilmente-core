@@ -46,6 +46,10 @@ public class Patient {
 	private boolean isLogged = false;
 	@Column(name = "is_enabled")
 	private boolean isEnabled = true;
+	@Column(name = "medals")
+	private int medals;
+	@Column(name = "trophies")
+	private int trophies;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Comment> comments;
 	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
